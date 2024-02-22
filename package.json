@@ -36,5 +36,10 @@
     "hooks": {
       "pre-commit": "yarn run lint"
     }
-  }
+  }, 
+  "browserslist": [
+    "last 2 versions",
+    "> 1%",
+    "ie 11"
+  ]
 }
