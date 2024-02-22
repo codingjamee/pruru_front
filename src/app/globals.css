@@ -4,7 +4,7 @@
 
 :root {
   --foreground-rgb: 0, 0, 0;
-  --background-start-rgb: 214, 219, 220;
+  --background: 214, 219, 220;
   --background-end-rgb: 255, 255, 255;
 }
 
@@ -17,17 +17,38 @@
 }
 
 body {
-  color: rgb(var(--foreground-rgb));
-  background: linear-gradient(
-      to bottom,
-      transparent,
-      rgb(var(--background-end-rgb))
-    )
-    rgb(var(--background-start-rgb));
+  color: black;
+  background: white;
+  width: 100dvw;
+  height: 100dvh;
 }
 
 @layer utilities {
   .text-balance {
     text-wrap: balance;
+  }
+}
+
+@layer components {
+  .header {
+    text-transform: uppercase;
+    text-align: center;
+    color: #0e4437;
+    font-weight: 700;
+  }
+  .big-logo {
+    font-size: 80px;
+  }
+  .small-logo {
+    font-size: 36px;
+  }
+  .button {
+    @apply w-28 h-10 rounded-lg text-white-100;
+  }
+  .primary {
+    @apply bg-primary-100;
+  }
+  .primary:hover {
+    @apply bg-primary-300;
   }
 }
