@@ -36,7 +36,7 @@
     "hooks": {
       "pre-commit": "yarn run lint"
     }
-  }, 
+  },
   "browserslist": [
     "last 2 versions",
     "> 1%",
