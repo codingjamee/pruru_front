@@ -3,22 +3,36 @@
 @tailwind utilities;
 
 :root {
-  --foreground-rgb: 0, 0, 0;
-  --background: 214, 219, 220;
-  --background-end-rgb: 255, 255, 255;
+  --background-main-color: #ffffff;
+  --background-sub-color: #ffffff;
+  --main-color: #ade594;
+  --main-hover-color: #7bc35b;
+  --sub-main-color: #f3d1ff;
+  --default-text-color: #000000;
+  --main-logo-color: #0e4437;
+  --sub-logo-color: #8da69d;
+  --button-text-color: #fff5d2;
+  --gray-color: #eef2f1;
 }
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --foreground-rgb: 255, 255, 255;
-    --background-start-rgb: 0, 0, 0;
-    --background-end-rgb: 0, 0, 0;
+    --background-main-color: #373737;
+    --background-sub-color: #000000;
+    --main-color: #7bc35b;
+    --main-hover-color: #37910f;
+    --sub-main-color: #f3d1ff;
+    --default-text-color: #fff5d2;
+    --main-logo-color: #fff5d2;
+    --sub-logo-color: #8da69d;
+    --button-text-color: #fff5d2;
+    --gray-color: #939393;
   }
 }
 
 body {
   color: black;
-  background: white;
+  background: var(--background-main-color);
   width: 100dvw;
   height: 100dvh;
 }
@@ -30,20 +44,32 @@ body {
 }
 
 @layer components {
+  .center-alignment {
+    @apply flex align-middle justify-center w-full;
+  }
   .header {
     text-transform: uppercase;
     text-align: center;
-    color: #0e4437;
     font-weight: 700;
+    color: var(--default-text-color);
+  }
+  .logo-img {
+    @apply w-20 h-20;
+  }
+  .tablet-logo-img {
+    @apply w-28 h-28;
+  }
+  .desktop-logo-img {
+    @apply w-44 h-44;
   }
   .big-logo {
-    font-size: 80px;
+    font-size: 90px;
   }
   .small-logo {
     font-size: 36px;
   }
   .button {
-    @apply w-28 h-10 rounded-lg text-white-100;
+    @apply w-28 h-10 rounded-lg text-button-text-color;
   }
   .primary {
     @apply bg-primary-100;

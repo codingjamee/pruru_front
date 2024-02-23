@@ -7,14 +7,14 @@ export default function Home() {
   return (
     <>
       <main className="w-full h-full flex flex-col align-middle justify-center">
-        <div className="flex align-middle justify-center w-full">
-          <div className="desktop:w-44 laptop:w-30 mobile:w-20 desktop:h-44">
+        <div className="center-alignment">
+          <div className="logo-img desktop:desktop-logo-img tablet:tablet-logo-img">
             <Image src={logo} alt="logo" />
           </div>
         </div>
         <div className="flex flex-col justify-center align-middle gap-10">
           <h1
-            className={`header desktop:big-logo mobile:small-logo ${montserrat.className} flex justify-center`}>
+            className={`header big-logo ${montserrat.className} flex justify-center`}>
             PRURU
           </h1>
           <div className="text-center text-sub-logo-100 text-3xl">

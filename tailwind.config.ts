@@ -9,23 +9,24 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
-        'primary-100': '#ADE594',
-        'primary-300': '#7BC35B',
-        'secondary-100': '#F3D1FF',
-        'gray-100': '#EEF2F1',
-        'gray-500': '#575C63',
-        'logo-700': '#0E4437',
-        'sub-logo-100': '#8DA69D',
-        'white-100': '#ffffff',
+        'primary-100': 'var(--main-color)',
+        'primary-300': 'var(--main-hover-color)',
+        'secondary-100': 'var(--sub-main-color)',
+        'gray-100': 'var(--gray-color)',
+        'dark-gray': 'var(--dark-gray-color)',
+        'logo-700': 'var(--main-logo-color)',
+        'sub-logo-100': 'var(--sub-logo-color)',
+        'default-text-color': 'var(--default-text-color)',
+        'button-text-color': 'var(--button-text-color)',
       },
     },
     screens: {
       mobile: { max: '767px' },
-      tablet: { min: '768px', max: '1023px' },
-      laptop: { min: '1024px', max: '1279px' },
+      tablet: { min: '768px', max: '1279px' },
       desktop: { min: '1280px' },
     },
   },
+  darkMode: 'selector',
   plugins: [],
 };
 export default config;
