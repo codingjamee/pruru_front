@@ -39,9 +39,18 @@
       "pre-commit": "yarn run lint"
     }
   },
-  "browserslist": [
-    "last 2 versions",
-    "> 1%",
-    "ie 11"
-  ]
+  "browserslist": {
+    "production": [
+      "last 2 versions",
+      "> 1%",
+      "ie 11"
+    ],
+    "development": [
+      "Chrome 118",
+      "last 1 chrome version",
+      "last 1 edge version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  }
 }
