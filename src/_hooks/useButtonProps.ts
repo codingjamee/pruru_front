@@ -17,12 +17,7 @@ export interface UseButtonPropsMetadata {
   tagName: React.ElementType;
 }
 
-const isTrivialHref = (href?: string) => {
-  return !href || href.trim() === '#';
-};
-
 export function useButtonProps({
-  href,
   rel,
   target,
   disabled,
@@ -31,7 +26,7 @@ export function useButtonProps({
   onClick,
 }: UseButtonPropsOptions): [UseButtonPropsOptions, UseButtonPropsMetadata] {
   if (!tagName) {
-    if (href != null || target != null || rel != null) {
+    if (target != null || rel != null) {
       tagName = 'a';
     } else {
       tagName = 'button';
@@ -43,7 +38,7 @@ export function useButtonProps({
   const handleClick = (
     event: React.MouseEvent<HTMLButtonElement, MouseEvent>,
   ) => {
-    if (disabled || (tagName === 'a' && isTrivialHref(href))) {
+    if (disabled || tagName === 'a') {
       event.preventDefault();
     }
     if (disabled) {
@@ -59,16 +54,9 @@ export function useButtonProps({
       meta,
     ];
   }
-  if (tagName === 'a') {
-    href ||= '#';
-    if (disabled) {
-      href = undefined;
-    }
-  }
 
   return [
     {
-      href,
       rel: tagName === 'a' ? rel : undefined,
       target: tagName === 'a' ? target : undefined,
       disabled: undefined,
