@@ -8,16 +8,22 @@ const config: Config = {
   ],
   theme: {
     extend: {
+      fontSize: {
+        'size-font-card-title': 'var(--size-font-card-title)',
+      },
       colors: {
-        'primary-100': 'var(--main-color)',
-        'primary-300': 'var(--main-hover-color)',
-        'secondary-100': 'var(--sub-main-color)',
-        'gray-100': 'var(--gray-color)',
-        'dark-gray': 'var(--dark-gray-color)',
-        'logo-700': 'var(--main-logo-color)',
-        'sub-logo-100': 'var(--sub-logo-color)',
-        'default-text-color': 'var(--default-text-color)',
-        'button-text-color': 'var(--button-text-color)',
+        'color-primary': 'var(--color-main)',
+        'color-primary-m': 'var(--color-main-hover)',
+        'color-secondary-100': 'var(--color-sub-main)',
+        'color-gray-100': 'var(--color-gray)',
+        'color-logo-700': 'var(--color-main-logo)',
+        'color-sub-logo-100': 'var(--color-sub-logo)',
+        'color-default-text': 'var(--color-default-text)',
+        'color-text-button': 'var(--color-text-button)',
+        'color-disabled': 'var(--color-disabled)',
+        'color-card-bg': 'var(--color-card-bg)',
+        'color-card-text': 'var(--color-card-text)',
+        'color-card-border': 'var(--color-card-border)',
       },
     },
     screens: {
