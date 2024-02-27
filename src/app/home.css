@@ -1,0 +1,43 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer components {
+  .header {
+    text-transform: uppercase;
+    text-align: center;
+    font-weight: 700;
+    color: var(--color-default-text);
+  }
+  .logo-img {
+    @apply w-20 h-20;
+  }
+  .tablet-logo-img {
+    @apply w-28 h-28;
+  }
+  .desktop-logo-img {
+    @apply w-44 h-44;
+  }
+  .logo-size {
+    font-size: 48px;
+  }
+  .desktop-logo-size {
+    font-size: 90px;
+  }
+  .tablet-logo-size {
+    font-size: 80px;
+  }
+  .sublogo-size {
+    font-size: 16px;
+  }
+  .desktop-sublogo-size {
+    font-size: 32px;
+  }
+  .tablet-sublogo-size {
+    font-size: 24px;
+  }
+
+  .customflex-column {
+    @apply flex flex-col justify-center align-middle;
+  }
+}

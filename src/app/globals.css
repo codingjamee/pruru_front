@@ -1,40 +1,57 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+@import './home.css';
 
+/* COLOR */
 :root {
-  --background-main-color: #ffffff;
-  --background-sub-color: #ffffff;
-  --main-color: #ade594;
-  --main-hover-color: #7bc35b;
-  --sub-main-color: #f3d1ff;
-  --default-text-color: #000000;
-  --main-logo-color: #0e4437;
-  --sub-logo-color: #8da69d;
-  --button-text-color: #fff5d2;
-  --gray-color: #eef2f1;
+  --color-background-main: #ffffff;
+  --color-background-sub: #ffffff;
+  --color-main: #ade594;
+  --color-main-hover: #7bc35b;
+  --color-sub-main: #f3d1ff;
+  --color-default-text: #000000;
+  --color-main-logo: #0e4437;
+  --color-sub-logo: #8da69d;
+  --color-text-button: #fff5d2;
+  --color-card-bg: #ffffff;
+  --color-card-border: #000000;
+  --color-card-text: #000000;
+  --color-gray: #eef2f1;
+  --color-disabled: #939393;
+}
+
+/* FONT SIZE */
+:root {
+  --size-font-card-title: 24px;
+  --size-font-default: 16px;
 }
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --background-main-color: #373737;
-    --background-sub-color: #000000;
-    --main-color: #7bc35b;
-    --main-hover-color: #37910f;
-    --sub-main-color: #f3d1ff;
-    --default-text-color: #fff5d2;
-    --main-logo-color: #fff5d2;
-    --sub-logo-color: #8da69d;
-    --button-text-color: #fff5d2;
-    --gray-color: #939393;
+    --color-background-main: #373737;
+    --color-background-sub: #000000;
+    --color-main: #7bc35b;
+    --color-main-hover: #37910f;
+    --color-sub-main: #f3d1ff;
+    --color-default-text: #fff5d2;
+    --color-main-logo: #fff5d2;
+    --color-sub-logo: #8da69d;
+    --color-text-button: #fff5d2;
+    --color-card-bg: #fff5d2;
+    --color-card-border: #000000;
+    --color-card-text: #000000;
+    --color-gray: #939393;
+    --color-disabled: #939393;
   }
 }
 
 body {
-  color: black;
-  background: var(--background-main-color);
+  color: var(--color-default-text);
+  background: var(--color-background-main);
   width: 100dvw;
   height: 100dvh;
+  font-size: var(--size-font-default);
 }
 
 @layer utilities {
@@ -44,37 +61,41 @@ body {
 }
 
 @layer components {
+  .full {
+    @apply w-full h-full flex flex-col align-middle justify-center;
+  }
   .center-alignment {
     @apply flex align-middle justify-center w-full;
   }
-  .header {
-    text-transform: uppercase;
-    text-align: center;
-    font-weight: 700;
-    color: var(--default-text-color);
-  }
-  .logo-img {
-    @apply w-20 h-20;
-  }
-  .tablet-logo-img {
-    @apply w-28 h-28;
-  }
-  .desktop-logo-img {
-    @apply w-44 h-44;
-  }
-  .big-logo {
-    font-size: 90px;
-  }
-  .small-logo {
-    font-size: 36px;
-  }
+
   .button {
-    @apply w-28 h-10 rounded-lg text-button-text-color;
+    @apply w-28 h-10 rounded-lg text-color-text-button cursor-pointer;
+  }
+  .card {
+    @apply center-alignment rounded-lg w-1/2 gap-9 flex-col bg-color-card-bg border-2 border-color-card-border text-color-card-text m-2 py-14 p-5;
+  }
+  .card-primary {
+    @apply bg-color-primary;
+  }
+  .input {
+    @apply bg-transparent border-b border-black focus:bg-transparent w-full mb-6;
   }
   .primary {
-    @apply bg-primary-100;
+    @apply bg-color-primary;
   }
-  .primary:hover {
-    @apply bg-primary-300;
+  .primary-hover {
+    @apply bg-color-primary-m;
+  }
+  .primary-disabled {
+    @apply bg-color-disabled border-color-disabled cursor-not-allowed;
+  }
+  .outlined {
+    @apply bg-transparent border-color-card-text text-color-card-text border-2;
+  }
+  .outlined-disabled {
+    @apply border-color-disabled cursor-not-allowed;
+  }
+  .outlined-hover {
+    @apply bg-color-primary-m border-color-primary-m;
   }
 }
