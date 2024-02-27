@@ -10,22 +10,14 @@ const Button = ({
   children,
   onClick,
   // as: tagName,
-  to,
   variant,
   ...props
 }: ButtonPropsType) => {
-  const getClassName = (variant: ButtonVariant) => {
-    if (variant === 'primary') {
-      if (disabled) {
-        return 'primary-disabled';
-      }
-      return 'primary hover:primary-hover';
-    } else if (variant === 'outlined') {
-      if (disabled) {
-        return 'outlined-disabled';
-      }
-      return 'outlined hover:outlined-hover';
+  const getClassName = (base: ButtonVariant) => {
+    if (disabled) {
+      return `${base}-disabled`;
     }
+    return `${base} hover:${base}-hover`;
   };
 
   const [buttonProps, { tagName: Component }] = useButtonProps({
