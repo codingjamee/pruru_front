@@ -51,7 +51,7 @@ const LoginForm = () => {
         <h1 className="text-size-font-card-title">
           {isJoinPage ? '회원가입' : '로그인'}
         </h1>
-        <div className="flex flex-col rounded-md gap-9">
+        <div className="flex flex-col gap-9 rounded-md">
           <>
             {isJoinPage && (
               <Input
