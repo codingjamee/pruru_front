@@ -1,7 +1,7 @@
 'use client';
 
 import { useButtonProps } from '@/_hooks/useButtonProps';
-import { ButtonPropsType, ButtonVariant } from '@/_types/CommonTypes';
+import { ButtonPropsType } from '@/_types/CommonTypes';
 import Link from 'next/link';
 
 const Button = ({
@@ -35,15 +35,27 @@ const Button = ({
 
   return (
     <>
-      {
-        /* @ts-expect-error Server Component */
-        <Component
-          className={`button ${getClassName()}`}
-          {...buttonProps}
-          {...props}>
-          {href ? <Link href={href}>{children}</Link> : children}
-        </Component>
-      }
+      {href ? (
+        <Link href={href}>
+          {/* @ts-expect-error Server Component */}
+          <Component
+            className={`button ${getClassName()}`}
+            {...buttonProps}
+            {...props}>
+            {children}
+          </Component>
+        </Link>
+      ) : (
+        <>
+          {/* @ts-expect-error Server Component */}
+          <Component
+            className={`button ${getClassName()}`}
+            {...buttonProps}
+            {...props}>
+            {children}
+          </Component>
+        </>
+      )}
     </>
   );
 };
