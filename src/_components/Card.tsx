@@ -11,7 +11,7 @@ const Card = ({
   const getClassName = (variant: CardVariant) => `card-${variant}`;
   return (
     <div className="center-alignment">
-      <div className={`card ${getClassName(variant)} m-1 center-alignment`}>
+      <div className={`card ${getClassName(variant)} center-alignment m-1`}>
         {children}
       </div>
     </div>
