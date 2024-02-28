@@ -3,14 +3,26 @@
 @tailwind utilities;
 
 @layer components {
-  .header {
+  .header-font {
     text-transform: uppercase;
     text-align: center;
     font-weight: 700;
     color: var(--color-default-text);
   }
   .logo-img {
-    @apply h-20 w-20;
+    @apply desktop:desktop-logo-img tablet:tablet-logo-img h-[64px] w-[64px];
+  }
+  .home-logo-img {
+    @apply desktop:desktop-home-logo-img tablet:tablet-home-logo-img flex h-[28px] w-[28px] items-center justify-center;
+  }
+  .home-logo-font {
+    @apply text-[30px] tablet:text-[52px] desktop:text-[64px];
+  }
+  .desktop-home-logo-img {
+    @apply h-[71px] w-[71px];
+  }
+  .tablet-home-logo-img {
+    @apply h-[65px] w-[65px];
   }
   .tablet-logo-img {
     @apply h-28 w-28;
@@ -20,6 +32,7 @@
   }
   .logo-size {
     font-size: 48px;
+    @apply desktop:desktop-logo-size tablet:tablet-logo-size;
   }
   .desktop-logo-size {
     font-size: 90px;
