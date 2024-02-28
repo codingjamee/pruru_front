@@ -13,11 +13,18 @@ const Button = ({
   variant,
   ...props
 }: ButtonPropsType) => {
-  const getClassName = (base: ButtonVariant) => {
-    if (disabled) {
-      return `${base}-disabled`;
+  const getClassName = () => {
+    if (variant === 'primary') {
+      if (disabled) {
+        return 'primary-disabled';
+      }
+      return 'primary hover:primary-hover';
+    } else if (variant === 'outlined') {
+      if (disabled) {
+        return 'outlined-disabled';
+      }
+      return 'outlined hover:outlined-hover';
     }
-    return `${base} hover:${base}-hover`;
   };
 
   const [buttonProps, { tagName: Component }] = useButtonProps({
@@ -31,7 +38,7 @@ const Button = ({
       {
         /* @ts-expect-error Server Component */
         <Component
-          className={`button ${getClassName(variant)}`}
+          className={`button ${getClassName()}`}
           {...buttonProps}
           {...props}>
           {href ? <Link href={href}>{children}</Link> : children}
