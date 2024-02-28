@@ -1,0 +1,15 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer components {
+  .nav {
+    @apply desktop:nav-desktop tablet:nav-tablet sticky top-[-16px] box-border flex h-[45px] w-full flex-col items-center justify-between bg-amber-400 pt-[32px];
+  }
+  .nav-desktop {
+    @apply top-[-32px] h-[153px];
+  }
+  .nav-tablet {
+    @apply top-[-24px] h-[132px];
+  }
+}
