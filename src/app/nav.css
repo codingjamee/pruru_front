@@ -4,12 +4,31 @@
 
 @layer components {
   .nav {
-    @apply desktop:nav-desktop tablet:nav-tablet sticky top-[-16px] box-border flex h-[45px] w-full flex-col items-center justify-between bg-amber-400 pt-[32px];
+    @apply desktop:nav-desktop tablet:nav-tablet sticky top-[-16px] box-border flex h-[61px] w-full flex-col items-center justify-between bg-amber-400 pt-[16px];
+  }
+  button.nav-button {
+    @apply h-[72px] w-[91px] rounded-tl-[7px];
   }
   .nav-desktop {
-    @apply top-[-32px] h-[153px];
+    @apply top-[-58px] h-[228px] pt-[58px];
   }
   .nav-tablet {
-    @apply top-[-24px] h-[132px];
+    @apply top-[-40px] h-[204px] pt-[40px];
+  }
+  .nav-logo-img {
+    @apply desktop:desktop-nav-logo-img tablet:tablet-nav-logo-img flex h-[28px] w-[28px] items-center justify-center;
+  }
+  .nav-logo-font {
+    @apply text-[30px] tablet:text-[52px] desktop:text-[64px];
+  }
+  .desktop-nav-logo-img {
+    @apply h-[71px] w-[71px];
+  }
+  .tablet-nav-logo-img {
+    @apply h-[60px] w-[60px];
+  }
+  button.nav-hover,
+  button.nav-button:hover {
+    @apply rounded-tl-[7px] bg-color-primary;
   }
 }
