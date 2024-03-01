@@ -2,6 +2,7 @@
 @tailwind components;
 @tailwind utilities;
 @import './home.css';
+@import './nav.css';
 
 /* COLOR */
 :root {
@@ -49,7 +50,7 @@
 body {
   color: var(--color-default-text);
   background: var(--color-background-main);
-  width: 100dvw;
+  width: screen;
   height: 100dvh;
   font-size: var(--size-font-default);
 }
@@ -62,10 +63,10 @@ body {
 
 @layer components {
   .full {
-    @apply flex h-full w-full flex-col justify-center align-middle;
+    @apply flex min-h-full w-full flex-col items-center justify-center;
   }
   .center-alignment {
-    @apply flex w-full justify-center align-middle;
+    @apply flex w-full items-center justify-center;
   }
 
   .button {
@@ -78,7 +79,7 @@ body {
     @apply bg-color-primary;
   }
   .input {
-    @apply mb-6 w-full border-b border-black bg-transparent focus:bg-transparent;
+    @apply mb-6 w-full border-b border-black bg-transparent;
   }
   .primary {
     @apply bg-color-primary;
