@@ -16,7 +16,7 @@ export interface ButtonPropsType extends ComponentPropsWithoutRef<'button'> {
   variant?: ButtonVariant;
 }
 
-export type CarouselProps = {
+export interface CarouselProps {
   autoPlay?: boolean;
   stopAutoplayOnHover?: boolean;
   interval?: number;
@@ -26,5 +26,19 @@ export type CarouselProps = {
   index?: number;
   animation?: 'fade' | 'slide';
   duration?: number;
+  showNavButton?: boolean;
   children?: ReactElement | ReactElement[];
-};
+}
+
+export type CarouselActionTypeKey =
+  | 'SET_INITIAL_STATE'
+  | 'UPDATE_NEXT_STATE_LEN2'
+  | 'UPDATE_NEXT_STATE'
+  | 'UPDATE_PREV_STATE_LEN2'
+  | 'UPDATE_PREV_STATE';
+
+export interface CarouselState {
+  active: number;
+  prevActive: number | null;
+  nextActive: number | null;
+}
