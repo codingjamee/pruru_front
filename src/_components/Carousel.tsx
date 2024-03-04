@@ -1,8 +1,9 @@
 'use client';
-import { Children, useEffect, useReducer } from 'react';
+import { Children, useEffect, useReducer, useRef } from 'react';
 import { CarouselProps, CarouselState } from '@/_types/CommonTypes';
 import { sanitizedProps } from '@/_utils/sanitizedProps';
 import indexReducer from '@/_reducers/indexReducer';
+import Indicator from './Indicator';
 
 export const actiontypes = {
   SET_INITIAL_STATE: 'SET_INITIAL_STATE',
@@ -14,10 +15,10 @@ export const actiontypes = {
 
 function Carousel(props: CarouselProps) {
   const {
-    // autoPlay,
-    // stopAutoplayOnHover,
-    // interval,
-    // indicators,
+    autoPlay,
+    stopAutoplayOnHover,
+    interval,
+    indicators,
     infiniteLoop,
     // height,
     // animation,
@@ -26,6 +27,7 @@ function Carousel(props: CarouselProps) {
     children,
   } = sanitizedProps(props);
 
+  let autoFnInterval = useRef<NodeJS.Timeout | undefined>(undefined);
   const childrenArray = Children.toArray(children);
   const initialState: CarouselState = infiniteLoop
     ? {
@@ -82,26 +84,62 @@ function Carousel(props: CarouselProps) {
     }
   };
 
+  useEffect(() => {
+    if (!autoPlay) return;
+    if (autoFnInterval.current) {
+      clearInterval(autoFnInterval.current);
+    }
+    autoFnInterval.current = setInterval(() => {
+      nextFn();
+    }, interval);
+    return () => {
+      if (autoFnInterval.current) clearInterval(autoFnInterval.current);
+    };
+  }, [autoPlay, interval]);
+
   // useEffect(() => {
   //   //시간이 지나면 왼쪽으로 transition
   //   setInterval(() => {}, interval);
   // }, []);
 
+  const handleMouseEnter = () => {
+    if (!stopAutoplayOnHover) return;
+    if (autoFnInterval.current) {
+      clearInterval(autoFnInterval.current);
+    }
+  };
+
+  const handleMouseLeave = () => {
+    if (!stopAutoplayOnHover) return;
+    autoFnInterval.current = setInterval(() => {
+      nextFn();
+    }, interval);
+  };
+
   useEffect(() => {
     console.log(childrenArray);
   }, []);
   return (
-    <>
+    <article className="flex">
       {showNavButton && state.prevActive && <div onClick={prevFn}>&lt;</div>}
-      {state.prevActive !== state.active && state.prevActive && (
-        <div>{childrenArray[state.prevActive]}</div>
-      )}
-      <div>{childrenArray[state.active]}</div>
-      {state.nextActive !== state.active && state.nextActive && (
-        <div>{childrenArray[state.nextActive]}</div>
-      )}
+      <div>
+        <div className="flex">
+          {state.prevActive !== state.active && state.prevActive && (
+            <div>{childrenArray[state.prevActive]}</div>
+          )}
+          <div onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>
+            {childrenArray[state.active]}
+          </div>
+          {state.nextActive !== state.active && state.nextActive && (
+            <div>{childrenArray[state.nextActive]}</div>
+          )}
+        </div>
+        <div className="flex">
+          {indicators && <Indicator number={childrenArray.length} />}
+        </div>
+      </div>
       {showNavButton && state.nextActive && <div onClick={nextFn}>&gt;</div>}
-    </>
+    </article>
   );
 }
 
