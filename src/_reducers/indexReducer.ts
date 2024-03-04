@@ -1,15 +1,8 @@
-import { actiontypes } from '@/_components/Carousel';
-import { CarouselActionTypeKey, CarouselState } from '@/_types/CommonTypes';
-
-interface indexReducerActionType {
-  type: CarouselActionTypeKey;
-  payload?: {};
-}
-
-export type indexReducerType = (
-  state: CarouselState,
-  action: indexReducerActionType,
-) => CarouselState;
+import {
+  CarouselState,
+  actiontypes,
+  indexReducerActionType,
+} from '@/_types/CommonTypes';
 
 const indexReducer = (
   state: CarouselState,
@@ -31,6 +24,14 @@ const indexReducer = (
         prevActive: state.active,
         nextActive: state.nextActive! + 1,
       };
+    case actiontypes.UPDATE_NEXT_INFINITE_STATE:
+      return {
+        ...state,
+        active: state.nextActive!,
+        prevActive: state.active,
+        nextActive:
+          state.nextActive === payload!.length - 1 ? 0 : state.nextActive! + 1,
+      };
     case actiontypes.UPDATE_PREV_STATE_LEN2:
       return {
         ...state,
@@ -43,6 +44,13 @@ const indexReducer = (
         ...state,
         active: state.nextActive!,
         prevActive: state.active,
+        nextActive: state.nextActive! + 1,
+      };
+    case actiontypes.UPDATE_PREV_INFINITE_STATE:
+      return {
+        ...state,
+        active: state.nextActive!,
+        prevActive: payload?.index === 0 ? payload.length - 1 : state.active,
         nextActive: state.nextActive! + 1,
       };
     default:
