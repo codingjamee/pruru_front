@@ -1,51 +1,54 @@
 'use client';
-import React, { ReactElement, useEffect, useState } from 'react';
-import { CarouselProps } from '@/_types/CommonTypes';
+import { Children, useEffect, useReducer } from 'react';
+import { CarouselProps, CarouselState } from '@/_types/CommonTypes';
 import { sanitizedProps } from '@/_utils/sanitizedProps';
+import indexReducer from '@/_reducers/indexReducer';
+
+export const actiontypes = {
+  SET_INITIAL_STATE: 'SET_INITIAL_STATE',
+  UPDATE_NEXT_STATE_LEN2: 'UPDATE_NEXT_STATE_LEN2',
+  UPDATE_NEXT_STATE: 'UPDATE_NEXT_STATE',
+  UPDATE_PREV_STATE_LEN2: 'UPDATE_PREV_STATE_LEN2',
+  UPDATE_PREV_STATE: 'UPDATE_PREV_STATE',
+};
 
 function Carousel(props: CarouselProps) {
   const {
-    autoPlay,
+    // autoPlay,
     // stopAutoplayOnHover,
     // interval,
     // indicators,
     infiniteLoop,
     // height,
     // animation,
-    duration,
+    // duration,
     showNavButton,
     children,
   } = sanitizedProps(props);
 
-  const childrenArray: ReactElement[] = [];
-  if (Array.isArray(children)) {
-    children.map((child) => {
-      if (React.isValidElement(child)) return childrenArray.push(child);
-    });
-  }
-  const [state, setState] = useState(
-    infiniteLoop
-      ? {
-          active: 0,
-          prevActive:
-            childrenArray.length === 2
-              ? 1
-              : childrenArray.length === 1
-                ? null
-                : childrenArray.length - 1,
-          nextActive:
-            childrenArray.length === 2
-              ? 1
-              : childrenArray.length === 1
-                ? null
-                : 1,
-        }
-      : {
-          active: 0,
-          prevActive: null,
-          nextActive: childrenArray.length === 1 ? null : 1,
-        },
-  );
+  const childrenArray = Children.toArray(children);
+  const initialState: CarouselState = infiniteLoop
+    ? {
+        active: 0,
+        prevActive:
+          childrenArray.length === 2
+            ? 1
+            : childrenArray.length === 1
+              ? null
+              : childrenArray.length - 1,
+        nextActive:
+          childrenArray.length === 2
+            ? 1
+            : childrenArray.length === 1
+              ? null
+              : 1,
+      }
+    : {
+        active: 0,
+        prevActive: null,
+        nextActive: childrenArray.length === 1 ? null : 1,
+      };
+  const [state, dispatchIndexReducer] = useReducer(indexReducer, initialState);
 
   const nextFn = () => {
     //돔이 재렌더링 되는지 확인필요
@@ -53,29 +56,14 @@ function Carousel(props: CarouselProps) {
       if (childrenArray.length === 1) {
         return;
       } else if (childrenArray.length === 2) {
-        return setState((prev) => ({
-          ...prev,
-          active: prev.nextActive!,
-          prevActive: prev.active,
-          nextActive: prev.active,
-        }));
+        return dispatchIndexReducer({ type: 'UPDATE_NEXT_STATE_LEN2' });
       } else {
         //nextActive가 null일경우 해당 함수 호출 불가
-        setState((prev) => ({
-          ...prev,
-          active: prev.nextActive!,
-          prevActive: prev.active,
-          nextActive: prev.nextActive! + 1,
-        }));
+        return dispatchIndexReducer({ type: 'UPDATE_NEXT_STATE' });
       }
     } else {
       //nextActive가 null일경우 해당 함수 호출 불가
-      setState((prev) => ({
-        ...prev,
-        active: prev.nextActive!,
-        prevActive: prev.active,
-        nextActive: prev.nextActive! + 1,
-      }));
+      return dispatchIndexReducer({ type: 'UPDATE_NEXT_STATE' });
     }
   };
 
@@ -84,28 +72,13 @@ function Carousel(props: CarouselProps) {
       if (childrenArray.length === 1) {
         return;
       } else if (childrenArray.length === 2) {
-        return setState((prev) => ({
-          ...prev,
-          active: prev.prevActive!,
-          prevActive: prev.active,
-          nextActive: prev.active,
-        }));
+        return dispatchIndexReducer({ type: 'UPDATE_NEXT_STATE_LEN2' });
       } else {
         //nextActive가 null일경우 해당 함수 호출 불가
-        setState((prev) => ({
-          ...prev,
-          active: prev.nextActive!,
-          prevActive: prev.active,
-          nextActive: prev.nextActive! + 1,
-        }));
+        return dispatchIndexReducer({ type: 'UPDATE_NEXT_STATE' });
       }
     } else {
-      setState((prev) => ({
-        ...prev,
-        active: prev.prevActive!,
-        prevActive: prev.active,
-        nextActive: prev.prevActive! - 1,
-      }));
+      return dispatchIndexReducer({ type: 'UPDATE_NEXT_STATE' });
     }
   };
 
