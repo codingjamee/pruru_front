@@ -34,11 +34,39 @@ export type CarouselActionTypeKey =
   | 'SET_INITIAL_STATE'
   | 'UPDATE_NEXT_STATE_LEN2'
   | 'UPDATE_NEXT_STATE'
+  | 'UPDATE_NEXT_INFINITE_STATE'
   | 'UPDATE_PREV_STATE_LEN2'
-  | 'UPDATE_PREV_STATE';
+  | 'UPDATE_PREV_STATE'
+  | 'UPDATE_PREV_INFINITE_STATE';
+
+export type CarouselPayloadType = {
+  loop?: 'infinite';
+  index: number;
+  length: number;
+};
 
 export interface CarouselState {
   active: number;
-  prevActive: number | null;
-  nextActive: number | null;
+  prevActive: number | undefined;
+  nextActive: number | undefined;
 }
+
+export interface indexReducerActionType {
+  type: CarouselActionTypeKey;
+  payload?: CarouselPayloadType;
+}
+
+export type indexReducerType = (
+  state: CarouselState,
+  action: indexReducerActionType,
+) => CarouselState;
+
+export const actiontypes = {
+  SET_INITIAL_STATE: 'SET_INITIAL_STATE',
+  UPDATE_NEXT_STATE_LEN2: 'UPDATE_NEXT_STATE_LEN2',
+  UPDATE_NEXT_STATE: 'UPDATE_NEXT_STATE',
+  UPDATE_NEXT_INFINITE_STATE: 'UPDATE_NEXT_INFINITE_STATE',
+  UPDATE_PREV_STATE_LEN2: 'UPDATE_PREV_STATE_LEN2',
+  UPDATE_PREV_STATE: 'UPDATE_PREV_STATE',
+  UPDATE_PREV_INFINITE_STATE: 'UPDATE_PREV_INFINITE_STATE',
+};
