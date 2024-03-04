@@ -11,21 +11,24 @@ export default function layout({
   return (
     <div className="full relative">
       <div className="nav">
-        <header className="center-alignment bg-green-300">
+        <header className="center-alignment ">
           <h1
-            className={`header-font ${montserrat.className} home-logo-font flex justify-center`}>
+            className={`header-font ${montserrat.className} nav-logo-font flex items-center justify-center`}>
             PRURU
           </h1>
-          <div className="home-logo-img bg-sky-950">
+          <div className="nav-logo-img">
             <Image src={logo} alt="logo" />
           </div>
         </header>
-        <nav className="m-3 flex w-full justify-between">
-          <p>우리집</p>
-          <NavTop />
-        </nav>
+        <div className="hidden w-full tablet:block desktop:block">
+          <nav className="flex w-full justify-between">
+            <p>우리집</p>
+            <NavTop />
+          </nav>
+        </div>
       </div>
-      <div className="flex-1">{children}</div>
+      <div className="flex-1 overflow-y-auto">{children}</div>
+      <nav className="mobile-nav">모바일 네브바</nav>
     </div>
   );
 }
