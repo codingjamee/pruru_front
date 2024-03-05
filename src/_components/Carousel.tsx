@@ -12,7 +12,7 @@ function Carousel(props: CarouselProps) {
     interval,
     indicators,
     infiniteLoop,
-    // height,
+    height,
     // animation,
     // duration,
     showNavButton,
@@ -44,17 +44,13 @@ function Carousel(props: CarouselProps) {
       };
   const [state, dispatchIndexReducer] = useReducer(indexReducer, initialState);
 
-  const className = {};
-
   const nextFn = () => {
-    //돔이 재렌더링 되는지 확인필요
     if (infiniteLoop) {
       if (childrenArray.length === 1) {
         return;
       } else if (childrenArray.length === 2) {
         return dispatchIndexReducer({ type: 'UPDATE_NEXT_STATE_LEN2' });
       } else {
-        //nextActive가 null일경우 해당 함수 호출 불가
         return dispatchIndexReducer({
           type: 'UPDATE_NEXT_INFINITE_STATE',
           payload: {
@@ -64,7 +60,6 @@ function Carousel(props: CarouselProps) {
         });
       }
     } else {
-      //nextActive가 null일경우 해당 함수 호출 불가
       return dispatchIndexReducer({ type: 'UPDATE_NEXT_STATE' });
     }
   };
@@ -74,13 +69,12 @@ function Carousel(props: CarouselProps) {
       if (childrenArray.length === 1) {
         return;
       } else if (childrenArray.length === 2) {
-        return dispatchIndexReducer({ type: 'UPDATE_NEXT_STATE_LEN2' });
+        return dispatchIndexReducer({ type: 'UPDATE_PREV_STATE_LEN2' });
       } else {
-        //nextActive가 null일경우 해당 함수 호출 불가
-        return dispatchIndexReducer({ type: 'UPDATE_NEXT_STATE' });
+        return dispatchIndexReducer({ type: 'UPDATE_PREV_INFINITE_STATE' });
       }
     } else {
-      return dispatchIndexReducer({ type: 'UPDATE_NEXT_STATE' });
+      return dispatchIndexReducer({ type: 'UPDATE_PREV_STATE' });
     }
   };
 
@@ -97,11 +91,6 @@ function Carousel(props: CarouselProps) {
     };
   }, [autoPlay, interval]);
 
-  // useEffect(() => {
-  //   //시간이 지나면 왼쪽으로 transition
-  //   setInterval(() => {}, interval);
-  // }, []);
-
   const handleMouseEnter = () => {
     if (!stopAutoplayOnHover) return;
     if (autoIntervalFn.current) {
@@ -110,40 +99,74 @@ function Carousel(props: CarouselProps) {
   };
 
   const handleMouseLeave = () => {
+    if (!autoPlay) return;
     if (!stopAutoplayOnHover) return;
-    autoIntervalFn.current = setInterval(() => {
-      nextFn();
-    }, interval);
+    autoIntervalFn.current =
+      autoPlay &&
+      setInterval(() => {
+        nextFn();
+      }, interval);
   };
 
   return (
-    <article className={`center-alignment flex w-full justify-between`}>
-      {showNavButton && state.prevActive && <div onClick={prevFn}>&lt;</div>}
-      <figure className="center-alignment m-3 flex h-[400px] w-full flex-col justify-between">
-        <div className="flex h-full gap-3">
+    <article
+      style={{ height }}
+      className={`flex w-[100%] items-center justify-between gap-[50px] px-[50px]`}>
+      {!!showNavButton && !!state.prevActive ? (
+        <div
+          onClick={prevFn}
+          className="center-vertical w-[30px] cursor-pointer text-[30px] hover:bg-slate-500">
+          &lt;
+        </div>
+      ) : (
+        <div
+          onClick={prevFn}
+          className="center-vertical w-[30px] cursor-pointer text-[30px] hover:bg-slate-500">
+          &lt;
+        </div>
+      )}
+      <figure
+        style={{ height }}
+        className={`flex flex-col items-center justify-between`}>
+        <div
+          style={{ height }}
+          className={`flex shrink-0 items-center overflow-hidden bg-lime-300 transition-all`}>
           {state.prevActive !== state.active &&
             state.prevActive !== undefined && (
-              <div className="w-[400px]">{childrenArray[state.prevActive]}</div>
+              <div className="hidden">{childrenArray[state.prevActive]}</div>
             )}
           <div
-            className="w-[400px]"
+            className="shrink-1 flex min-w-[100%] flex-col items-center justify-center bg-violet-400"
             onMouseEnter={handleMouseEnter}
             onMouseLeave={handleMouseLeave}>
             {childrenArray[state.active]}
           </div>
           {state.nextActive !== state.active &&
             state.nextActive !== undefined && (
-              <div className="w-[400px]">{childrenArray[state.nextActive]}</div>
+              <div className="shrink-1 flex max-h-[100%] min-w-[100%] flex-col items-center justify-center ">
+                {childrenArray[state.nextActive]}
+              </div>
             )}
         </div>
+
         <div className="flex">
           {indicators && <Indicator number={childrenArray.length} />}
         </div>
       </figure>
-      {showNavButton && state.nextActive ? (
-        <div onClick={nextFn}>&gt;</div>
+      {!!showNavButton && !!state.nextActive ? (
+        <div
+          onClick={nextFn}
+          className="center-vertical w-[30px] cursor-pointer text-[30px] hover:bg-slate-500 ">
+          &gt;
+        </div>
       ) : (
-        infiniteLoop && <div onClick={nextFn}>&gt;</div>
+        infiniteLoop && (
+          <div
+            onClick={nextFn}
+            className="center-vertical w-[30px] cursor-pointer text-[30px] hover:bg-slate-500">
+            &gt;
+          </div>
+        )
       )}
     </article>
   );
