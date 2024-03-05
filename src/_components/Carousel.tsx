@@ -136,21 +136,26 @@ function Carousel(props: CarouselProps) {
               <div className="hidden">{childrenArray[state.prevActive]}</div>
             )}
           <div
-            className="shrink-1 flex min-w-[100%] flex-col items-center justify-center bg-violet-400"
+            className="flex max-h-[100%] min-w-[100%] flex-shrink flex-col items-center justify-center bg-violet-400"
             onMouseEnter={handleMouseEnter}
             onMouseLeave={handleMouseLeave}>
             {childrenArray[state.active]}
           </div>
           {state.nextActive !== state.active &&
             state.nextActive !== undefined && (
-              <div className="shrink-1 flex max-h-[100%] min-w-[100%] flex-col items-center justify-center ">
+              <div className="flex max-h-[100%] min-w-[100%] flex-shrink flex-col items-center justify-center ">
                 {childrenArray[state.nextActive]}
               </div>
             )}
         </div>
 
-        <div className="flex">
-          {indicators && <Indicator number={childrenArray.length} />}
+        <div className="mt-7 flex gap-3">
+          {indicators && (
+            <Indicator
+              number={childrenArray.length}
+              activeIndex={state.active}
+            />
+          )}
         </div>
       </figure>
       {!!showNavButton && !!state.nextActive ? (
