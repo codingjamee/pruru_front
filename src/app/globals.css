@@ -18,7 +18,7 @@
   --color-card-bg: #ffffff;
   --color-card-border: #000000;
   --color-card-text: #000000;
-  --color-gray: #eef2f1;
+  --color-gray: #939393;
   --color-disabled: #939393;
 }
 
@@ -53,6 +53,38 @@ body {
   width: screen;
   height: 100dvh;
   font-size: var(--size-font-default);
+  box-sizing: border-box;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+img {
+  object-fit: cover;
+}
+
+/* SCROLL BAR */
+
+/* width */
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  opacity: 0.2;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  opacity: 0.2;
+  border-radius: 5px;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #555;
 }
 
 @layer utilities {
@@ -63,10 +95,15 @@ body {
 
 @layer components {
   .full {
-    @apply flex min-h-full w-full flex-col items-center justify-center;
+    width: screen;
+    @apply flex min-h-full flex-col items-center justify-center;
   }
   .center-alignment {
-    @apply flex w-full items-center justify-center;
+    @apply flex w-screen items-center justify-center;
+  }
+
+  .center-vertical {
+    @apply flex h-full items-center justify-center;
   }
 
   .button {
