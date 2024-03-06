@@ -5,6 +5,8 @@ import { sanitizedProps } from '@/_utils/sanitizedProps';
 import indexReducer from '@/_reducers/indexReducer';
 import Indicator from './Indicator';
 
+//오류 : 이미지 크기 넘침 문제
+//
 function Carousel(props: CarouselProps) {
   const {
     autoPlay,
@@ -125,31 +127,31 @@ function Carousel(props: CarouselProps) {
           &lt;
         </div>
       )}
-      <figure
-        style={{ height }}
-        className={`flex flex-col items-center justify-between`}>
+      <figure style={{ height }} className="h-[100%] w-[100%] object-cover">
         <div
           style={{ height }}
-          className={`flex shrink-0 items-center overflow-hidden bg-lime-300 transition-all`}>
+          className={`relative overflow-hidden bg-lime-300 transition-all`}>
           {state.prevActive !== state.active &&
             state.prevActive !== undefined && (
-              <div className="hidden">{childrenArray[state.prevActive]}</div>
+              <div className="absolute flex h-[100%] w-[100%] flex-shrink translate-x-[-100%] flex-col items-center justify-center bg-violet-400">
+                {childrenArray[state.prevActive]}
+              </div>
             )}
           <div
-            className="flex max-h-[100%] min-w-[100%] flex-shrink flex-col items-center justify-center bg-violet-400"
+            className="absolute flex h-[100%] w-[100%] flex-shrink flex-col items-center justify-center bg-violet-400"
             onMouseEnter={handleMouseEnter}
             onMouseLeave={handleMouseLeave}>
             {childrenArray[state.active]}
           </div>
           {state.nextActive !== state.active &&
             state.nextActive !== undefined && (
-              <div className="flex max-h-[100%] min-w-[100%] flex-shrink flex-col items-center justify-center ">
+              <div className="absolute flex h-[100%] w-[100%] flex-shrink translate-x-[100%]  flex-col items-center justify-center bg-violet-400">
                 {childrenArray[state.nextActive]}
               </div>
             )}
         </div>
 
-        <div className="mt-7 flex gap-3">
+        <div className="mt-7 flex justify-center gap-3">
           {indicators && (
             <Indicator
               number={childrenArray.length}
