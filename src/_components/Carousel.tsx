@@ -4,9 +4,9 @@ import { CarouselProps, CarouselState } from '@/_types/CommonTypes';
 import { sanitizedProps } from '@/_utils/sanitizedProps';
 import indexReducer from '@/_reducers/indexReducer';
 import Indicator from './Indicator';
+import Arrow from './Arrow';
+import CarouselTransition from './CarouselTransition';
 
-//오류 : 이미지 크기 넘침 문제
-//
 function Carousel(props: CarouselProps) {
   const {
     autoPlay,
@@ -23,6 +23,7 @@ function Carousel(props: CarouselProps) {
 
   const autoIntervalFn = useRef<NodeJS.Timeout | undefined>(undefined);
   const childrenArray = Children.toArray(children);
+  const transitionRef = useRef<HTMLDivElement | null>(null);
   const initialState: CarouselState = infiniteLoop
     ? {
         active: 0,
@@ -38,11 +39,13 @@ function Carousel(props: CarouselProps) {
             : childrenArray.length === 1
               ? undefined
               : 1,
+        showState: false,
       }
     : {
         active: 0,
         prevActive: -1,
         nextActive: 1,
+        showState: false,
       };
   const [state, dispatchIndexReducer] = useReducer(indexReducer, initialState);
 
@@ -51,9 +54,9 @@ function Carousel(props: CarouselProps) {
       if (childrenArray.length === 1) {
         return;
       } else if (childrenArray.length === 2) {
-        return dispatchIndexReducer({ type: 'UPDATE_NEXT_STATE_LEN2' });
+        dispatchIndexReducer({ type: 'UPDATE_NEXT_STATE_LEN2' });
       } else {
-        return dispatchIndexReducer({
+        dispatchIndexReducer({
           type: 'UPDATE_NEXT_INFINITE_STATE',
           payload: {
             index: state.active,
@@ -62,7 +65,7 @@ function Carousel(props: CarouselProps) {
         });
       }
     } else {
-      return dispatchIndexReducer({ type: 'UPDATE_NEXT_STATE' });
+      dispatchIndexReducer({ type: 'UPDATE_NEXT_STATE' });
     }
   };
 
@@ -71,15 +74,26 @@ function Carousel(props: CarouselProps) {
       if (childrenArray.length === 1) {
         return;
       } else if (childrenArray.length === 2) {
-        return dispatchIndexReducer({ type: 'UPDATE_PREV_STATE_LEN2' });
+        dispatchIndexReducer({ type: 'UPDATE_PREV_STATE_LEN2' });
       } else {
-        return dispatchIndexReducer({ type: 'UPDATE_PREV_INFINITE_STATE' });
+        dispatchIndexReducer({
+          type: 'UPDATE_PREV_INFINITE_STATE',
+          payload: {
+            index: state.active,
+            length: childrenArray.length,
+          },
+        });
       }
     } else {
-      return dispatchIndexReducer({ type: 'UPDATE_PREV_STATE' });
+      dispatchIndexReducer({ type: 'UPDATE_PREV_STATE' });
     }
   };
 
+  useEffect(() => {
+    dispatchIndexReducer({ type: 'INITIAL_RENDER' });
+  }, []);
+
+  // AUTO PLAY
   useEffect(() => {
     if (!autoPlay) return;
     if (autoIntervalFn.current) {
@@ -93,6 +107,7 @@ function Carousel(props: CarouselProps) {
     };
   }, [autoPlay, interval]);
 
+  // STOP AUTOPLAY ON HOVER
   const handleMouseEnter = () => {
     if (!stopAutoplayOnHover) return;
     if (autoIntervalFn.current) {
@@ -100,6 +115,7 @@ function Carousel(props: CarouselProps) {
     }
   };
 
+  // RESTART AUTOPLAY ON MOUSE LEAVE
   const handleMouseLeave = () => {
     if (!autoPlay) return;
     if (!stopAutoplayOnHover) return;
@@ -113,42 +129,24 @@ function Carousel(props: CarouselProps) {
   return (
     <article
       style={{ height }}
-      className={`flex w-[100%] items-center justify-between gap-[50px] px-[50px]`}>
+      className={`relative flex w-[100%] items-center justify-between gap-[50px] px-[50px]`}>
       {!!showNavButton && !!state.prevActive ? (
-        <div
-          onClick={prevFn}
-          className="center-vertical w-[30px] cursor-pointer text-[30px] hover:bg-slate-500">
-          &lt;
-        </div>
+        <Arrow direction="left" executeFn={prevFn} />
       ) : (
-        <div
-          onClick={prevFn}
-          className="center-vertical w-[30px] cursor-pointer text-[30px] hover:bg-slate-500">
-          &lt;
-        </div>
+        <Arrow direction="left" executeFn={prevFn} />
       )}
       <figure style={{ height }} className="h-[100%] w-[100%] object-cover">
         <div
           style={{ height }}
-          className={`relative overflow-hidden bg-lime-300 transition-all`}>
-          {state.prevActive !== state.active &&
-            state.prevActive !== undefined && (
-              <div className="absolute flex h-[100%] w-[100%] flex-shrink translate-x-[-100%] flex-col items-center justify-center bg-violet-400">
-                {childrenArray[state.prevActive]}
-              </div>
-            )}
-          <div
-            className="absolute flex h-[100%] w-[100%] flex-shrink flex-col items-center justify-center bg-violet-400"
-            onMouseEnter={handleMouseEnter}
-            onMouseLeave={handleMouseLeave}>
-            {childrenArray[state.active]}
-          </div>
-          {state.nextActive !== state.active &&
-            state.nextActive !== undefined && (
-              <div className="absolute flex h-[100%] w-[100%] flex-shrink translate-x-[100%]  flex-col items-center justify-center bg-violet-400">
-                {childrenArray[state.nextActive]}
-              </div>
-            )}
+          ref={transitionRef}
+          className="relative overflow-hidden">
+          <CarouselTransition
+            transitionRef={transitionRef}
+            show={state.showState}
+            handleMouseEnter={handleMouseEnter}
+            handleMouseLeave={handleMouseLeave}
+            child={childrenArray[state.active]}
+          />
         </div>
 
         <div className="mt-7 flex justify-center gap-3">
@@ -161,19 +159,9 @@ function Carousel(props: CarouselProps) {
         </div>
       </figure>
       {!!showNavButton && !!state.nextActive ? (
-        <div
-          onClick={nextFn}
-          className="center-vertical w-[30px] cursor-pointer text-[30px] hover:bg-slate-500 ">
-          &gt;
-        </div>
+        <Arrow direction="right" executeFn={nextFn} />
       ) : (
-        infiniteLoop && (
-          <div
-            onClick={nextFn}
-            className="center-vertical w-[30px] cursor-pointer text-[30px] hover:bg-slate-500">
-            &gt;
-          </div>
-        )
+        infiniteLoop && <Arrow direction="right" executeFn={nextFn} />
       )}
     </article>
   );
