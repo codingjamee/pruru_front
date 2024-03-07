@@ -6,6 +6,7 @@ import indexReducer from '@/_reducers/indexReducer';
 import Indicator from './Indicator';
 import Arrow from './Arrow';
 import CarouselTransition from './CarouselTransition';
+import { TransitionGroup } from 'react-transition-group';
 
 function Carousel(props: CarouselProps) {
   const {
@@ -50,6 +51,7 @@ function Carousel(props: CarouselProps) {
   const [state, dispatchIndexReducer] = useReducer(indexReducer, initialState);
 
   const nextFn = () => {
+    dispatchIndexReducer({ type: 'UNMOUNTED' });
     if (infiniteLoop) {
       if (childrenArray.length === 1) {
         return;
@@ -92,6 +94,10 @@ function Carousel(props: CarouselProps) {
   useEffect(() => {
     dispatchIndexReducer({ type: 'INITIAL_RENDER' });
   }, []);
+
+  useEffect(() => {
+    console.log(state.showState);
+  }, [state]);
 
   // AUTO PLAY
   useEffect(() => {
@@ -136,17 +142,18 @@ function Carousel(props: CarouselProps) {
         <Arrow direction="left" executeFn={prevFn} />
       )}
       <figure style={{ height }} className="h-[100%] w-[100%] object-cover">
-        <div
-          style={{ height }}
-          ref={transitionRef}
-          className="relative overflow-hidden">
-          <CarouselTransition
-            transitionRef={transitionRef}
-            show={state.showState}
-            handleMouseEnter={handleMouseEnter}
-            handleMouseLeave={handleMouseLeave}
-            child={childrenArray[state.active]}
-          />
+        <div style={{ height }} className="relative overflow-hidden">
+          <TransitionGroup>
+            <CarouselTransition
+              dispatch={dispatchIndexReducer}
+              key={state.active}
+              transitionRef={transitionRef}
+              show={state.showState}
+              handleMouseEnter={handleMouseEnter}
+              handleMouseLeave={handleMouseLeave}
+              child={childrenArray[state.active]}
+            />
+          </TransitionGroup>
         </div>
 
         <div className="mt-7 flex justify-center gap-3">
