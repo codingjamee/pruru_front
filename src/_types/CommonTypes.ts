@@ -31,6 +31,7 @@ export interface CarouselProps {
 }
 
 export type CarouselActionTypeKey =
+  | 'INITIAL_RENDER'
   | 'SET_INITIAL_STATE'
   | 'UPDATE_NEXT_STATE_LEN2'
   | 'UPDATE_NEXT_STATE'
@@ -49,6 +50,7 @@ export interface CarouselState {
   active: number;
   prevActive: number | undefined;
   nextActive: number | undefined;
+  showState: boolean;
 }
 
 export interface indexReducerActionType {
@@ -62,6 +64,7 @@ export type indexReducerType = (
 ) => CarouselState;
 
 export const actiontypes = {
+  INITIAL_RENDER: 'INITIAL_RENDER',
   SET_INITIAL_STATE: 'SET_INITIAL_STATE',
   UPDATE_NEXT_STATE_LEN2: 'UPDATE_NEXT_STATE_LEN2',
   UPDATE_NEXT_STATE: 'UPDATE_NEXT_STATE',
