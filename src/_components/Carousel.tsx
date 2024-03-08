@@ -6,7 +6,6 @@ import indexReducer from '@/_reducers/indexReducer';
 import Indicator from './Indicator';
 import Arrow from './Arrow';
 import CarouselTransition from './CarouselTransition';
-import { TransitionGroup } from 'react-transition-group';
 
 function Carousel(props: CarouselProps) {
   const {
@@ -143,17 +142,15 @@ function Carousel(props: CarouselProps) {
       )}
       <figure style={{ height }} className="h-[100%] w-[100%] object-cover">
         <div style={{ height }} className="relative overflow-hidden">
-          <TransitionGroup>
-            <CarouselTransition
-              dispatch={dispatchIndexReducer}
-              key={state.active}
-              transitionRef={transitionRef}
-              show={state.showState}
-              handleMouseEnter={handleMouseEnter}
-              handleMouseLeave={handleMouseLeave}
-              child={childrenArray[state.active]}
-            />
-          </TransitionGroup>
+          <CarouselTransition
+            dispatch={dispatchIndexReducer}
+            transitionKey={state.active}
+            transitionRef={transitionRef}
+            show={state.showState}
+            handleMouseEnter={handleMouseEnter}
+            handleMouseLeave={handleMouseLeave}
+            child={childrenArray[state.active]}
+          />
         </div>
 
         <div className="mt-7 flex justify-center gap-3">
