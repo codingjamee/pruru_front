@@ -16,17 +16,26 @@ function Carousel(props: CarouselProps) {
     interval,
     indicators,
     infiniteLoop,
-    height,
+    height: carouselHeight,
+    arrowHoverStyle,
     // animation,
     // duration,
     inArrow,
     showNavButton,
     children,
+    customClass,
   } = sanitizedProps(props);
 
   const autoIntervalFn = useRef<NodeJS.Timeout | undefined>(undefined);
   const childrenArray = flattenChildren(children);
   const transitionRef = useRef<HTMLDivElement | null>(null);
+  const customCarouselHeight = carouselHeight;
+
+  // CSS 변수를 인라인 스타일로 사용하기 위한 타입 캐스팅
+  const style: React.CSSProperties = {
+    '--custom-height': customCarouselHeight,
+  } as React.CSSProperties & { '--custom-height': string };
+
   const initialState: CarouselState = infiniteLoop
     ? {
         active: 0,
@@ -128,24 +137,46 @@ function Carousel(props: CarouselProps) {
 
   return (
     <article
-      style={{ height }}
-      className={`relative box-border flex w-full items-center justify-between ${inArrow ? '' : 'gap-[50px]'} px-12`}>
+      style={style}
+      className={`custom-carousel-height relative box-border flex w-full items-center justify-center ${inArrow ? '' : 'gap-[50px]'} ${customClass}`}>
       <figure
-        style={{ height, width: 'calc(100% - 48px * 2)' }}
+        style={{ height: carouselHeight }}
         className={`h-full w-full ${inArrow ? 'absolute' : ''} max-w-full`}>
         {!!showNavButton && !!state.prevActive ? (
-          <Arrow direction="left" executeFn={prevFn} inArrow={inArrow} />
+          <Arrow
+            direction="left"
+            executeFn={prevFn}
+            inArrow={inArrow}
+            hoverStyle={arrowHoverStyle}
+          />
         ) : (
-          <Arrow direction="left" executeFn={prevFn} inArrow={inArrow} />
+          <Arrow
+            direction="left"
+            executeFn={prevFn}
+            inArrow={inArrow}
+            hoverStyle={arrowHoverStyle}
+          />
         )}
         {!!showNavButton && !!state.nextActive ? (
-          <Arrow direction="right" executeFn={nextFn} inArrow={inArrow} />
+          <Arrow
+            direction="right"
+            executeFn={nextFn}
+            inArrow={inArrow}
+            hoverStyle={arrowHoverStyle}
+          />
         ) : (
           infiniteLoop && (
-            <Arrow direction="right" executeFn={nextFn} inArrow={inArrow} />
+            <Arrow
+              direction="right"
+              executeFn={nextFn}
+              inArrow={inArrow}
+              hoverStyle={arrowHoverStyle}
+            />
           )
         )}
-        <div style={{ height }} className="relative flex overflow-hidden">
+        <div
+          style={{ height: carouselHeight }}
+          className="relative flex overflow-hidden">
           <TransitionGroup>
             {Array(childrenArray.length)
               .fill(undefined)

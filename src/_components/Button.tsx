@@ -10,6 +10,7 @@ const Button = ({
   children,
   onClick,
   // as: tagName,
+  customClassName,
   variant,
   ...props
 }: ButtonPropsType) => {
@@ -39,7 +40,7 @@ const Button = ({
         <Link href={href}>
           {/* @ts-expect-error Server Component */}
           <Component
-            className={`button ${getClassName()}`}
+            className={`button ${getClassName()} ${customClassName}`}
             {...buttonProps}
             {...props}>
             {children}
