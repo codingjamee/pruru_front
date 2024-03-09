@@ -1,5 +1,5 @@
 'use client';
-import { Children, isValidElement, useEffect, useReducer, useRef } from 'react';
+import { isValidElement, useEffect, useReducer, useRef } from 'react';
 import { CarouselProps, CarouselState } from '@/_types/CommonTypes';
 import { sanitizedProps } from '@/_utils/sanitizedProps';
 import indexReducer from '@/_reducers/indexReducer';
@@ -156,10 +156,9 @@ function Carousel(props: CarouselProps) {
               .fill(undefined)
               .map((_, index) => (
                 <CarouselTransition
-                  dispatch={dispatchIndexReducer}
+                  key={`item-${index}`}
                   transitionKey={index}
                   transitionRef={transitionRef}
-                  show={state.showState}
                   handleMouseEnter={handleMouseEnter}
                   handleMouseLeave={handleMouseLeave}
                   index={index}
