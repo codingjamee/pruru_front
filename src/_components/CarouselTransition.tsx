@@ -7,6 +7,7 @@ import {
   ReactNode,
   ReactPortal,
   useEffect,
+  useState,
 } from 'react';
 import { CSSTransition } from 'react-transition-group';
 
@@ -15,20 +16,13 @@ const CarouselTransition = ({
   handleMouseEnter,
   handleMouseLeave,
   child,
-  transitionKey,
   index,
   active,
 }: {
   transitionRef: MutableRefObject<HTMLDivElement | null>;
   handleMouseEnter: () => void;
   handleMouseLeave: () => void;
-  transitionKey:
-    | string
-    | number
-    | ReactElement<any, string | JSXElementConstructor<any>>
-    | Iterable<ReactNode>
-    | ReactPortal
-    | PromiseLikeOfReactNode;
+
   child?:
     | string
     | number
@@ -39,18 +33,13 @@ const CarouselTransition = ({
   index: number;
   active: number;
 }) => {
-  // useEffect(() => {
-  //   dispatch({ type: 'INITIAL_RENDER' });
-  //   return () => {
-  //     dispatch({ type: 'UNMOUNTED' });
-  //   };
-  // }, []);
+  const [isIn, setIsIn] = useState(false);
   useEffect(() => {
-    console.log(transitionKey);
-  }, [transitionKey]);
+    setIsIn(active === index);
+  }, [active]);
   return (
     <CSSTransition
-      in={active === index}
+      in={isIn}
       unmountOnExit
       appear
       nodeRef={transitionRef}

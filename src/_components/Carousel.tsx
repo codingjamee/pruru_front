@@ -1,5 +1,5 @@
 'use client';
-import { isValidElement, useEffect, useReducer, useRef } from 'react';
+import { useEffect, useReducer, useRef } from 'react';
 import { CarouselProps, CarouselState } from '@/_types/CommonTypes';
 import { sanitizedProps } from '@/_utils/sanitizedProps';
 import indexReducer from '@/_reducers/indexReducer';
@@ -19,6 +19,7 @@ function Carousel(props: CarouselProps) {
     height,
     // animation,
     // duration,
+    inArrow,
     showNavButton,
     children,
   } = sanitizedProps(props);
@@ -92,14 +93,6 @@ function Carousel(props: CarouselProps) {
     }
   };
 
-  // useEffect(() => {
-  //   dispatchIndexReducer({ type: 'INITIAL_RENDER' });
-  // }, []);
-
-  useEffect(() => {
-    console.log(state.showState);
-  }, [state]);
-
   // AUTO PLAY
   useEffect(() => {
     if (!autoPlay) return;
@@ -133,23 +126,25 @@ function Carousel(props: CarouselProps) {
       }, interval);
   };
 
-  useEffect(() => {
-    const activeElement = childrenArray[state.active];
-    if (isValidElement(activeElement)) {
-      console.log(activeElement.key);
-    }
-  }, [state.active]);
-
   return (
     <article
       style={{ height }}
-      className={`relative flex w-[100%] items-center justify-between gap-[50px] px-[50px]`}>
-      {!!showNavButton && !!state.prevActive ? (
-        <Arrow direction="left" executeFn={prevFn} />
-      ) : (
-        <Arrow direction="left" executeFn={prevFn} />
-      )}
-      <figure style={{ height }} className="h-[100%] w-[100%]">
+      className={`relative box-border flex w-full items-center justify-between ${inArrow ? '' : 'gap-[50px]'} px-12`}>
+      <figure
+        style={{ height, width: 'calc(100% - 48px * 2)' }}
+        className={`h-full w-full ${inArrow ? 'absolute' : ''} max-w-full`}>
+        {!!showNavButton && !!state.prevActive ? (
+          <Arrow direction="left" executeFn={prevFn} inArrow={inArrow} />
+        ) : (
+          <Arrow direction="left" executeFn={prevFn} inArrow={inArrow} />
+        )}
+        {!!showNavButton && !!state.nextActive ? (
+          <Arrow direction="right" executeFn={nextFn} inArrow={inArrow} />
+        ) : (
+          infiniteLoop && (
+            <Arrow direction="right" executeFn={nextFn} inArrow={inArrow} />
+          )
+        )}
         <div style={{ height }} className="relative flex overflow-hidden">
           <TransitionGroup>
             {Array(childrenArray.length)
@@ -157,7 +152,6 @@ function Carousel(props: CarouselProps) {
               .map((_, index) => (
                 <CarouselTransition
                   key={`item-${index}`}
-                  transitionKey={index}
                   transitionRef={transitionRef}
                   handleMouseEnter={handleMouseEnter}
                   handleMouseLeave={handleMouseLeave}
@@ -168,7 +162,6 @@ function Carousel(props: CarouselProps) {
               ))}
           </TransitionGroup>
         </div>
-
         <div className="mt-7 flex justify-center gap-3">
           {indicators && (
             <Indicator
@@ -178,11 +171,6 @@ function Carousel(props: CarouselProps) {
           )}
         </div>
       </figure>
-      {!!showNavButton && !!state.nextActive ? (
-        <Arrow direction="right" executeFn={nextFn} />
-      ) : (
-        infiniteLoop && <Arrow direction="right" executeFn={nextFn} />
-      )}
     </article>
   );
 }
