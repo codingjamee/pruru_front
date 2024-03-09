@@ -27,7 +27,9 @@ export default function layout({
           </nav>
         </div>
       </div>
-      <div className="flex-1 overflow-y-auto">{children}</div>
+      <div className="w-full max-w-[900px] flex-1 px-5 tablet:px-9 desktop:px-12">
+        {children}
+      </div>
       <nav className="mobile-nav">모바일 네브바</nav>
     </div>
   );
