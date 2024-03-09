@@ -19,19 +19,23 @@ export interface ButtonPropsType extends ComponentPropsWithoutRef<'button'> {
 export interface CarouselProps {
   autoPlay?: boolean;
   stopAutoplayOnHover?: boolean;
+  arrowHoverStyle?: string;
   interval?: number;
+  inArrow?: boolean;
   indicators?: boolean;
   infiniteLoop?: boolean;
-  height?: number;
+  height?: string;
   index?: number;
   animation?: 'fade' | 'slide';
   duration?: number;
   showNavButton?: boolean;
   children?: ReactElement | ReactElement[];
+  customClass?: string;
 }
 
 export type CarouselActionTypeKey =
   | 'INITIAL_RENDER'
+  | 'UNMOUNTED'
   | 'SET_INITIAL_STATE'
   | 'UPDATE_NEXT_STATE_LEN2'
   | 'UPDATE_NEXT_STATE'
@@ -65,6 +69,7 @@ export type indexReducerType = (
 
 export const actiontypes = {
   INITIAL_RENDER: 'INITIAL_RENDER',
+  UNMOUNTED: 'UNMOUNTED',
   SET_INITIAL_STATE: 'SET_INITIAL_STATE',
   UPDATE_NEXT_STATE_LEN2: 'UPDATE_NEXT_STATE_LEN2',
   UPDATE_NEXT_STATE: 'UPDATE_NEXT_STATE',
