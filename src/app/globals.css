@@ -3,6 +3,7 @@
 @tailwind utilities;
 @import './home.css';
 @import './nav.css';
+@import './transition.css';
 
 /* COLOR */
 :root {

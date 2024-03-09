@@ -1,11 +1,13 @@
 'use client';
-import { Children, useEffect, useReducer, useRef } from 'react';
+import { Children, isValidElement, useEffect, useReducer, useRef } from 'react';
 import { CarouselProps, CarouselState } from '@/_types/CommonTypes';
 import { sanitizedProps } from '@/_utils/sanitizedProps';
 import indexReducer from '@/_reducers/indexReducer';
 import Indicator from './Indicator';
 import Arrow from './Arrow';
 import CarouselTransition from './CarouselTransition';
+import flattenChildren from 'react-keyed-flatten-children';
+import { TransitionGroup } from 'react-transition-group';
 
 function Carousel(props: CarouselProps) {
   const {
@@ -22,7 +24,7 @@ function Carousel(props: CarouselProps) {
   } = sanitizedProps(props);
 
   const autoIntervalFn = useRef<NodeJS.Timeout | undefined>(undefined);
-  const childrenArray = Children.toArray(children);
+  const childrenArray = flattenChildren(children);
   const transitionRef = useRef<HTMLDivElement | null>(null);
   const initialState: CarouselState = infiniteLoop
     ? {
@@ -90,9 +92,9 @@ function Carousel(props: CarouselProps) {
     }
   };
 
-  useEffect(() => {
-    dispatchIndexReducer({ type: 'INITIAL_RENDER' });
-  }, []);
+  // useEffect(() => {
+  //   dispatchIndexReducer({ type: 'INITIAL_RENDER' });
+  // }, []);
 
   useEffect(() => {
     console.log(state.showState);
@@ -131,6 +133,13 @@ function Carousel(props: CarouselProps) {
       }, interval);
   };
 
+  useEffect(() => {
+    const activeElement = childrenArray[state.active];
+    if (isValidElement(activeElement)) {
+      console.log(activeElement.key);
+    }
+  }, [state.active]);
+
   return (
     <article
       style={{ height }}
@@ -140,17 +149,25 @@ function Carousel(props: CarouselProps) {
       ) : (
         <Arrow direction="left" executeFn={prevFn} />
       )}
-      <figure style={{ height }} className="h-[100%] w-[100%] object-cover">
-        <div style={{ height }} className="relative overflow-hidden">
-          <CarouselTransition
-            dispatch={dispatchIndexReducer}
-            transitionKey={state.active}
-            transitionRef={transitionRef}
-            show={state.showState}
-            handleMouseEnter={handleMouseEnter}
-            handleMouseLeave={handleMouseLeave}
-            child={childrenArray[state.active]}
-          />
+      <figure style={{ height }} className="h-[100%] w-[100%]">
+        <div style={{ height }} className="relative flex overflow-hidden">
+          <TransitionGroup>
+            {Array(childrenArray.length)
+              .fill(undefined)
+              .map((_, index) => (
+                <CarouselTransition
+                  dispatch={dispatchIndexReducer}
+                  transitionKey={index}
+                  transitionRef={transitionRef}
+                  show={state.showState}
+                  handleMouseEnter={handleMouseEnter}
+                  handleMouseLeave={handleMouseLeave}
+                  index={index}
+                  active={state.active}
+                  child={childrenArray[index]}
+                />
+              ))}
+          </TransitionGroup>
         </div>
 
         <div className="mt-7 flex justify-center gap-3">

@@ -1,5 +1,3 @@
-import { Dispatch, SetStateAction } from 'react';
-
 const Arrow = ({
   direction,
   executeFn,

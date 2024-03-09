@@ -1,7 +1,5 @@
 'use client';
-import { indexReducerActionType } from '@/_types/CommonTypes';
 import {
-  Dispatch,
   JSXElementConstructor,
   MutableRefObject,
   PromiseLikeOfReactNode,
@@ -10,23 +8,27 @@ import {
   ReactPortal,
   useEffect,
 } from 'react';
-import { CSSTransition, TransitionGroup } from 'react-transition-group';
+import { CSSTransition } from 'react-transition-group';
 
 const CarouselTransition = ({
   transitionRef,
-  show,
   handleMouseEnter,
   handleMouseLeave,
-  dispatch,
   child,
   transitionKey,
+  index,
+  active,
 }: {
   transitionRef: MutableRefObject<HTMLDivElement | null>;
-  show: boolean;
   handleMouseEnter: () => void;
   handleMouseLeave: () => void;
-  dispatch: Dispatch<indexReducerActionType>;
-  transitionKey: number | string;
+  transitionKey:
+    | string
+    | number
+    | ReactElement<any, string | JSXElementConstructor<any>>
+    | Iterable<ReactNode>
+    | ReactPortal
+    | PromiseLikeOfReactNode;
   child?:
     | string
     | number
@@ -34,31 +36,36 @@ const CarouselTransition = ({
     | Iterable<ReactNode>
     | ReactPortal
     | PromiseLikeOfReactNode;
+  index: number;
+  active: number;
 }) => {
+  // useEffect(() => {
+  //   dispatch({ type: 'INITIAL_RENDER' });
+  //   return () => {
+  //     dispatch({ type: 'UNMOUNTED' });
+  //   };
+  // }, []);
   useEffect(() => {
-    dispatch({ type: 'INITIAL_RENDER' });
-    return () => {
-      dispatch({ type: 'UNMOUNTED' });
-    };
-  }, []);
+    console.log(transitionKey);
+  }, [transitionKey]);
   return (
-    <TransitionGroup>
-      <CSSTransition
-        unmountOnExit
-        nodeRef={transitionRef}
-        timeout={2000}
-        in={show}
-        key={transitionKey}
-        classNames="my-transition">
-        <div
-          className="absolute flex h-[100%] w-[100%] flex-shrink flex-col items-center justify-center"
-          onMouseEnter={handleMouseEnter}
-          onMouseLeave={handleMouseLeave}
-          ref={transitionRef}>
-          {child}
-        </div>
-      </CSSTransition>
-    </TransitionGroup>
+    <CSSTransition
+      in={active === index}
+      unmountOnExit
+      appear
+      nodeRef={transitionRef}
+      timeout={200}
+      key={active ? `enter-${index}` : `exit-${index}`}
+      classNames="my-transition">
+      <div
+        // style={{ opacity: active === index ? 1 : 0 }}
+        className="absolute flex h-[100%] w-[100%] flex-shrink flex-col items-center justify-center"
+        onMouseEnter={handleMouseEnter}
+        onMouseLeave={handleMouseLeave}
+        ref={transitionRef}>
+        {child}
+      </div>
+    </CSSTransition>
   );
 };
 

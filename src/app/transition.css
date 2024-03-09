@@ -2,19 +2,17 @@
 @tailwind components;
 @tailwind utilities;
 
-@layer components {
-  .my-transition-enter {
-    transform: translateX(100%);
-  }
-  .my-transition-enter-active {
-    transform: translateX(0%);
-    transition: all 3000ms;
-  }
-  .my-transition-exit {
-    transform: translateX(0%);
-  }
-  .my-transition-exit-active {
-    transform: translateX(-100%);
-    transition: all 3000ms;
-  }
+.my-transition-enter {
+  transform: translateX(100%);
 }
+.my-transition-enter-done {
+  transform: translateX(0%);
+  transition: all 500ms;
+}
+/* .my-transition-exit {
+  transform: translateX(0%);
+} */
+/* .my-transition-exit-active {
+  transform: translateX(-100%);
+  transition: all 300ms;
+} */
