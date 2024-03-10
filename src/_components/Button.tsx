@@ -12,6 +12,7 @@ const Button = ({
   // as: tagName,
   customClassName,
   variant,
+  className,
   ...props
 }: ButtonPropsType) => {
   const getClassName = () => {
@@ -26,6 +27,7 @@ const Button = ({
       }
       return 'outlined hover:outlined-hover';
     }
+    return '';
   };
 
   const [buttonProps, { tagName: Component }] = useButtonProps({
@@ -37,10 +39,10 @@ const Button = ({
   return (
     <>
       {href ? (
-        <Link href={href}>
+        <Link href={href} className={className}>
           {/* @ts-expect-error Server Component */}
           <Component
-            className={`button ${getClassName()} ${customClassName}`}
+            className={`button ${variant && getClassName()} ${customClassName} ${className}`}
             {...buttonProps}
             {...props}>
             {children}
