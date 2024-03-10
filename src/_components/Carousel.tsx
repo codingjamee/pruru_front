@@ -16,7 +16,6 @@ function Carousel(props: CarouselProps) {
     interval,
     indicators,
     infiniteLoop,
-    height: carouselHeight,
     arrowHoverStyle,
     // animation,
     // duration,
@@ -29,12 +28,6 @@ function Carousel(props: CarouselProps) {
   const autoIntervalFn = useRef<NodeJS.Timeout | undefined>(undefined);
   const childrenArray = flattenChildren(children);
   const transitionRef = useRef<HTMLDivElement | null>(null);
-  const customCarouselHeight = carouselHeight;
-
-  // CSS 변수를 인라인 스타일로 사용하기 위한 타입 캐스팅
-  const style: React.CSSProperties = {
-    '--custom-height': customCarouselHeight,
-  } as React.CSSProperties & { '--custom-height': string };
 
   const initialState: CarouselState = infiniteLoop
     ? {
@@ -137,10 +130,8 @@ function Carousel(props: CarouselProps) {
 
   return (
     <article
-      style={style}
       className={`custom-carousel-height relative box-border flex w-full items-center justify-center ${inArrow ? '' : 'gap-[50px]'} ${customClass}`}>
       <figure
-        style={{ height: carouselHeight }}
         className={`h-full w-full ${inArrow ? 'absolute' : ''} max-w-full`}>
         {!!showNavButton && !!state.prevActive ? (
           <Arrow
@@ -174,9 +165,7 @@ function Carousel(props: CarouselProps) {
             />
           )
         )}
-        <div
-          style={{ height: carouselHeight }}
-          className="relative flex overflow-hidden">
+        <div className="relative flex h-full overflow-hidden">
           <TransitionGroup>
             {Array(childrenArray.length)
               .fill(undefined)
