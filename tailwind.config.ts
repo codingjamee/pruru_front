@@ -24,12 +24,17 @@ const config: Config = {
         'color-card-bg': 'var(--color-card-bg)',
         'color-card-text': 'var(--color-card-text)',
         'color-card-border': 'var(--color-card-border)',
+        'color-bg-main': 'var(--color-background-main)',
       },
     },
     screens: {
       mobile: { max: '767px' },
       tablet: { min: '768px', max: '1279px' },
       desktop: { min: '1280px' },
+    },
+    boxShadow: {
+      // 0 4px 6px -1px rgba(255, 255, 255, 0.5)
+      custom: '0 4px 6px -1px rgba(255, 255, 255, 0.5)',
     },
   },
   darkMode: 'selector',
