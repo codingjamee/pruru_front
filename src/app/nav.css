@@ -4,7 +4,7 @@
 
 @layer components {
   .nav {
-    @apply desktop:nav-desktop tablet:nav-tablet bg-color-bg-main sticky top-0 box-border flex h-[61px] w-full flex-col items-center justify-between drop-shadow-lg;
+    @apply desktop:nav-desktop tablet:nav-tablet sticky top-0 z-[99] box-border flex h-[61px] w-full flex-col items-center justify-between bg-color-bg-main px-12  drop-shadow-lg;
   }
   button.nav-button {
     @apply h-[52px] w-[91px] rounded-tl-[7px];
@@ -28,11 +28,30 @@
     @apply h-[60px] w-[60px];
   }
   button.nav-hover,
-  button.nav-button:hover {
-    @apply rounded-tl-[7px] bg-color-primary;
+  button.nav-button:hover,
+  a.nav-hover,
+  a.nav-hover:hover {
+    @apply rounded-tl-2xl bg-color-primary;
   }
 
   .mobile-nav {
     @apply fixed bottom-0 block h-[53px] w-full bg-color-primary tablet:hidden desktop:hidden;
   }
+  .link-style {
+    @apply flex h-full w-full items-center justify-center text-center hover:bg-color-primary-m focus:bg-color-primary-m;
+  }
+  .sub-nav {
+    @apply absolute hidden h-[123px] w-[91px] flex-col items-center justify-evenly rounded-b-2xl bg-color-primary;
+  }
+}
+
+/* hover시에 특정 클래스의 display를 flex로 */
+.link-one:hover .link-hidden-one {
+  display: flex;
+}
+.link-two:hover .link-hidden-two {
+  display: flex;
+}
+.link-three:hover .link-hidden-three {
+  display: flex;
 }
