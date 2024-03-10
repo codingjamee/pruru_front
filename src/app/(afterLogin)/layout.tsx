@@ -2,6 +2,7 @@ import Image from 'next/image';
 import logo from '@/_assets/pruru_logo.png';
 import { montserrat } from '@/app/layout';
 import NavTop from './_component/NavTop';
+import Link from 'next/link';
 
 export default function layout({
   children,
@@ -11,16 +12,18 @@ export default function layout({
   return (
     <div className="full relative">
       <div className="nav">
-        <header className="center-alignment ">
-          <h1
-            className={`header-font ${montserrat.className} nav-logo-font flex items-center justify-center`}>
-            PRURU
-          </h1>
-          <div className="nav-logo-img">
-            <Image src={logo} alt="logo" />
-          </div>
-        </header>
-        <div className="hidden w-full tablet:block desktop:block">
+        <Link href="/home">
+          <header className="center-alignment">
+            <h1
+              className={`header-font ${montserrat.className} nav-logo-font flex items-center justify-center`}>
+              PRURU
+            </h1>
+            <div className="nav-logo-img">
+              <Image src={logo} alt="logo" />
+            </div>
+          </header>
+        </Link>
+        <div className="hidden w-full text-size-font-card-title tablet:block desktop:block">
           <nav className="flex w-full justify-between">
             <p>우리집</p>
             <NavTop />
