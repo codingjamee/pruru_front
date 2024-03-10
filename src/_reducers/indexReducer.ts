@@ -15,6 +15,11 @@ const indexReducer = (
         ...state,
         showState: true,
       };
+    case actiontypes.UNMOUNTED:
+      return {
+        ...state,
+        showState: false,
+      };
     case actiontypes.UPDATE_NEXT_STATE_LEN2:
       return {
         ...state,
@@ -65,7 +70,7 @@ const indexReducer = (
         showState: !state.showState,
       };
     default:
-      return { active: 0, prevActive: -1, nextActive: 1, showState: false };
+      return { active: 0, prevActive: -1, nextActive: 1, showState: true };
   }
 };
 
