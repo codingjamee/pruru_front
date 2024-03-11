@@ -95,6 +95,7 @@ const LoginForm = () => {
         <Button
           type="submit"
           variant="primary"
+          className="btn-defaultsize"
           disabled={isSubmitting || !!errors}>
           {isJoinPage ? '회원가입' : '로그인'}
         </Button>
@@ -105,6 +106,7 @@ const LoginForm = () => {
             <p>이미 가입 하셨나요?</p>
             <Button
               variant="outlined"
+              className="btn-defaultsize"
               onClick={() => {
                 router.push('/welcome/login');
               }}>
@@ -116,6 +118,7 @@ const LoginForm = () => {
             <p>아직 회원이 아니신가요?</p>
             <Button
               variant="outlined"
+              className="btn-defaultsize"
               onClick={() => {
                 router.push('/welcome/join');
               }}>
