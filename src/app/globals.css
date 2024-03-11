@@ -62,11 +62,11 @@ body {
   box-sizing: border-box;
 }
 
-img {
+/* img {
   width: 100%;
   height: 100%;
   object-fit: cover;
-}
+} */
 
 /* FONT SIZE */
 
@@ -132,10 +132,10 @@ img {
   }
 
   .button {
-    @apply cursor-pointer items-center justify-center rounded-[7px] text-color-text-button;
+    @apply cursor-pointer items-center justify-center text-color-text-button;
   }
   .btn-defaultsize {
-    @apply h-[40px] w-[110px];
+    @apply h-[40px] w-[110px] rounded-[7px];
   }
   .card {
     @apply center-alignment m-2 w-1/2 flex-col gap-9 rounded-lg border-2 border-color-card-border bg-color-card-bg p-5 py-14 text-color-card-text;
