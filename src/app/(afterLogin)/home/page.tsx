@@ -5,6 +5,7 @@ import CarouselItem from '@/_components/CarouselItem';
 import FoodCard from '../_component/FoodCard';
 import CardSliderWrapper from '../_component/CardSliderWrapper';
 import Link from 'next/link';
+import SmallFoodCard from '../_component/SmallFoodCard';
 const foodCardDummyArr = [
   {
     id: 1,
@@ -74,7 +75,10 @@ const page = () => {
       </div>
       <CardSliderWrapper>
         {foodCardDummyArr.map((food) => (
-          <FoodCard key={food.id} food={food} />
+          <div key={food.id}>
+            <FoodCard className="mobile:hidden" food={food} />
+            <SmallFoodCard className="tablet:hidden desktop:hidden" />
+          </div>
         ))}
       </CardSliderWrapper>
       <div className="my-10 flex justify-between text-size-font-card-title">
@@ -83,7 +87,10 @@ const page = () => {
       </div>
       <CardSliderWrapper>
         {foodCardDummyArr.map((food) => (
-          <FoodCard key={food.id} food={food} />
+          <div key={food.id}>
+            <FoodCard className="mobile:hidden" food={food} />
+            <SmallFoodCard className="tablet:hidden desktop:hidden" />
+          </div>
         ))}
       </CardSliderWrapper>
     </>
