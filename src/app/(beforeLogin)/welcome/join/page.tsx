@@ -1,4 +1,4 @@
-import SignForm from '@/app/_components/SignForm';
+import SignForm from '@/app/(beforeLogin)/_component/SignForm';
 
 const page = () => {
   return <SignForm />;
