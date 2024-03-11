@@ -12,6 +12,7 @@ const foodCardDummyArr = [
     foodTitle: '당근',
     purchaseDate: '24.2.17',
     foodWeight: '400',
+    expiryDate: '2024-03-30T15:00:00Z',
   },
   {
     id: 2,
@@ -19,6 +20,7 @@ const foodCardDummyArr = [
     foodTitle: '토마토',
     purchaseDate: '24.2.19',
     foodWeight: '40g',
+    expiryDate: '2024-03-30T15:00:00Z',
   },
   {
     id: 3,
@@ -26,6 +28,7 @@ const foodCardDummyArr = [
     foodTitle: '아보카도',
     purchaseDate: '24.2.12',
     foodWeight: '3개',
+    expiryDate: '2024-03-30T15:00:00Z',
   },
   {
     id: 4,
@@ -33,6 +36,7 @@ const foodCardDummyArr = [
     foodTitle: '바나나',
     purchaseDate: '24.2.12',
     foodWeight: '1송이',
+    expiryDate: '2024-03-30T15:00:00Z',
   },
 ];
 const page = () => {
