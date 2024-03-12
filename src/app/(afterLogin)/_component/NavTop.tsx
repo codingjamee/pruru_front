@@ -45,8 +45,6 @@ const navList = [
 
 const NavTop = () => {
   const segment = useSelectedLayoutSegment();
-
-  console.log(segment);
   const isFocused = (selected: string): string | undefined => {
     if (segment === selected) return 'nav-hover';
     return '';

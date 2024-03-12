@@ -7,10 +7,10 @@ import { ReactElement } from 'react';
 
 export type FoodPropType = {
   id: number;
-  imgSrc?: string;
-  foodTitle?: string;
+  foodImageUrl?: string;
+  foodName?: string;
   purchaseDate?: string;
-  foodWeight?: string;
+  foodAmount?: string;
   expiryDate?: string;
 };
 
@@ -21,7 +21,8 @@ export type FoodCardType = {
 };
 
 const FoodCard = ({ children, food, className }: FoodCardType) => {
-  const { id, imgSrc, foodTitle, purchaseDate, foodWeight, expiryDate } = food;
+  const { id, foodImageUrl, foodName, purchaseDate, foodAmount, expiryDate } =
+    food;
   const remainingDay = expiryDate && remainedTime(expiryDate);
   const router = useRouter();
 
@@ -35,10 +36,10 @@ const FoodCard = ({ children, food, className }: FoodCardType) => {
       className={`flex w-[198px] cursor-pointer flex-col rounded-lg border-2 border-solid border-color-default-text shadow-custom mobile:hidden tablet:h-[246px] desktop:h-[246px] ${className}`}>
       <div className="boder-color-default-text relative h-full min-w-[194px] tablet:h-[125px] tablet:border-b desktop:h-[133px] desktop:border-b">
         <div className="absolute right-0 m-1 flex h-[22px] w-[60px] items-center justify-center rounded-3xl bg-color-secondary-100 text-color-card-text">
-          d-{remainingDay}
+          D-{remainingDay}
         </div>
-        {imgSrc ? (
-          <Image src={imgSrc} alt={imgSrc} />
+        {foodImageUrl ? (
+          <Image src={foodImageUrl} alt={foodImageUrl} />
         ) : (
           <div className="h-full w-full tablet:p-7 desktop:p-7">
             <CameraSvg />
@@ -47,10 +48,10 @@ const FoodCard = ({ children, food, className }: FoodCardType) => {
       </div>
 
       <div className="h-full w-full flex-col justify-evenly p-[18px] tablet:flex desktop:flex">
-        <div>{foodTitle}</div>
+        <div>{foodName}</div>
         <div className="flex w-full justify-between">
           <div>{purchaseDate}구매</div>
-          <div className="mobile:hidden">{foodWeight}</div>
+          <div className="mobile:hidden">{foodAmount}</div>
         </div>
       </div>
       {children && children}

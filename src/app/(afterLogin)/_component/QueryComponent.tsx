@@ -14,9 +14,6 @@ const QueryComponent = ({ value }: { value: 'storage' | 'sort' }) => {
   const sort = searchParams.get('sort') || '유통기한';
   const direction = searchParams.get('direction');
 
-  console.log(searchParams);
-  console.log(searchParams.entries());
-
   const createQueryString = useCallback(
     (name: string, value: string) => {
       const params = new URLSearchParams(searchParams.toString());
@@ -38,7 +35,6 @@ const QueryComponent = ({ value }: { value: 'storage' | 'sort' }) => {
     expiryDate: '유통기한',
     purchaseDate: '구매일자',
   };
-  //value가 내가 원하는 return text
   let returnText = '';
   if (value === 'storage' && typeof storage === 'string') {
     returnText = storageText[storage] || '전체';

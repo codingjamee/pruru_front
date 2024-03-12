@@ -7,7 +7,7 @@ import React from 'react';
 import { FoodCardType } from './FoodCard';
 
 const SmallFoodCard = ({ food, className }: FoodCardType) => {
-  const { id, imgSrc, foodTitle, expiryDate } = food;
+  const { id, foodImageUrl, foodName, expiryDate } = food;
   const remainingDay = expiryDate && remainedTime(expiryDate);
   const router = useRouter();
 
@@ -21,10 +21,10 @@ const SmallFoodCard = ({ food, className }: FoodCardType) => {
       className={`flex h-[133px] w-[158px] flex-shrink-0 cursor-pointer flex-col gap-[10px] rounded-lg border-2  border-solid border-color-default-text shadow-custom ${className}`}>
       <div className="relative flex h-full w-full flex-col">
         <div className="absolute right-0 m-1 flex h-[22px] w-[40px] items-center justify-center rounded-3xl bg-color-secondary-100 text-[12px] text-color-bg-sub">
-          d-{remainingDay}
+          D-{remainingDay}
         </div>
-        {imgSrc ? (
-          <Image src={imgSrc} alt={imgSrc} />
+        {foodImageUrl ? (
+          <Image src={foodImageUrl} alt={foodImageUrl} />
         ) : (
           <div className="flex h-full w-full items-center justify-center">
             <div className="w-[40%] pt-[10px]">
@@ -34,7 +34,7 @@ const SmallFoodCard = ({ food, className }: FoodCardType) => {
         )}
       </div>
       <div className="h-full w-full flex-col justify-evenly px-3 pt-2 text-center">
-        {foodTitle}
+        {foodName}
       </div>
     </div>
   );

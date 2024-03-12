@@ -8,9 +8,9 @@ const CardSliderWrapper = ({
   className?: string;
 }) => {
   return (
-    <div className={`flex w-full overflow-x-scroll ${className}`}>
+    <article className={`flex w-full gap-4 overflow-x-scroll ${className}`}>
       {children}
-    </div>
+    </article>
   );
 };
 

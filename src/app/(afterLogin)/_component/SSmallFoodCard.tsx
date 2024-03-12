@@ -7,8 +7,8 @@ import React from 'react';
 import { FoodCardType } from './FoodCard';
 
 const SSmallFoodCard = ({ food, className }: FoodCardType) => {
-  const { id, imgSrc, foodTitle, expiryDate } = food;
-  // const { id, imgSrc, foodTitle, purchaseDate, foodWeight, expiryDate } = food;
+  const { id, foodImageUrl, foodName, expiryDate } = food;
+  // const { id, foodImageUrl, foodName, purchaseDate, foodAmount, expiryDate } = food;
   const remainingDay = expiryDate && remainedTime(expiryDate);
   const router = useRouter();
 
@@ -24,8 +24,8 @@ const SSmallFoodCard = ({ food, className }: FoodCardType) => {
         <div className="absolute right-0 m-1 flex h-[22px] w-[40px] items-center justify-center rounded-3xl bg-color-secondary-100  text-color-bg-sub mobile:text-[10px]">
           D-{remainingDay}
         </div>
-        {imgSrc ? (
-          <Image src={imgSrc} alt={imgSrc} />
+        {foodImageUrl ? (
+          <Image src={foodImageUrl} alt={foodImageUrl} />
         ) : (
           <div className="flex h-full w-full items-center justify-center">
             <div className="w-[40%] pt-[10px]">
@@ -35,7 +35,7 @@ const SSmallFoodCard = ({ food, className }: FoodCardType) => {
         )}
       </div>
       <div className="h-full w-full flex-col justify-evenly px-3 pt-2 text-center tablet:hidden desktop:hidden">
-        {foodTitle}
+        {foodName}
       </div>
     </div>
   );
