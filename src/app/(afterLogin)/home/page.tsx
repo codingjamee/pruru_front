@@ -6,7 +6,7 @@ import FoodCard from '../_component/FoodCard';
 import CardSliderWrapper from '../_component/CardSliderWrapper';
 import Link from 'next/link';
 import SmallFoodCard from '../_component/SmallFoodCard';
-const foodCardDummyArr = [
+export const foodCardDummyArr = [
   {
     id: 1,
     imgSrc: '',
@@ -77,7 +77,10 @@ const page = () => {
         {foodCardDummyArr.map((food) => (
           <div key={food.id}>
             <FoodCard className="mobile:hidden" food={food} />
-            <SmallFoodCard className="tablet:hidden desktop:hidden" />
+            <SmallFoodCard
+              className="tablet:hidden desktop:hidden"
+              food={food}
+            />
           </div>
         ))}
       </CardSliderWrapper>
@@ -89,7 +92,10 @@ const page = () => {
         {foodCardDummyArr.map((food) => (
           <div key={food.id}>
             <FoodCard className="mobile:hidden" food={food} />
-            <SmallFoodCard className="tablet:hidden desktop:hidden" />
+            <SmallFoodCard
+              className="tablet:hidden desktop:hidden"
+              food={food}
+            />
           </div>
         ))}
       </CardSliderWrapper>
