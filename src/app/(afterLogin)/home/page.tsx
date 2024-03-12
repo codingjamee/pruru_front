@@ -6,37 +6,46 @@ import FoodCard from '../_component/FoodCard';
 import CardSliderWrapper from '../_component/CardSliderWrapper';
 import Link from 'next/link';
 import SmallFoodCard from '../_component/SmallFoodCard';
+import React from 'react';
 export const foodCardDummyArr = [
   {
     id: 1,
-    imgSrc: '',
-    foodTitle: '당근',
+    foodName: '당근',
+    foodImageUrl: '',
     purchaseDate: '24.2.17',
-    foodWeight: '400',
+    foodAmount: '400',
     expiryDate: '2024-03-30T15:00:00Z',
   },
   {
     id: 2,
-    imgSrc: '',
-    foodTitle: '토마토',
+    foodName: '토마토',
+    foodImageUrl: '',
     purchaseDate: '24.2.19',
-    foodWeight: '40g',
+    foodAmount: '40g',
     expiryDate: '2024-03-30T15:00:00Z',
   },
   {
     id: 3,
-    imgSrc: '',
-    foodTitle: '아보카도',
+    foodName: '아보카도',
+    foodImageUrl: '',
     purchaseDate: '24.2.12',
-    foodWeight: '3개',
+    foodAmount: '3개',
     expiryDate: '2024-03-30T15:00:00Z',
   },
   {
     id: 4,
-    imgSrc: '',
-    foodTitle: '바나나',
+    foodName: '바나나',
+    foodImageUrl: '',
     purchaseDate: '24.2.12',
-    foodWeight: '1송이',
+    foodAmount: '1송이',
+    expiryDate: '2024-03-30T15:00:00Z',
+  },
+  {
+    id: 5,
+    foodImageUrl: '',
+    foodName: '완두콩',
+    purchaseDate: '24.2.12',
+    foodAmount: '1개',
     expiryDate: '2024-03-30T15:00:00Z',
   },
 ];
@@ -90,13 +99,13 @@ const page = () => {
       </div>
       <CardSliderWrapper>
         {foodCardDummyArr.map((food) => (
-          <div key={food.id}>
+          <React.Fragment key={food.id}>
             <FoodCard className="mobile:hidden" food={food} />
             <SmallFoodCard
               className="tablet:hidden desktop:hidden"
               food={food}
             />
-          </div>
+          </React.Fragment>
         ))}
       </CardSliderWrapper>
     </>
