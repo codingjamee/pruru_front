@@ -1,15 +1,31 @@
 'use client';
-import { useSearchParams } from 'next/navigation';
+import { usePathname, useRouter, useSearchParams } from 'next/navigation';
+import { useCallback } from 'react';
 
 interface QueryTextMap {
   [key: string]: string;
 }
 
 const QueryComponent = ({ value }: { value: 'storage' | 'sort' }) => {
-  const router = useSearchParams();
-  const storage = router.get('storage') || '전체';
-  const sort = router.get('sort') || '유통기한';
-  const direction = router.get('direction');
+  const router = useRouter();
+  const searchParams = useSearchParams();
+  const pathname = usePathname();
+  const storage = searchParams.get('storage') || '전체';
+  const sort = searchParams.get('sort') || '유통기한';
+  const direction = searchParams.get('direction');
+
+  console.log(searchParams);
+  console.log(searchParams.entries());
+
+  const createQueryString = useCallback(
+    (name: string, value: string) => {
+      const params = new URLSearchParams(searchParams.toString());
+      params.set(name, value);
+
+      return params.toString();
+    },
+    [searchParams],
+  );
 
   const storageText: QueryTextMap = {
     refrigerated: '냉장',
@@ -30,13 +46,21 @@ const QueryComponent = ({ value }: { value: 'storage' | 'sort' }) => {
     returnText = sortText[sort] || '유통기한';
   }
 
-  console.log(returnText);
-
   return (
     <div className="flex items-center gap-[10px]">
       <div className="cursor-pointer">{returnText}</div>
       {value === 'sort' && (
         <div
+          onClick={() =>
+            router.push(
+              pathname +
+                '?' +
+                createQueryString(
+                  'direction',
+                  direction === 'up' ? 'down' : 'up',
+                ),
+            )
+          }
           className={`${direction === 'up' ? 'arrow-up' : 'arrow-down'} cursor-pointer`}></div>
       )}
     </div>
