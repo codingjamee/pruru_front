@@ -15,9 +15,9 @@
   --color-default-text: #000000;
   --color-main-logo: #0e4437;
   --color-sub-logo: #8da69d;
-  --color-text-button: #fff5d2;
+  --color-text-button: #000000;
   --color-card-bg: #ffffff;
-  --color-card-border: #000000;
+  --color-card-border: #ffffff;
   --color-card-text: #000000;
   --color-gray: #939393;
   --color-disabled: #939393;
@@ -41,8 +41,8 @@
     --color-sub-logo: #8da69d;
     --color-text-button: #fff5d2;
     --color-card-bg: #fff5d2;
-    --color-card-border: #000000;
-    --color-card-text: #000000;
+    --color-card-border: #fff5d2;
+    --color-card-text: #fff5d2;
     --color-gray: #939393;
     --color-disabled: #939393;
     --size-font-card-title: 20px;
@@ -82,6 +82,12 @@ body {
   :root {
     --size-font-card-title: 1.25rem; /* 데스크톱 텍스트 크기 */
   }
+}
+
+/* INPUT PLACEHOLDER */
+input::placeholder {
+  font-size: var(--size-font-default);
+  color: var(--color-card-text);
 }
 
 /* SCROLL BAR */
@@ -124,7 +130,7 @@ body {
     @apply flex min-h-full flex-col items-center justify-center;
   }
   .center-alignment {
-    @apply flex w-screen items-center justify-center;
+    @apply flex items-center justify-center;
   }
 
   .center-vertical {
@@ -132,19 +138,19 @@ body {
   }
 
   .button {
-    @apply cursor-pointer items-center justify-center text-color-text-button;
+    @apply cursor-pointer items-center justify-center px-[15px] py-[7px] text-color-text-button;
   }
   .btn-defaultsize {
     @apply h-[40px] w-[110px] rounded-[7px];
   }
   .card {
-    @apply center-alignment m-2 w-1/2 flex-col gap-9 rounded-lg border-2 border-color-card-border bg-color-card-bg p-5 py-14 text-color-card-text;
+    @apply m-2 w-1/2 flex-col gap-9 rounded-lg border border-color-card-border p-5 py-14 text-color-card-text shadow-2xl dark:shadow-custom;
   }
   .card-primary {
     @apply bg-color-primary;
   }
   .input {
-    @apply mb-6 w-full border-b border-black bg-transparent;
+    @apply h-[40px] w-full border-b border-color-card-text bg-transparent pb-1 text-color-card-text focus:outline-none;
   }
   .primary {
     @apply bg-color-primary;
@@ -156,7 +162,7 @@ body {
     @apply cursor-not-allowed border-color-disabled bg-color-disabled;
   }
   .outlined {
-    @apply border-2 border-color-card-text bg-transparent text-color-card-text;
+    @apply border border-color-card-text bg-transparent text-color-card-text;
   }
   .outlined-disabled {
     @apply cursor-not-allowed border-color-disabled;
