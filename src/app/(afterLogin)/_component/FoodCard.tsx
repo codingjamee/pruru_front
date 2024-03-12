@@ -5,7 +5,7 @@ import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 import { ReactElement } from 'react';
 
-type foodPropType = {
+export type FoodPropType = {
   id: number;
   imgSrc?: string;
   foodTitle?: string;
@@ -14,15 +14,13 @@ type foodPropType = {
   expiryDate?: string;
 };
 
-const FoodCard = ({
-  children,
-  food,
-  className,
-}: {
+export type FoodCardType = {
   children?: ReactElement;
-  food: foodPropType;
+  food: FoodPropType;
   className?: string;
-}) => {
+};
+
+const FoodCard = ({ children, food, className }: FoodCardType) => {
   const { id, imgSrc, foodTitle, purchaseDate, foodWeight, expiryDate } = food;
   const remainingDay = expiryDate && remainedTime(expiryDate);
   const router = useRouter();
@@ -34,7 +32,7 @@ const FoodCard = ({
   return (
     <div
       onClick={onClickCard}
-      className={`mx-3 flex w-[198px] cursor-pointer flex-col rounded-lg border-2 border-solid border-color-default-text shadow-custom mobile:hidden tablet:h-[246px] desktop:h-[246px] ${className}`}>
+      className={`flex w-[198px] cursor-pointer flex-col rounded-lg border-2 border-solid border-color-default-text shadow-custom mobile:hidden tablet:h-[246px] desktop:h-[246px] ${className}`}>
       <div className="boder-color-default-text relative h-full min-w-[194px] tablet:h-[125px] tablet:border-b desktop:h-[133px] desktop:border-b">
         <div className="absolute right-0 m-1 flex h-[22px] w-[60px] items-center justify-center rounded-3xl bg-color-secondary-100 text-color-card-text">
           d-{remainingDay}
