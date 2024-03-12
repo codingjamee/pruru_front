@@ -10,6 +10,7 @@ const config: Config = {
     extend: {
       fontSize: {
         'size-font-card-title': 'var(--size-font-card-title)',
+        'size-font-default': 'var(--size-font-default)',
       },
       colors: {
         'color-primary': 'var(--color-main)',
@@ -25,6 +26,10 @@ const config: Config = {
         'color-card-text': 'var(--color-card-text)',
         'color-card-border': 'var(--color-card-border)',
         'color-bg-main': 'var(--color-background-main)',
+        'color-bg-sub': 'var(--color-background-sub)',
+      },
+      boxShadow: {
+        custom: '0 4px 6px -1px rgba(255, 255, 255, 0.5)',
       },
     },
     screens: {
@@ -32,12 +37,8 @@ const config: Config = {
       tablet: { min: '768px', max: '1279px' },
       desktop: { min: '1280px' },
     },
-    boxShadow: {
-      // 0 4px 6px -1px rgba(255, 255, 255, 0.5)
-      custom: '0 4px 6px -1px rgba(255, 255, 255, 0.5)',
-    },
   },
-  darkMode: 'selector',
+  darkMode: 'class',
   plugins: [],
 };
 export default config;
