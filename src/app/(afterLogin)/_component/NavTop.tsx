@@ -21,11 +21,7 @@ const navList = [
     path: '/search',
     focusKey: 'search',
     style: 'link-two',
-    subStyle: 'link-hidden-two',
-    subList: [
-      { name: '식재료', subPath: '/search/food' },
-      { name: '영수증', subPath: '/search/receipt' },
-    ],
+    subList: [],
   },
   {
     name: '식재료',
@@ -57,7 +53,7 @@ const NavTop = () => {
   };
 
   return (
-    <ul className="flex h-[52px] items-center justify-between text-size-font-card-title">
+    <ul className="text-size-font-default flex h-[52px] items-center justify-between gap-4">
       {navList.map((nav) => (
         <div key={nav.path} className={`${nav.style} relative`}>
           <Button
