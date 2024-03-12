@@ -4,14 +4,16 @@ import { ReactNode } from 'react';
 const Card = ({
   children,
   variant,
+  className,
 }: {
   children: ReactNode;
-  variant: CardVariant;
+  variant?: CardVariant;
+  className?: string;
 }) => {
   const getClassName = (variant: CardVariant) => `card-${variant}`;
   return (
     <div className="center-alignment">
-      <div className={`card ${getClassName(variant)} center-alignment m-1`}>
+      <div className={`card ${getClassName(variant)} ${className} m-1`}>
         {children}
       </div>
     </div>
