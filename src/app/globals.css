@@ -4,8 +4,10 @@
 @import '../_styles/home.css';
 @import '../_styles/nav.css';
 @import '../_styles/transition.css';
+@import '../_styles/component.css';
 
 /* COLOR */
+
 :root {
   --color-background-main: #ffffff;
   --color-background-sub: #ffffff;
@@ -144,7 +146,7 @@ input::placeholder {
     @apply h-[40px] w-[110px] rounded-[7px];
   }
   .card {
-    @apply m-2 w-1/2 flex-col gap-9 rounded-lg border border-color-card-border p-5 py-14 text-color-card-text shadow-2xl dark:shadow-custom;
+    @apply m-2 w-1/2 flex-col gap-9 rounded-lg border border-color-card-border p-2 py-8 text-color-card-text shadow-2xl dark:shadow-custom;
   }
   .card-primary {
     @apply bg-color-primary;
