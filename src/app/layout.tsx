@@ -2,6 +2,7 @@ import type { Metadata } from 'next';
 import { Inter, Montserrat } from 'next/font/google';
 
 import './globals.css';
+import MSWComponent from '@/_components/MSWComponent';
 
 export const inter = Inter({ subsets: ['latin'] });
 export const montserrat = Montserrat({ subsets: ['latin'] });
@@ -18,7 +19,10 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={inter.className}>{children}</body>
+      <body className={inter.className}>
+        <MSWComponent />
+        {children}
+      </body>
     </html>
   );
 }
