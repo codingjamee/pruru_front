@@ -44,7 +44,7 @@ export default function layout({
           <ReceiptIcon width={30} height={30} path="/receipt" />
           <SearchGlass width={30} height={30} color="black" path="/search" />
           <UserIcon width={30} height={30} path="/user" />
-          <AddList width={30} height={30} path="/add" />
+          <AddList width={30} height={30} path="/add/receipt" />
         </div>
       </nav>
     </div>
