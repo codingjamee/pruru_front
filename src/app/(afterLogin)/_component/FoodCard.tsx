@@ -1,24 +1,9 @@
 'use client';
 import CameraSvg from '@/_assets/CameraSvg';
+import { FoodCardType } from '@/_types/FoodTypes';
 import { remainedTime } from '@/_utils/remainedTime';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
-import { ReactElement } from 'react';
-
-export type FoodPropType = {
-  id: number;
-  foodImageUrl?: string;
-  foodName?: string;
-  purchaseDate?: string;
-  foodAmount?: string;
-  expiryDate?: string;
-};
-
-export type FoodCardType = {
-  children?: ReactElement;
-  food: FoodPropType;
-  className?: string;
-};
 
 const FoodCard = ({ children, food, className }: FoodCardType) => {
   const { id, foodImageUrl, foodName, purchaseDate, foodAmount, expiryDate } =
