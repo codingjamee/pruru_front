@@ -1,4 +1,12 @@
-const PlusSvg = ({ className }: { className?: string }) => {
+const PlusSvg = ({
+  className,
+  width,
+  height,
+}: {
+  className?: string;
+  width?: number;
+  height?: number;
+}) => {
   return (
     <div className={className}>
       <svg
@@ -7,6 +15,8 @@ const PlusSvg = ({ className }: { className?: string }) => {
         viewBox="0 0 24 24"
         strokeWidth="1.5"
         stroke="currentColor"
+        width={width || '22px'}
+        height={height || '22px'}
         className="h-6 w-6">
         <path
           strokeLinecap="round"
