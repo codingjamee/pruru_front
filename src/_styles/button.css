@@ -1,0 +1,33 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer components {
+  .button {
+    @apply cursor-pointer items-center justify-center px-[15px] py-[7px] text-color-text-button;
+  }
+  .btn-defaultsize {
+    @apply h-[40px] w-[110px] rounded-[7px];
+  }
+  .card {
+    @apply m-2 w-1/2 flex-col gap-9 rounded-lg border border-color-card-border p-2 py-8 text-color-card-text shadow-2xl dark:shadow-custom;
+  }
+  .primary {
+    @apply bg-color-primary;
+  }
+  .primary-hover {
+    @apply bg-color-primary-m;
+  }
+  .primary-disabled {
+    @apply cursor-not-allowed border-color-disabled bg-color-disabled;
+  }
+  .outlined {
+    @apply border border-color-card-text bg-transparent text-color-card-text;
+  }
+  .outlined-disabled {
+    @apply cursor-not-allowed border-color-disabled;
+  }
+  .outlined-hover {
+    @apply border-color-primary-m bg-color-primary-m;
+  }
+}

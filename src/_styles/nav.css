@@ -35,7 +35,7 @@
   }
 
   .mobile-nav {
-    @apply fixed bottom-0 block h-[53px] w-full bg-color-primary tablet:hidden desktop:hidden;
+    @apply fixed bottom-0 flex h-[53px] w-full justify-center bg-color-primary tablet:hidden desktop:hidden;
   }
   .link-style {
     @apply flex h-full w-full items-center justify-center text-center hover:bg-color-primary-m focus:bg-color-primary-m;
