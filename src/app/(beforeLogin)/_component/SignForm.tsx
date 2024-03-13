@@ -5,14 +5,7 @@ import Input from '@/_components/Input';
 import { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { usePathname, useRouter } from 'next/navigation';
-
-interface FormType {
-  id: string;
-  name: string;
-  pwd: string;
-  email: string;
-  phone: string;
-}
+import { FormType } from '@/_types/CommonTypes';
 
 const LoginForm = () => {
   const {
@@ -40,8 +33,6 @@ const LoginForm = () => {
   }, []);
 
   const handleSubmit = () => {
-    // const handleSubmit = (data: FormType) => {
-    // console.log(data);
     reset();
   };
 
@@ -55,6 +46,7 @@ const LoginForm = () => {
           <>
             {isJoinPage && (
               <Input
+                variant="underline"
                 type="text"
                 placeholder="이름"
                 {...register('name', {
@@ -68,6 +60,7 @@ const LoginForm = () => {
           </>
           <div className="full">
             <Input
+              variant="underline"
               type="text"
               placeholder="이메일"
               {...register('email', {
@@ -81,6 +74,7 @@ const LoginForm = () => {
             {errors.email && <p>{errors.email.message}</p>}
 
             <Input
+              variant="underline"
               type="password"
               placeholder="비밀번호"
               {...register('pwd', {
