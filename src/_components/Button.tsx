@@ -52,7 +52,7 @@ const Button = ({
         <>
           {/* @ts-expect-error Server Component */}
           <Component
-            className={`button ${getClassName()} ${className}`}
+            className={`button ${variant && getClassName()} ${className}`}
             {...buttonProps}
             {...props}>
             {children}
