@@ -1,8 +1,8 @@
 import React from 'react';
 import FoodCard from '../_component/FoodCard';
-import SmallFoodCard from '../_component/SmallFoodCard';
 import { foodCardDummyArr } from '../home/page';
 import QueryComponent from '../_component/QueryComponent';
+import SSmallFoodCard from '../_component/SSmallFoodCard';
 
 const page = () => {
   return (
@@ -20,7 +20,7 @@ const page = () => {
         {foodCardDummyArr.map((food) => (
           <React.Fragment key={food.id}>
             <FoodCard className="mobile:hidden" food={food} />
-            <SmallFoodCard
+            <SSmallFoodCard
               className="tablet:hidden desktop:hidden"
               food={food}
             />
