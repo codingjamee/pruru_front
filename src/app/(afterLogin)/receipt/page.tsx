@@ -3,8 +3,10 @@ import Button from '@/_components/Button';
 import Card from '@/_components/Card';
 import React from 'react';
 import ReceiptArrowFn from '../_component/ReceiptArrowFn';
+import ReceiptCard from '../_component/ReceiptCard';
+import { ReceiptArrType } from '@/_types/ReceiptTypes';
 
-export const receiptDummyArr = [
+export const receiptDummyArr: ReceiptArrType[] = [
   {
     receiptId: 1,
     quantity: 10,
@@ -52,19 +54,7 @@ const page = () => {
         </Button>
       </Card>
       {receiptDummyArr.map((receipt) => (
-        <Card
-          key={receipt.receiptId}
-          variant="primary"
-          className="flex w-full flex-shrink justify-between gap-[20px] px-[40px]">
-          <div className="flex w-full justify-between">
-            <div>{receipt.purchaseDate} 구매 영수증</div>
-            <div>{receipt.purchaseLocation}</div>
-          </div>
-          <div className="flex w-full justify-between">
-            <div>품목 {receipt.quantity}개</div>
-            <div>총 {receipt.totalPrice.toLocaleString()}원</div>
-          </div>
-        </Card>
+        <ReceiptCard key={receipt.receiptId} receipt={receipt} />
       ))}
     </div>
   );
