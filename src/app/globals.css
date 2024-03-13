@@ -5,6 +5,8 @@
 @import '../_styles/nav.css';
 @import '../_styles/transition.css';
 @import '../_styles/component.css';
+@import '../_styles/button.css';
+@import '../_styles/input.css';
 
 /* COLOR */
 
@@ -90,6 +92,7 @@ body {
 input::placeholder {
   font-size: var(--size-font-default);
   color: var(--color-card-text);
+  padding-left: 10px;
 }
 
 /* SCROLL BAR */
@@ -139,37 +142,10 @@ input::placeholder {
     @apply flex h-full items-center justify-center;
   }
 
-  .button {
-    @apply cursor-pointer items-center justify-center px-[15px] py-[7px] text-color-text-button;
-  }
-  .btn-defaultsize {
-    @apply h-[40px] w-[110px] rounded-[7px];
-  }
-  .card {
-    @apply m-2 w-1/2 flex-col gap-9 rounded-lg border border-color-card-border p-2 py-8 text-color-card-text shadow-2xl dark:shadow-custom;
-  }
   .card-primary {
     @apply bg-color-primary;
   }
-  .input {
-    @apply h-[40px] w-full border-b border-color-card-text bg-transparent pb-1 text-color-card-text focus:outline-none;
-  }
   .primary {
     @apply bg-color-primary;
-  }
-  .primary-hover {
-    @apply bg-color-primary-m;
-  }
-  .primary-disabled {
-    @apply cursor-not-allowed border-color-disabled bg-color-disabled;
-  }
-  .outlined {
-    @apply border border-color-card-text bg-transparent text-color-card-text;
-  }
-  .outlined-disabled {
-    @apply cursor-not-allowed border-color-disabled;
-  }
-  .outlined-hover {
-    @apply border-color-primary-m bg-color-primary-m;
   }
 }
