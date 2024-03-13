@@ -7,7 +7,7 @@ import { useSelectedLayoutSegment } from 'next/navigation';
 const navList = [
   {
     name: '추가',
-    path: '/add',
+    path: '/add/food',
     focusKey: 'add',
     style: 'link-one',
     subStyle: 'link-hidden-one',
@@ -51,7 +51,7 @@ const NavTop = () => {
   };
 
   return (
-    <ul className="text-size-font-default flex h-[52px] items-center justify-between gap-4">
+    <ul className="flex h-[52px] items-center justify-between gap-4 text-size-font-default">
       {navList.map((nav) => (
         <div key={nav.path} className={`${nav.style} relative`}>
           <Button
