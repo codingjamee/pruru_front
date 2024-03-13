@@ -24,7 +24,6 @@ export interface CarouselProps {
   inArrow?: boolean;
   indicators?: boolean;
   infiniteLoop?: boolean;
-  height?: string;
   index?: number;
   animation?: 'fade' | 'slide';
   duration?: number;
@@ -78,3 +77,11 @@ export const actiontypes = {
   UPDATE_PREV_STATE: 'UPDATE_PREV_STATE',
   UPDATE_PREV_INFINITE_STATE: 'UPDATE_PREV_INFINITE_STATE',
 };
+
+export interface FormType {
+  id: string;
+  name: string;
+  pwd: string;
+  email: string;
+  phone: string;
+}
