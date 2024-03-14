@@ -1,10 +1,6 @@
 import { CarouselProps } from '@/_types/CommonTypes';
 
-interface SanitizedProps extends Omit<CarouselProps, 'height'> {
-  height: string | number;
-}
-
-export const sanitizedProps = (props: CarouselProps): SanitizedProps => {
+export const sanitizedProps = (props: CarouselProps): CarouselProps => {
   const animation = props.animation !== undefined ? props.animation : 'fade';
   const duration =
     props.duration !== undefined
@@ -27,7 +23,6 @@ export const sanitizedProps = (props: CarouselProps): SanitizedProps => {
     inArrow: props.inArrow !== undefined ? props.inArrow : true,
     indicators: props.indicators !== undefined ? props.indicators : true,
     infiniteLoop: props.infiniteLoop !== undefined ? props.infiniteLoop : true,
-    height: props.height !== undefined ? props.height : '600px',
     animation: animation,
     duration: duration,
     showNavButton:
