@@ -18,7 +18,7 @@
   .primary-hover {
     @apply bg-color-primary-m;
   }
-  .primary-disabled {
+  .button.primary-disabled {
     @apply cursor-not-allowed border-color-disabled bg-color-disabled;
   }
   .outlined {
