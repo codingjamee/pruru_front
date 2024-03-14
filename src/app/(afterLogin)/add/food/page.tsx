@@ -1,6 +1,7 @@
 import Card from '@/_components/Card';
 import Button from '@/_components/Button';
 import Search from '../../_component/Search';
+import Input from '@/_components/Input';
 
 function page() {
   return (
@@ -29,15 +30,15 @@ function page() {
           <div className="flex flex-grow flex-col gap-[20px]">
             <div className="flex flex-row justify-between mobile:flex-col">
               <div>보관방법</div>
-              <div className="h-[29px] w-[213px] rounded-lg border border-solid border-color-default-text text-center mobile:w-full">
-                상온
-              </div>
+              <Input
+                variant="outlined"
+                placeholder="상온"
+                className="h-[29px] w-[213px]"
+              />
             </div>
             <div className="flex flex-row justify-between mobile:flex-col">
               <div>중량(g)</div>
-              <div className="h-[29px] w-[213px] rounded-lg border border-solid border-color-default-text text-center mobile:w-full">
-                10g
-              </div>
+              <Input variant="outlined" className="h-[29px] w-[213px]" />
             </div>
             <div className="flex flex-row justify-between mobile:flex-col">
               <div>유통기한</div>
