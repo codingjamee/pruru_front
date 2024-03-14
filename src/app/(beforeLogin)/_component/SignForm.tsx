@@ -3,24 +3,22 @@ import Button from '@/_components/Button';
 import Card from '@/_components/Card';
 import Input from '@/_components/Input';
 import { useEffect, useState } from 'react';
-import { useForm } from 'react-hook-form';
+import { useForm, SubmitHandler } from 'react-hook-form';
 import { usePathname, useRouter } from 'next/navigation';
 import { FormType } from '@/_types/CommonTypes';
 
 const LoginForm = () => {
   const {
     register,
-    handleSubmit: onSubmit,
-    formState: { errors, isSubmitting },
+    handleSubmit,
+    formState: { errors, isSubmitting, isValid },
     reset,
   } = useForm<FormType>({
-    mode: 'onBlur',
+    mode: 'onChange',
     defaultValues: {
-      id: '',
       name: '',
       pwd: '',
       email: '',
-      phone: '',
     },
   });
   const pathname = usePathname();
@@ -32,13 +30,18 @@ const LoginForm = () => {
     setIsJoinPage(pathname === '/welcome/join');
   }, []);
 
-  const handleSubmit = () => {
+  const onSubmit: SubmitHandler<FormType> = (data) => {
+    console.log(data);
     reset();
   };
 
   return (
-    <form onSubmit={onSubmit(handleSubmit)} className="full">
-      <Card variant="outlined">
+    <form
+      onSubmit={handleSubmit(onSubmit)}
+      className="full mb-[100px] mt-[70px] flex-row mobile:flex-col tablet:flex-col">
+      <Card
+        variant="outlined"
+        className="m-0 flex min-h-[390px] w-[636px] flex-col p-[30px] mobile:w-[370px]">
         <h1 className="text-size-font-card-title">
           {isJoinPage ? '회원가입' : '로그인'}
         </h1>
@@ -46,61 +49,68 @@ const LoginForm = () => {
           <>
             {isJoinPage && (
               <Input
-                variant="underline"
+                variant={errors.name ? 'danger' : 'passed'}
                 type="text"
                 placeholder="이름"
                 {...register('name', {
                   required: '반드시 입력해주세요',
-                  max: { value: 10, message: '최대 10글자 입력이 가능합니다.' },
-                  min: { value: 1, message: '1글자 이상 입력해주세요.' },
+                  minLength: { value: 2, message: '2글자 이상 입력해주세요.' },
                 })}
               />
             )}
-            {errors.name && <p>{errors.name.message}</p>}
+            {errors.name && (
+              <p className="text-red-500">{errors.name.message}</p>
+            )}
           </>
-          <div className="full">
-            <Input
-              variant="underline"
-              type="text"
-              placeholder="이메일"
-              {...register('email', {
-                pattern: {
-                  value:
-                    /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i,
-                  message: '이메일 형식에 맞지 않습니다.',
-                },
-              })}
-            />
-            {errors.email && <p>{errors.email.message}</p>}
+          <Input
+            variant={errors.email ? 'danger' : 'passed'}
+            type="text"
+            placeholder="이메일"
+            {...register('email', {
+              required: '반드시 입력해주세요',
+              pattern: {
+                value:
+                  /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i,
+                message: '이메일 형식에 맞지 않습니다.',
+              },
+            })}
+          />
+          {errors.email && (
+            <p className="text-red-500">{errors.email.message}</p>
+          )}
 
-            <Input
-              variant="underline"
-              type="password"
-              placeholder="비밀번호"
-              {...register('pwd', {
-                required: '반드시 입력해주세요',
-                max: { value: 10, message: '최대 10글자 입력이 가능합니다.' },
-                min: { value: 3, message: '3글자 이상 입력해주세요.' },
-              })}
-            />
-            {errors.pwd && <p>{errors.pwd.message}</p>}
-          </div>
+          <Input
+            variant={errors.pwd ? 'danger' : 'passed'}
+            type="password"
+            placeholder="비밀번호"
+            {...register('pwd', {
+              required: '반드시 입력해주세요',
+              maxLength: {
+                value: 20,
+                message: '최대 10글자 입력이 가능합니다.',
+              },
+              minLength: { value: 3, message: '3글자 이상 입력해주세요.' },
+            })}
+          />
+          {errors.pwd && <p className="text-red-500">{errors.pwd.message}</p>}
         </div>
         <Button
           type="submit"
           variant="primary"
           className="btn-defaultsize"
-          disabled={isSubmitting || !!errors}>
+          disabled={isSubmitting || !isValid}>
           {isJoinPage ? '회원가입' : '로그인'}
         </Button>
       </Card>
-      <Card variant="primary">
+      <Card
+        variant="primary"
+        className="m-0 flex h-[390px] w-[636px] flex-col p-[30px] pt-[70px] mobile:w-[370px]">
         {isJoinPage ? (
           <>
             <p>이미 가입 하셨나요?</p>
             <Button
               variant="outlined"
-              className="btn-defaultsize"
+              className="btn-defaultsize w-[200px]"
               onClick={() => {
                 router.push('/welcome/login');
               }}>
@@ -112,7 +122,7 @@ const LoginForm = () => {
             <p>아직 회원이 아니신가요?</p>
             <Button
               variant="outlined"
-              className="btn-defaultsize"
+              className="btn-defaultsize w-[200px]"
               onClick={() => {
                 router.push('/welcome/join');
               }}>
