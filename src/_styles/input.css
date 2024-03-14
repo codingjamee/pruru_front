@@ -6,6 +6,10 @@
   .input {
     @apply h-[40px] w-full border-color-card-text bg-transparent pb-1 text-color-card-text focus:outline-none;
   }
+
+  .input[type='*'] {
+    @apply px-3;
+  }
   .input-primary {
     @apply rounded-lg bg-color-primary;
   }
