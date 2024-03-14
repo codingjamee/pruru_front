@@ -5,7 +5,39 @@ import Input from '@/_components/Input';
 import { useEffect, useState } from 'react';
 import { useForm, SubmitHandler } from 'react-hook-form';
 import { usePathname, useRouter } from 'next/navigation';
-import { FormType } from '@/_types/CommonTypes';
+import { z } from 'zod';
+import { zodResolver } from '@hookform/resolvers/zod';
+
+const pwdRegex = new RegExp(/(?=.*\d)(?=.*[a-z]).{8,}/);
+
+const LoginSchema = z
+  .object({
+    name: z.string().min(2, { message: '2글자 이상 입력해주세요' }),
+    email: z
+      .string()
+      .min(1, { message: '반드시 입력해주세요' })
+      .email({ message: '이메일 형식에 맞게 입력해주세요' }),
+    password: z
+      .string()
+      .min(5)
+      .max(20)
+      .regex(
+        pwdRegex,
+        '영어소문자, 숫자 포함 5자 이상 20자 미만으로 입력해주세요',
+      ),
+    checkPwd: z.string().min(5),
+  })
+  .superRefine(({ checkPwd, password }, ctx) => {
+    if (checkPwd !== password) {
+      ctx.addIssue({
+        code: z.ZodIssueCode.custom,
+        message: '패스워드가 일치하지 않습니다.',
+        path: ['checkPwd'],
+      });
+    }
+  });
+
+type LoginType = z.infer<typeof LoginSchema>;
 
 const LoginForm = () => {
   const {
@@ -13,24 +45,25 @@ const LoginForm = () => {
     handleSubmit,
     formState: { errors, isSubmitting, isValid },
     reset,
-  } = useForm<FormType>({
+  } = useForm<LoginType>({
     mode: 'onChange',
+    resolver: zodResolver(LoginSchema),
     defaultValues: {
       name: '',
-      pwd: '',
       email: '',
+      password: '',
+      checkPwd: '',
     },
   });
   const pathname = usePathname();
   const [isJoinPage, setIsJoinPage] = useState(pathname === '/welcome/join');
-
   const router = useRouter();
 
   useEffect(() => {
     setIsJoinPage(pathname === '/welcome/join');
   }, []);
 
-  const onSubmit: SubmitHandler<FormType> = (data) => {
+  const onSubmit: SubmitHandler<LoginType> = (data) => {
     console.log(data);
     reset();
   };
@@ -51,7 +84,7 @@ const LoginForm = () => {
               <Input
                 variant={errors.name ? 'danger' : 'passed'}
                 type="text"
-                placeholder="이름"
+                placeholder="이름 (2글자 이상)"
                 {...register('name', {
                   required: '반드시 입력해주세요',
                   minLength: { value: 2, message: '2글자 이상 입력해주세요.' },
@@ -65,34 +98,28 @@ const LoginForm = () => {
           <Input
             variant={errors.email ? 'danger' : 'passed'}
             type="text"
-            placeholder="이메일"
-            {...register('email', {
-              required: '반드시 입력해주세요',
-              pattern: {
-                value:
-                  /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i,
-                message: '이메일 형식에 맞지 않습니다.',
-              },
-            })}
+            placeholder="이메일 (이메일 형식)"
+            {...register('email')}
           />
           {errors.email && (
             <p className="text-red-500">{errors.email.message}</p>
           )}
 
           <Input
-            variant={errors.pwd ? 'danger' : 'passed'}
+            variant={errors.password ? 'danger' : 'passed'}
             type="password"
-            placeholder="비밀번호"
-            {...register('pwd', {
-              required: '반드시 입력해주세요',
-              maxLength: {
-                value: 20,
-                message: '최대 10글자 입력이 가능합니다.',
-              },
-              minLength: { value: 3, message: '3글자 이상 입력해주세요.' },
-            })}
+            placeholder="비밀번호 (최소5자 ~ 20자)"
+            {...register('password')}
           />
-          {errors.pwd && <p className="text-red-500">{errors.pwd.message}</p>}
+          {errors.password && (
+            <p className="text-red-500">{errors.password.message}</p>
+          )}
+          <Input
+            variant={errors.checkPwd ? 'danger' : 'passed'}
+            type="password"
+            placeholder="비밀번호를 다시한번 입력해주세요"
+            {...register('checkPwd')}
+          />
         </div>
         <Button
           type="submit"
