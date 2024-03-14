@@ -7,6 +7,7 @@ import { useForm, SubmitHandler } from 'react-hook-form';
 import { usePathname, useRouter } from 'next/navigation';
 import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
+import { signIn } from 'next-auth/react';
 
 const pwdRegex = new RegExp(/(?=.*\d)(?=.*[a-z]).{8,}/);
 
@@ -63,9 +64,19 @@ const LoginForm = () => {
     setIsJoinPage(pathname === '/welcome/join');
   }, []);
 
-  const onSubmit: SubmitHandler<LoginType> = (data) => {
+  const onSubmit: SubmitHandler<LoginType> = async (data) => {
     console.log(data);
     reset();
+    try {
+      await signIn('credentials', {
+        username: data.email,
+        password: data.password,
+        redirect: false,
+      });
+    } catch (err) {
+      console.error(err);
+    }
+    router.replace('/home');
   };
 
   return (
