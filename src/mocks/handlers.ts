@@ -7,7 +7,6 @@ export const handlers = [
         userId: 1,
         nickname: 'jenner',
         id: 'jenner',
-        image: '../_assets/pruru_logo.png',
       },
       {
         headers: {
@@ -22,5 +21,15 @@ export const handlers = [
         'Set-Cookie': 'connect.sid=;HttpOnly;Path=/;Max-Age=0',
       },
     });
+  }),
+  http.post('/api/users', () => {
+    return HttpResponse.text(JSON.stringify('user_exists'), {
+      status: 403,
+    });
+    // return HttpResponse.text(JSON.stringify('user_exists'), {
+    //   headers: {
+    //     'Set-Cookie': 'connect.sid=msw-cookie;HttpOnly;Path=/',
+    //   },
+    // });
   }),
 ];
