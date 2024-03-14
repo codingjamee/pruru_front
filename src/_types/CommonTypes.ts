@@ -79,9 +79,7 @@ export const actiontypes = {
 };
 
 export interface FormType {
-  id: string;
   name: string;
   pwd: string;
   email: string;
-  phone: string;
 }
