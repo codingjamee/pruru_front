@@ -3,8 +3,13 @@ import logo from '@/_assets/pruru_logo.png';
 
 import Image from 'next/image';
 import { montserrat } from '@/app/layout';
+import { auth } from '@/auth';
+import { redirect } from 'next/navigation';
 
-export default function Home() {
+export default async function Home() {
+  const session = await auth();
+  if (session?.user) redirect('/home');
+
   return (
     <>
       <main className="full">
