@@ -5,7 +5,7 @@ export const handlers = [
     return HttpResponse.json(
       {
         userId: 1,
-        nickname: 'jenner',
+        name: 'jenner',
         id: 'jenner',
       },
       {
