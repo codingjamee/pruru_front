@@ -1,7 +1,7 @@
-import SignForm from '../../_component/SignForm';
+import LoginForm from '../../_component/LoginForm';
 
 const page = () => {
-  return <SignForm />;
+  return <LoginForm />;
 };
 
 export default page;

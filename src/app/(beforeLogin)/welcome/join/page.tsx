@@ -1,7 +1,7 @@
-import SignForm from '@/app/(beforeLogin)/_component/SignForm';
+import SignupForm from '@/app/(beforeLogin)/_component/SignupForm';
 
 const page = () => {
-  return <SignForm />;
+  return <SignupForm />;
 };
 
 export default page;

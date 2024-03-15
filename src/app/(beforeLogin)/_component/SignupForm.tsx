@@ -2,16 +2,15 @@
 import Button from '@/_components/Button';
 import Card from '@/_components/Card';
 import Input from '@/_components/Input';
-import { useEffect, useState } from 'react';
 import { useForm, SubmitHandler } from 'react-hook-form';
-import { usePathname, useRouter } from 'next/navigation';
+import { useRouter } from 'next/navigation';
 import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { signIn } from 'next-auth/react';
 
 const pwdRegex = new RegExp(/(?=.*\d)(?=.*[a-z]).{8,}/);
 
-const LoginSchema = z
+const SignupSchema = z
   .object({
     name: z.string().min(2, { message: '2글자 이상 입력해주세요' }),
     email: z
@@ -38,17 +37,17 @@ const LoginSchema = z
     }
   });
 
-type LoginType = z.infer<typeof LoginSchema>;
+type SignupType = z.infer<typeof SignupSchema>;
 
-const LoginForm = () => {
+const SignupForm = () => {
   const {
     register,
     handleSubmit,
     formState: { errors, isSubmitting, isValid },
     reset,
-  } = useForm<LoginType>({
+  } = useForm<SignupType>({
     mode: 'onChange',
-    resolver: zodResolver(LoginSchema),
+    resolver: zodResolver(SignupSchema),
     defaultValues: {
       name: '',
       email: '',
@@ -56,17 +55,16 @@ const LoginForm = () => {
       checkPwd: '',
     },
   });
-  const pathname = usePathname();
-  const [isJoinPage, setIsJoinPage] = useState(pathname === '/welcome/join');
+  // const session = useSession();
   const router = useRouter();
 
-  useEffect(() => {
-    setIsJoinPage(pathname === '/welcome/join');
-  }, []);
+  // if (session) {
+  //   router.replace('/home');
+  //   return null;
+  // }
 
-  const onSubmit: SubmitHandler<LoginType> = async (data) => {
+  const onSubmit: SubmitHandler<SignupType> = async (data) => {
     console.log(data);
-    reset();
     try {
       await signIn('credentials', {
         username: data.email,
@@ -76,6 +74,7 @@ const LoginForm = () => {
     } catch (err) {
       console.error(err);
     }
+    reset();
     router.replace('/home');
   };
 
@@ -86,22 +85,18 @@ const LoginForm = () => {
       <Card
         variant="outlined"
         className="m-0 flex min-h-[390px] w-[636px] flex-col p-[30px] mobile:w-[370px]">
-        <h1 className="text-size-font-card-title">
-          {isJoinPage ? '회원가입' : '로그인'}
-        </h1>
+        <h1 className="text-size-font-card-title">회원가입</h1>
         <div className="flex flex-col gap-9 rounded-md">
           <>
-            {isJoinPage && (
-              <Input
-                variant={errors.name ? 'danger' : 'passed'}
-                type="text"
-                placeholder="이름 (2글자 이상)"
-                {...register('name', {
-                  required: '반드시 입력해주세요',
-                  minLength: { value: 2, message: '2글자 이상 입력해주세요.' },
-                })}
-              />
-            )}
+            <Input
+              variant={errors.name ? 'danger' : 'passed'}
+              type="text"
+              placeholder="이름 (2글자 이상)"
+              {...register('name', {
+                required: '반드시 입력해주세요',
+                minLength: { value: 2, message: '2글자 이상 입력해주세요.' },
+              })}
+            />
             {errors.name && (
               <p className="text-red-500">{errors.name.message}</p>
             )}
@@ -137,40 +132,26 @@ const LoginForm = () => {
           variant="primary"
           className="btn-defaultsize"
           disabled={isSubmitting || !isValid}>
-          {isJoinPage ? '회원가입' : '로그인'}
+          회원가입
         </Button>
       </Card>
       <Card
         variant="primary"
         className="m-0 flex h-[390px] w-[636px] flex-col p-[30px] pt-[70px] mobile:w-[370px]">
-        {isJoinPage ? (
-          <>
-            <p>이미 가입 하셨나요?</p>
-            <Button
-              variant="outlined"
-              className="btn-defaultsize w-[200px]"
-              onClick={() => {
-                router.push('/welcome/login');
-              }}>
-              로그인 하러가기
-            </Button>
-          </>
-        ) : (
-          <>
-            <p>아직 회원이 아니신가요?</p>
-            <Button
-              variant="outlined"
-              className="btn-defaultsize w-[200px]"
-              onClick={() => {
-                router.push('/welcome/join');
-              }}>
-              회원가입
-            </Button>
-          </>
-        )}
+        <>
+          <p>이미 가입 하셨나요?</p>
+          <Button
+            variant="outlined"
+            className="btn-defaultsize w-[200px]"
+            onClick={() => {
+              router.push('/welcome/Signup');
+            }}>
+            로그인 하러가기
+          </Button>
+        </>
       </Card>
     </form>
   );
 };
 
-export default LoginForm;
+export default SignupForm;
