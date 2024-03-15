@@ -6,7 +6,8 @@ import { useForm, SubmitHandler } from 'react-hook-form';
 import { useRouter } from 'next/navigation';
 import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { signIn } from 'next-auth/react';
+import { signIn, useSession } from 'next-auth/react';
+import { useEffect } from 'react';
 
 const pwdRegex = new RegExp(/(?=.*\d)(?=.*[a-z]).{8,}/);
 
@@ -55,27 +56,37 @@ const SignupForm = () => {
       checkPwd: '',
     },
   });
-  // const session = useSession();
+  const session = useSession();
   const router = useRouter();
 
-  // if (session) {
-  //   router.replace('/home');
-  //   return null;
-  // }
+  useEffect(() => {
+    if (session) {
+      router.replace('/home');
+    }
+  }, []);
 
   const onSubmit: SubmitHandler<SignupType> = async (data) => {
     console.log(data);
+    let showRedirect = false;
     try {
       await signIn('credentials', {
         username: data.email,
         password: data.password,
         redirect: false,
       });
+      showRedirect = true;
+      await signIn('credentials', {
+        username: data.email,
+        password: data.password,
+        redirect: false,
+      });
     } catch (err) {
+      //추후 toast로 설정
       console.error(err);
+      return null;
     }
     reset();
-    router.replace('/home');
+    if (showRedirect) router.replace('/home');
   };
 
   return (

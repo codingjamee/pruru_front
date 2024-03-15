@@ -44,17 +44,20 @@ const LoginForm = () => {
 
   const onSubmit: SubmitHandler<LoginType> = async (data) => {
     console.log(data);
+    let showRedirect = false;
     try {
       await signIn('credentials', {
         username: data.email,
         password: data.password,
         redirect: false,
       });
+      showRedirect = true;
     } catch (err) {
+      //추후 toast로 설정
       console.error(err);
     }
     reset();
-    router.replace('/home');
+    if (showRedirect) router.replace('/home');
   };
 
   return (
