@@ -21,7 +21,7 @@ export const {
               'Content-Type': 'application/json',
             },
             body: JSON.stringify({
-              email: credentials.id,
+              email: credentials.username,
               password: credentials.password,
             }),
           },
