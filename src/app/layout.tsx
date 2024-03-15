@@ -3,6 +3,7 @@ import { Inter, Montserrat } from 'next/font/google';
 
 import './globals.css';
 import MSWComponent from '@/_components/MSWComponent';
+import { SessionProvider } from 'next-auth/react';
 
 export const inter = Inter({ subsets: ['latin'] });
 export const montserrat = Montserrat({ subsets: ['latin'] });
@@ -21,7 +22,7 @@ export default function RootLayout({
     <html lang="en">
       <body className={inter.className}>
         <MSWComponent />
-        {children}
+        <SessionProvider>{children}</SessionProvider>
       </body>
     </html>
   );
