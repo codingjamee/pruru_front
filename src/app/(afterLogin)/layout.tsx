@@ -30,7 +30,7 @@ export default function layout({
         </Link>
         <div className="hidden w-full text-size-font-card-title tablet:block desktop:block">
           <nav className="flex w-full justify-between">
-            <p>우리집</p>
+            <Link href="/user">우리집</Link>
             <NavTop />
           </nav>
         </div>
