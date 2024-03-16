@@ -1,14 +1,14 @@
 'use client';
 import CameraSvg from '@/_assets/CameraSvg';
+import { FoodCardType } from '@/_types/FoodTypes';
 import { remainedTime } from '@/_utils/remainedTime';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 import React from 'react';
-import { FoodCardType } from './FoodCard';
 
 const SmallFoodCard = ({ food, className }: FoodCardType) => {
-  const { id, foodImageUrl, foodName, expiryDate } = food;
-  const remainingDay = expiryDate && remainedTime(expiryDate);
+  const { id, image_url, food_name, expiry_date } = food;
+  const remainingDay = expiry_date && remainedTime(expiry_date);
   const router = useRouter();
 
   const onClickCard = () => {
@@ -23,8 +23,8 @@ const SmallFoodCard = ({ food, className }: FoodCardType) => {
         <div className="absolute right-0 m-1 flex h-[22px] w-[40px] items-center justify-center rounded-3xl bg-color-secondary-100 text-[12px] text-color-bg-sub">
           D-{remainingDay}
         </div>
-        {foodImageUrl ? (
-          <Image src={foodImageUrl} alt={foodImageUrl} />
+        {image_url ? (
+          <Image src={image_url} alt={image_url} width="100" height="100" />
         ) : (
           <div className="flex h-full w-full items-center justify-center">
             <div className="w-[40%] pt-[10px]">
@@ -34,7 +34,7 @@ const SmallFoodCard = ({ food, className }: FoodCardType) => {
         )}
       </div>
       <div className="h-full w-full flex-col justify-evenly px-3 pt-2 text-center">
-        {foodName}
+        {food_name}
       </div>
     </div>
   );

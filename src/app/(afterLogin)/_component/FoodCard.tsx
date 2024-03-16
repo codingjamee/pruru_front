@@ -6,9 +6,9 @@ import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 
 const FoodCard = ({ children, food, className }: FoodCardType) => {
-  const { id, foodImageUrl, foodName, purchaseDate, foodAmount, expiryDate } =
+  const { id, image_url, food_name, purchase_date, amount, unit, expiry_date } =
     food;
-  const remainingDay = expiryDate && remainedTime(expiryDate);
+  const remainingDay = expiry_date && remainedTime(expiry_date);
   const router = useRouter();
 
   const onClickCard = () => {
@@ -23,8 +23,8 @@ const FoodCard = ({ children, food, className }: FoodCardType) => {
         <div className="absolute right-0 m-1 flex h-[22px] w-[60px] items-center justify-center rounded-3xl bg-color-secondary-100 text-color-card-text">
           D-{remainingDay}
         </div>
-        {foodImageUrl ? (
-          <Image src={foodImageUrl} alt={foodImageUrl} />
+        {image_url ? (
+          <Image src={image_url} alt={image_url} width="100" height="100" />
         ) : (
           <div className="h-full w-full tablet:p-7 desktop:p-7">
             <CameraSvg />
@@ -33,10 +33,21 @@ const FoodCard = ({ children, food, className }: FoodCardType) => {
       </div>
 
       <div className="h-full w-full flex-col justify-evenly p-[18px] tablet:flex desktop:flex">
-        <div>{foodName}</div>
+        <div>{food_name}</div>
         <div className="flex w-full justify-between">
-          <div>{purchaseDate}구매</div>
-          <div className="mobile:hidden">{foodAmount}</div>
+          <div>
+            {purchase_date &&
+              new Date(purchase_date)?.toLocaleDateString('ko-KR', {
+                year: 'numeric',
+                month: 'numeric',
+                day: 'numeric',
+              })}
+            구매
+          </div>
+          <div className="mobile:hidden">
+            {amount}
+            {unit}
+          </div>
         </div>
       </div>
       {children && children}
