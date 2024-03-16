@@ -124,7 +124,7 @@ export const handlers = [
     const storage = url.searchParams.get('storage');
     const sort = url.searchParams.get('sort');
     const direction = url.searchParams.get('direction');
-    let filteredFoods =
+    const filteredFoods =
       storage === 'total'
         ? foodCardDummyArr
         : foodCardDummyArr.filter((food) => food.method === storage);
