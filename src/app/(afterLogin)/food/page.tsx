@@ -1,8 +1,6 @@
 import React from 'react';
-import FoodCard from '../_component/FoodCard';
-import { foodCardDummyArr } from '../home/page';
 import QueryComponent from '../_component/QueryComponent';
-import SSmallFoodCard from '../_component/SSmallFoodCard';
+import ExpireyFood from '../_component/ExpireyFood';
 
 const page = () => {
   return (
@@ -17,15 +15,7 @@ const page = () => {
         </div>
       </div>
       <div className="flex flex-row flex-wrap items-center gap-[10px]">
-        {foodCardDummyArr.map((food) => (
-          <React.Fragment key={food.id}>
-            <FoodCard className="mobile:hidden" food={food} />
-            <SSmallFoodCard
-              className="tablet:hidden desktop:hidden"
-              food={food}
-            />
-          </React.Fragment>
-        ))}
+        <ExpireyFood />
       </div>
     </div>
   );
