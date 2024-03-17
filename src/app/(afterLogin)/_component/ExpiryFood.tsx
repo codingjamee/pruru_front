@@ -5,10 +5,11 @@ import { useQuery } from '@tanstack/react-query';
 import FoodCard from './FoodCard';
 import SmallFoodCard from './SmallFoodCard';
 
-const ExpireyFood = () => {
+const ExpiryFood = () => {
   const { data: expiryFood } = useQuery({
     queryKey: ['foods', 'expiryDate'],
     queryFn: getFoodsByExpiry,
+    staleTime: 60 * 1000,
   });
   return (
     <>
@@ -26,4 +27,4 @@ const ExpireyFood = () => {
   );
 };
 
-export default ExpireyFood;
+export default ExpiryFood;
