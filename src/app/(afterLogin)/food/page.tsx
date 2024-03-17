@@ -1,6 +1,6 @@
 import React from 'react';
 import QueryComponent from '../_component/QueryComponent';
-import ExpireyFood from '../_component/ExpireyFood';
+import ExpiryFood from '../_component/ExpiryFood';
 
 const page = () => {
   return (
@@ -15,7 +15,7 @@ const page = () => {
         </div>
       </div>
       <div className="flex flex-row flex-wrap items-center gap-[10px]">
-        <ExpireyFood />
+        <ExpiryFood />
       </div>
     </div>
   );

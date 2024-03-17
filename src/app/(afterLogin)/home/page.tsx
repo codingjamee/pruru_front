@@ -10,7 +10,7 @@ import {
   QueryClient,
   dehydrate,
 } from '@tanstack/react-query';
-import ExpireyFood from '../_component/ExpireyFood';
+import ExpiryFood from '../_component/ExpiryFood';
 import { foodsByPurchase, getFoodsByExpiry } from '@/_utils/getQuery';
 import RecentlyFood from '../_component/RecentlyFood';
 
@@ -104,7 +104,7 @@ const page = async () => {
           <Link href="/food?storage=total&sort=expiryDate">더보기</Link>
         </div>
         <CardSliderWrapper>
-          <ExpireyFood />
+          <ExpiryFood />
         </CardSliderWrapper>
         <div className="my-10 flex justify-between text-size-font-card-title">
           <div>최근 산 재료</div>
