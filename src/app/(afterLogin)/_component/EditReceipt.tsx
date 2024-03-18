@@ -58,8 +58,8 @@ const EditReceipt = () => {
           <form onSubmit={handleSubmit(onSubmit)}>
             {fields.map((receipt, index) => (
               <div
-                className="flex w-full justify-between gap-[5px] truncate"
-                key={receipt.food_id}>
+                className="flex w-full items-center justify-between gap-[5px] truncate"
+                key={`receipt-${index}`}>
                 <Input
                   variant="underline"
                   {...register(`receiptArr.${index}.food_category`)}
