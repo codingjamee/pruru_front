@@ -17,41 +17,41 @@ import RecentlyFood from '../_component/RecentlyFood';
 export const foodCardDummyArr = [
   {
     id: 1,
-    foodName: '당근',
+    food_name: '당근',
     foodImageUrl: '',
-    purchaseDate: '24.2.17',
+    purchase_date: '24.2.17',
     foodAmount: '400',
     expiryDate: '2024-03-30T15:00:00Z',
   },
   {
     id: 2,
-    foodName: '토마토',
+    food_name: '토마토',
     foodImageUrl: '',
-    purchaseDate: '24.2.19',
+    purchase_date: '24.2.19',
     foodAmount: '40g',
     expiryDate: '2024-03-30T15:00:00Z',
   },
   {
     id: 3,
-    foodName: '아보카도',
+    food_name: '아보카도',
     foodImageUrl: '',
-    purchaseDate: '24.2.12',
+    purchase_date: '24.2.12',
     foodAmount: '3개',
     expiryDate: '2024-03-30T15:00:00Z',
   },
   {
     id: 4,
-    foodName: '바나나',
+    food_name: '바나나',
     foodImageUrl: '',
-    purchaseDate: '24.2.12',
+    purchase_date: '24.2.12',
     foodAmount: '1송이',
     expiryDate: '2024-03-30T15:00:00Z',
   },
   {
     id: 5,
     foodImageUrl: '',
-    foodName: '완두콩',
-    purchaseDate: '24.2.12',
+    food_name: '완두콩',
+    purchase_date: '24.2.12',
     foodAmount: '1개',
     expiryDate: '2024-03-30T15:00:00Z',
   },
@@ -64,7 +64,7 @@ const page = async () => {
     queryFn: getFoodsByExpiry,
   });
   await queryClient.prefetchQuery({
-    queryKey: ['foods', 'purchaseDate'],
+    queryKey: ['foods', 'purchase_date'],
     queryFn: foodsByPurchase,
   });
 
@@ -108,7 +108,7 @@ const page = async () => {
         </CardSliderWrapper>
         <div className="my-10 flex justify-between text-size-font-card-title">
           <div>최근 산 재료</div>
-          <Link href="/food?storage=total&sort=purchaseDate">더보기</Link>
+          <Link href="/food?storage=total&sort=purchase_date">더보기</Link>
         </div>
         <CardSliderWrapper>
           <RecentlyFood />

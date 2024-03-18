@@ -8,13 +8,12 @@ import SmallFoodCard from './SmallFoodCard';
 
 const RecentlyFood = () => {
   const { data: purchaseFood } = useQuery({
-    queryKey: ['foods', 'purchaseDate'],
+    queryKey: ['foods', 'purchase_date'],
     queryFn: foodsByPurchase,
   });
   return (
     <>
-      {' '}
-      {purchaseFood.map((food: FoodPropType) => (
+      {purchaseFood?.map((food: FoodPropType) => (
         <React.Fragment key={food.id}>
           <FoodCard className="mobile:hidden" food={food} />
           <SmallFoodCard className="tablet:hidden desktop:hidden" food={food} />

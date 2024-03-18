@@ -16,7 +16,7 @@ import { faker } from '@faker-js/faker';
   registered?: boolean;
  */
 
-function generate_purchaseDate() {
+function generate_purchase_date() {
   const lastWeek = new Date(Date.now());
   lastWeek.setDate(lastWeek.getDate() - 7);
   return faker.date.between({
@@ -38,7 +38,7 @@ const foodCardDummyArr = [
     method: 'frozen',
     food_name: '당근',
     image_url: faker.image.urlLoremFlickr({ category: 'food' }),
-    purchase_date: generate_purchaseDate(),
+    purchase_date: generate_purchase_date(),
     purchase_price: 5950,
     amount: 400,
     unit: 'g',
@@ -49,7 +49,7 @@ const foodCardDummyArr = [
     method: 'refrigerated',
     food_name: '토마토',
     image_url: faker.image.urlLoremFlickr({ category: 'food' }),
-    purchase_date: generate_purchaseDate(),
+    purchase_date: generate_purchase_date(),
     purchase_price: 10000,
     amount: 40,
     unit: 'g',
@@ -60,7 +60,7 @@ const foodCardDummyArr = [
     method: 'frozen',
     food_name: '아보카도',
     image_url: faker.image.urlLoremFlickr({ category: 'food' }),
-    purchase_date: generate_purchaseDate(),
+    purchase_date: generate_purchase_date(),
     amount: '3개',
     unit: 'g',
     expiry_date: generate_expiryDate(),
@@ -70,7 +70,7 @@ const foodCardDummyArr = [
     method: 'room_temp',
     food_name: '바나나',
     image_url: faker.image.urlLoremFlickr({ category: 'food' }),
-    purchase_date: generate_purchaseDate(),
+    purchase_date: generate_purchase_date(),
     amount: 1,
     unit: '송이',
     expiry_date: generate_expiryDate(),
@@ -80,7 +80,7 @@ const foodCardDummyArr = [
     method: 'frozen',
     food_name: '완두콩',
     image_url: faker.image.urlLoremFlickr({ category: 'food' }),
-    purchase_date: generate_purchaseDate(),
+    purchase_date: generate_purchase_date(),
     amount: 1,
     unit: '개',
     expiry_date: generate_expiryDate(),

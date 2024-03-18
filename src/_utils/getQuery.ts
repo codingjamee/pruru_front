@@ -15,7 +15,7 @@ export const getFoodsByExpiry = async () => {
 export const foodsByPurchase = async () => {
   const res = await api(`/food?storage=total&sort=purchase_date`, {
     next: {
-      tags: ['foods', 'purchaseDate'],
+      tags: ['foods', 'purchase_date'],
     },
   });
   if (!res.ok) {

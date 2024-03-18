@@ -8,32 +8,32 @@ import { ReceiptArrType } from '@/_types/ReceiptTypes';
 
 export const receiptDummyArr: ReceiptArrType[] = [
   {
-    receiptId: 1,
+    receipt_id: 1,
     quantity: 10,
-    purchaseLocation: '이마트',
-    purchaseDate: '24.2.17',
-    totalPrice: 20950,
+    purchase_location: '이마트',
+    purchase_date: '24.2.17',
+    total_price: 20950,
   },
   {
-    receiptId: 2,
+    receipt_id: 2,
     quantity: 17,
-    purchaseLocation: '시장마트',
-    purchaseDate: '24.2.27',
-    totalPrice: 52182,
+    purchase_location: '시장마트',
+    purchase_date: '24.2.27',
+    total_price: 52182,
   },
   {
-    receiptId: 3,
+    receipt_id: 3,
     quantity: 1,
-    purchaseLocation: '편의점',
-    purchaseDate: '24.2.9',
-    totalPrice: 5931,
+    purchase_location: '편의점',
+    purchase_date: '24.2.9',
+    total_price: 5931,
   },
   {
-    receiptId: 4,
+    receipt_id: 4,
     quantity: 1,
-    purchaseLocation: '홈플러스',
-    purchaseDate: '24.2.29',
-    totalPrice: 5931,
+    purchase_location: '홈플러스',
+    purchase_date: '24.2.29',
+    total_price: 5931,
   },
 ];
 const page = () => {
@@ -54,7 +54,7 @@ const page = () => {
         </Button>
       </Card>
       {receiptDummyArr.map((receipt) => (
-        <ReceiptCard key={receipt.receiptId} receipt={receipt} />
+        <ReceiptCard key={receipt.receipt_id} receipt={receipt} />
       ))}
     </div>
   );

@@ -2,13 +2,15 @@ const PlusSvg = ({
   className,
   width,
   height,
+  onClick,
 }: {
   className?: string;
   width?: number;
   height?: number;
+  onClick?: () => void;
 }) => {
   return (
-    <div className={className}>
+    <div className={className} onClick={onClick}>
       <svg
         xmlns="http://www.w3.org/2000/svg"
         fill="none"

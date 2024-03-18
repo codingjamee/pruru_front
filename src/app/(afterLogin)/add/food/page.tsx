@@ -19,7 +19,10 @@ function page() {
           <div className="flex flex-grow mobile:w-full">
             <Search />
           </div>
-          <Button variant="primary" className="rounded-lg mobile:w-full">
+          <Button
+            href="/receipt"
+            variant="primary"
+            className="rounded-lg mobile:w-full">
             영수증에서 가져오기
           </Button>
         </div>

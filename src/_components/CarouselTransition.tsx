@@ -22,7 +22,6 @@ const CarouselTransition = ({
   transitionRef: MutableRefObject<HTMLDivElement | null>;
   handleMouseEnter: () => void;
   handleMouseLeave: () => void;
-
   child?:
     | string
     | number
@@ -33,7 +32,7 @@ const CarouselTransition = ({
   index: number;
   active: number;
 }) => {
-  const [isIn, setIsIn] = useState(false);
+  const [isIn, setIsIn] = useState<boolean>(false);
   useEffect(() => {
     setIsIn(active === index);
   }, [active]);

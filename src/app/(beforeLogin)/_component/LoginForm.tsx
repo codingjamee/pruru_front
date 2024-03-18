@@ -14,7 +14,7 @@ const LoginSchema = z.object({
     .string()
     .min(1, { message: '반드시 입력해주세요' })
     .email({ message: '이메일 형식에 맞게 입력해주세요' }),
-  password: z.string(),
+  password: z.string().min(1),
 });
 
 type LoginType = z.infer<typeof LoginSchema>;
@@ -76,18 +76,16 @@ const LoginForm = () => {
             {...register('email')}
           />
           {errors.email && (
-            <p className="text-red-500">{errors.email.message}</p>
+            <p role="alert" className="text-red-500">
+              {errors.email.message}
+            </p>
           )}
 
           <Input
             variant={errors.password ? 'danger' : 'passed'}
             type="password"
-            placeholder="비밀번호 (최소5자 ~ 20자)"
             {...register('password')}
           />
-          {errors.password && (
-            <p className="text-red-500">{errors.password.message}</p>
-          )}
         </div>
         <Button
           type="submit"

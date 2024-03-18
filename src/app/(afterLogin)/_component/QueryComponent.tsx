@@ -33,7 +33,7 @@ const QueryComponent = ({ value }: { value: 'storage' | 'sort' }) => {
   const sortText: QueryTextMap = {
     price: '가격순',
     expiryDate: '유통기한',
-    purchaseDate: '구매일자',
+    purchase_date: '구매일자',
   };
   let returnText = '';
   if (value === 'storage' && typeof storage === 'string') {

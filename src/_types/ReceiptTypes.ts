@@ -1,24 +1,24 @@
 export interface purchaseReceiptInfoType {
-  purchaseLocation: string;
-  purchaseDate: string;
+  purchase_location: string;
+  purchase_date: string;
   receiptItems: receiptDetailType[];
 }
 
 export interface receiptDetailType {
-  foodId: number;
-  foodCategory: string;
-  foodName: string;
-  foodWeight: string;
-  purchasePrice: number;
-  pricePerAmount: number;
+  food_id?: number;
+  food_category: string;
+  food_name: string;
+  food_weight: string;
+  purchase_price: number;
+  price_per_amount: number;
   quantity: number;
   registered: boolean;
 }
 
 export interface ReceiptArrType {
-  receiptId: number;
+  receipt_id: number;
   quantity: number;
-  purchaseLocation: string;
-  purchaseDate: string;
-  totalPrice: number;
+  purchase_location: string;
+  purchase_date: string;
+  total_price: number;
 }
