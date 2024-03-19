@@ -1,4 +1,5 @@
 export interface purchaseReceiptInfoType {
+  receipt_id: number;
   purchase_location: string;
   purchase_date: string;
   receiptItems: receiptDetailType[];
