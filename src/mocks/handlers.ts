@@ -86,6 +86,36 @@ const foodCardDummyArr = [
     expiry_date: generate_expiryDate(),
   },
 ];
+const receiptDummyArr = [
+  {
+    receipt_id: 1,
+    quantity: 10,
+    purchase_location: '이마트',
+    purchase_date: '24.2.17',
+    total_price: 20950,
+  },
+  {
+    receipt_id: 2,
+    quantity: 17,
+    purchase_location: '시장마트',
+    purchase_date: '24.2.27',
+    total_price: 52182,
+  },
+  {
+    receipt_id: 3,
+    quantity: 1,
+    purchase_location: '편의점',
+    purchase_date: '24.2.9',
+    total_price: 5931,
+  },
+  {
+    receipt_id: 4,
+    quantity: 1,
+    purchase_location: '홈플러스',
+    purchase_date: '24.2.29',
+    total_price: 5931,
+  },
+];
 
 export const handlers = [
   http.post('/api/login', () => {
@@ -148,5 +178,11 @@ export const handlers = [
 
     console.log({ storage, sort });
     return HttpResponse.json(filteredFoods);
+  }),
+  http.get('/api/receipt', () => {
+    // http.get('/api/receipt', ({ request }) => {
+    // const url = new URL(request.url);
+    // const month = url.searchParams.get('month');
+    return HttpResponse.json(receiptDummyArr);
   }),
 ];
