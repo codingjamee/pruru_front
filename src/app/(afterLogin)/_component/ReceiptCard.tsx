@@ -4,12 +4,14 @@ import { ReceiptArrType } from '@/_types/ReceiptTypes';
 import { useRouter } from 'next/navigation';
 import { useQuery } from '@tanstack/react-query';
 import { getReceiptsByMonth } from '@/_utils/getQuery';
+import { useYearMonthCtx } from '@/_contexts/DateContext';
 
-const ReceiptCard = ({ YM }: { YM?: string }) => {
+const ReceiptCard = () => {
   const router = useRouter();
+  const { yearMonth } = useYearMonthCtx();
   const { data: receipts } = useQuery({
-    queryKey: ['receipt', 'monthly', YM],
-    queryFn: () => getReceiptsByMonth(YM),
+    queryKey: ['receipt', 'monthly', yearMonth],
+    queryFn: () => getReceiptsByMonth(yearMonth),
     staleTime: 60 * 1000,
   });
   const onClickCard = () => {
