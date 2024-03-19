@@ -43,7 +43,6 @@ const LoginForm = () => {
   }, [session, router]);
 
   const onSubmit: SubmitHandler<LoginType> = async (data) => {
-    console.log(data);
     let showRedirect = false;
     try {
       await signIn('credentials', {
