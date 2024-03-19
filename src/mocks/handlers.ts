@@ -1,5 +1,8 @@
 import { http, HttpResponse } from 'msw';
 import { faker } from '@faker-js/faker';
+import dayjs from 'dayjs';
+import customParseFormat from 'dayjs/plugin/customParseFormat';
+dayjs.extend(customParseFormat);
 /**
  *   storage_id?: number;
   receipt_id?: number;
@@ -162,11 +165,11 @@ export const handlers = [
     if (sort) {
       filteredFoods.sort((a, b) => {
         if (sort === 'purchase_date' || sort === 'expiry_date') {
-          const dateA = new Date(a[sort]);
-          const dateB = new Date(b[sort]);
+          const dateA = dayjs(a[sort]);
+          const dateB = dayjs(b[sort]);
           return direction === 'up'
-            ? dateA.getTime() - dateB.getTime()
-            : dateB.getTime() - dateA.getTime();
+            ? dateA.get('second') - dateB.get('second')
+            : dateB.get('second') - dateA.get('second');
         } else if (sort === 'purchase_price') {
           const priceA = a.purchase_price ?? 0;
           const priceB = b.purchase_price ?? 0;
@@ -179,10 +182,21 @@ export const handlers = [
     console.log({ storage, sort });
     return HttpResponse.json(filteredFoods);
   }),
-  http.get('/api/receipt', () => {
-    // http.get('/api/receipt', ({ request }) => {
-    // const url = new URL(request.url);
-    // const month = url.searchParams.get('month');
-    return HttpResponse.json(receiptDummyArr);
+  http.get('/api/receipt', ({ request }) => {
+    const url = new URL(request.url);
+    const year_month = url.searchParams.get('month');
+    const requestObj = dayjs(year_month, ['YY.MM']) || dayjs().format('YY.MM');
+    const isThisDayArr = (target: string) => {
+      const toDayjsObj = dayjs(target, ['YY.M.D']);
+
+      return (
+        toDayjsObj.get('year') === requestObj.get('year') &&
+        toDayjsObj.get('month') === requestObj.get('month')
+      );
+    };
+    const filteredReceiptArr = receiptDummyArr.filter((receipt) =>
+      isThisDayArr(receipt.purchase_date),
+    );
+    return HttpResponse.json(filteredReceiptArr);
   }),
 ];
