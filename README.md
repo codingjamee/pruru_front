@@ -1,4 +1,4 @@
-db :  https://dbdiagram.io/d/65c6e16dac844320aed83b44
+db :  https://dbdiagram.io/d/65c6e16dac844320aed83b44   
 figma : https://www.figma.com/file/xcU6l7pfXA6HFCjJWfpAYD/refrigerator?type=design&node-id=0-1&mode=design&t=B84jVdtzD1Flbpej-0
 
 
