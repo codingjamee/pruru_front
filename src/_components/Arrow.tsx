@@ -8,13 +8,10 @@ const Arrow = ({
   hoverStyle,
 }: {
   direction: 'left' | 'right';
-  executeFn: () => void;
+  executeFn: (val: 'left' | 'right') => void;
   inArrow?: boolean;
   hoverStyle?: string;
 }) => {
-  const onClickArrow = () => {
-    executeFn();
-  };
   const [hoverColor, setHoverColor] = useState(hoverStyle || undefined);
 
   useEffect(() => {
@@ -23,7 +20,7 @@ const Arrow = ({
 
   return (
     <div
-      onClick={onClickArrow}
+      onClick={() => executeFn(direction)}
       className={`${inArrow ? 'absolute z-50' : ''} ${direction === 'left' ? 'left-0 top-0 rounded-l-lg' : 'right-0 top-0 rounded-r-lg'}  center-vertical flex h-full w-[30px] cursor-pointer text-[30px] ${hoverColor && hoverColor}`}>
       {direction === 'left' ? '<' : '>'}
     </div>
