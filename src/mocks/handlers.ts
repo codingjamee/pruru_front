@@ -1,124 +1,8 @@
 import { http, HttpResponse } from 'msw';
-import { faker } from '@faker-js/faker';
 import dayjs from 'dayjs';
 import customParseFormat from 'dayjs/plugin/customParseFormat';
+import { foodCardDummyArr, purchaseReceiptInfo, receiptDummyArr } from './data';
 dayjs.extend(customParseFormat);
-/**
- *   storage_id?: number;
-  receipt_id?: number;
-  food_id?: number;
-  method?: 'refrigerated' | 'frozen' | 'room_temp';
-  amount?: number;
-  quantity?: number;
-  unit?: string;
-  remain_amount?: number;
-  image_url?: string;
-  purchase_date
-  purchase_price?: number;
-  expiry_date?: string;
-  registered?: boolean;
- */
-
-function generate_purchase_date() {
-  const lastWeek = new Date(Date.now());
-  lastWeek.setDate(lastWeek.getDate() - 7);
-  return faker.date.between({
-    from: lastWeek,
-    to: Date.now(),
-  });
-}
-
-function generate_expiryDate() {
-  const today = new Date();
-  const nextWeek = new Date();
-  nextWeek.setDate(nextWeek.getDate() + 7);
-  return faker.date.between({ from: today, to: nextWeek });
-}
-
-const foodCardDummyArr = [
-  {
-    id: 1,
-    method: 'frozen',
-    food_name: '당근',
-    image_url: faker.image.urlLoremFlickr({ category: 'food' }),
-    purchase_date: generate_purchase_date(),
-    purchase_price: 5950,
-    amount: 400,
-    unit: 'g',
-    expiry_date: generate_expiryDate(),
-  },
-  {
-    id: 2,
-    method: 'refrigerated',
-    food_name: '토마토',
-    image_url: faker.image.urlLoremFlickr({ category: 'food' }),
-    purchase_date: generate_purchase_date(),
-    purchase_price: 10000,
-    amount: 40,
-    unit: 'g',
-    expiry_date: generate_expiryDate(),
-  },
-  {
-    id: 3,
-    method: 'frozen',
-    food_name: '아보카도',
-    image_url: faker.image.urlLoremFlickr({ category: 'food' }),
-    purchase_date: generate_purchase_date(),
-    amount: '3개',
-    unit: 'g',
-    expiry_date: generate_expiryDate(),
-  },
-  {
-    id: 4,
-    method: 'room_temp',
-    food_name: '바나나',
-    image_url: faker.image.urlLoremFlickr({ category: 'food' }),
-    purchase_date: generate_purchase_date(),
-    amount: 1,
-    unit: '송이',
-    expiry_date: generate_expiryDate(),
-  },
-  {
-    id: 5,
-    method: 'frozen',
-    food_name: '완두콩',
-    image_url: faker.image.urlLoremFlickr({ category: 'food' }),
-    purchase_date: generate_purchase_date(),
-    amount: 1,
-    unit: '개',
-    expiry_date: generate_expiryDate(),
-  },
-];
-const receiptDummyArr = [
-  {
-    receipt_id: 1,
-    quantity: 10,
-    purchase_location: '이마트',
-    purchase_date: '24.2.17',
-    total_price: 20950,
-  },
-  {
-    receipt_id: 2,
-    quantity: 17,
-    purchase_location: '시장마트',
-    purchase_date: '24.2.27',
-    total_price: 52182,
-  },
-  {
-    receipt_id: 3,
-    quantity: 1,
-    purchase_location: '편의점',
-    purchase_date: '24.2.9',
-    total_price: 5931,
-  },
-  {
-    receipt_id: 4,
-    quantity: 1,
-    purchase_location: '홈플러스',
-    purchase_date: '24.2.29',
-    total_price: 5931,
-  },
-];
 
 export const handlers = [
   http.post('/api/login', () => {
@@ -186,6 +70,7 @@ export const handlers = [
     const url = new URL(request.url);
     const year_month = url.searchParams.get('month');
     const requestObj = dayjs(year_month, ['YY.MM']) || dayjs().format('YY.MM');
+
     const isThisDayArr = (target: string) => {
       const toDayjsObj = dayjs(target, ['YY.M.D']);
 
@@ -198,5 +83,17 @@ export const handlers = [
       isThisDayArr(receipt.purchase_date),
     );
     return HttpResponse.json(filteredReceiptArr);
+  }),
+  http.get('/api/receipt/:receipt_id', ({ params }) => {
+    const { receipt_id } = params;
+    console.log({ receipt_id });
+    if (!receipt_id) {
+      return new HttpResponse(null, { status: 404 });
+    }
+    return HttpResponse.json(
+      purchaseReceiptInfo.filter(
+        (items) => items.receipt_id === parseInt(receipt_id[0]),
+      ),
+    );
   }),
 ];
