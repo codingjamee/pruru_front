@@ -14,15 +14,15 @@ const ReceiptCard = () => {
     queryFn: () => getReceiptsByMonth(yearMonth),
     staleTime: 60 * 1000,
   });
-  const onClickCard = () => {
-    router.push(`/receipt/${receipts.receipt_id.toString()}`);
+  const onClickCard = (id: number) => {
+    router.push(`/receipt/${id}`);
   };
   return (
     <>
       {receipts &&
         receipts.map((receipt: ReceiptArrType) => (
           <Card
-            onClick={onClickCard}
+            onClick={() => onClickCard(receipt.receipt_id)}
             key={receipt.receipt_id}
             variant="outlined"
             className="flex w-full flex-shrink cursor-pointer justify-between gap-[20px] px-[40px]">
