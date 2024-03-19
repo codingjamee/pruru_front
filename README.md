@@ -1,3 +1,8 @@
+db :  https://dbdiagram.io/d/65c6e16dac844320aed83b44   
+figma : https://www.figma.com/file/xcU6l7pfXA6HFCjJWfpAYD/refrigerator?type=design&node-id=0-1&mode=design&t=B84jVdtzD1Flbpej-0
+
+
+
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
 ## Getting Started
