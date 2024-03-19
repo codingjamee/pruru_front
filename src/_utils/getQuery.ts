@@ -39,3 +39,15 @@ export const getReceiptsByMonth = async (YM?: string) => {
   }
   return res.json();
 };
+
+export const getReceiptItems = async (receipt_id: string) => {
+  const res = await api(`/receipt/${receipt_id}`, {
+    next: {
+      tags: ['receipt', 'items', receipt_id],
+    },
+  });
+  if (!res.ok) {
+    throw new Error('Failed to fetch data');
+  }
+  return res.json();
+};
