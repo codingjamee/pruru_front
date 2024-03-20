@@ -53,7 +53,7 @@ export const getReceiptItems = async (receipt_id: string) => {
 };
 
 export const getAnalyzeReceipt = async (
-  file: string | ArrayBuffer | null | undefined,
+  file: string | PromiseLike<string>,
   type: string,
 ) => {
   const res = await receiptApi(
