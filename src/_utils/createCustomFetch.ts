@@ -1,3 +1,4 @@
+import dayjs from 'dayjs';
 import uuid4 from 'uuid4';
 
 interface HeadersObjType {
@@ -8,7 +9,7 @@ interface ImageType {
   format: string;
   name: string;
   url?: string;
-  data?: string | ArrayBuffer | null | undefined;
+  data?: string | PromiseLike<string>;
 }
 
 interface CustomFetchType {
@@ -21,7 +22,7 @@ interface DynamicValuesType {
   format?: string;
   imageUrl?: string;
   timestamp?: number;
-  data?: string | ArrayBuffer | null | undefined;
+  data?: string | PromiseLike<string>;
 }
 
 const createCustomFetch = ({ baseURL, headers }: CustomFetchType) => {
@@ -78,15 +79,14 @@ const createCustomReceiptFetch = ({ baseURL, headers }: CustomFetchType) => {
       images: [
         {
           format: 'png',
-          name: 'medium',
+          name: uuid4(),
           data: undefined,
           url: undefined,
         },
       ] as ImageType[],
       lang: 'ko',
       requestId: uuid4(),
-      resultType: 'string',
-      timestamp: 0,
+      timestamp: dayjs().unix(),
       version: 'V2',
     };
 
