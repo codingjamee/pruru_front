@@ -1,5 +1,5 @@
 import dayjs from 'dayjs';
-import { api } from './createCustomFetch';
+import { api, receiptApi } from './createCustomFetch';
 
 export const getFoodsByExpiry = async () => {
   const res = await api(`/food?storage=total&sort=expiry_date`, {
@@ -46,6 +46,28 @@ export const getReceiptItems = async (receipt_id: string) => {
       tags: ['receipt', 'items', receipt_id],
     },
   });
+  if (!res.ok) {
+    throw new Error('Failed to fetch data');
+  }
+  return res.json();
+};
+
+export const getAnalyzeReceipt = async (
+  file: string | ArrayBuffer | null | undefined,
+  type: string,
+) => {
+  const res = await receiptApi(
+    '',
+    {
+      next: {
+        tags: ['receipt', 'anaylze'],
+      },
+    },
+    {
+      format: type,
+      data: file,
+    },
+  );
   if (!res.ok) {
     throw new Error('Failed to fetch data');
   }
