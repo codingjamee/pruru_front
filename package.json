@@ -24,6 +24,7 @@
     "react": "^18",
     "react-dom": "^18",
     "react-hook-form": "^7.50.1",
+    "react-image-file-resizer": "^0.4.8",
     "react-keyed-flatten-children": "^3.0.0",
     "react-transition-group": "^4.4.5",
     "uuid4": "^2.0.3",
