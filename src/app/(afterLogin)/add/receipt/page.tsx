@@ -13,9 +13,6 @@ const page = () => {
         variant="outlined"
         className="flex min-h-[695px] w-[635px] flex-col gap-[30px] px-[55px] mobile:min-h-[450px] mobile:border-0 mobile:px-4">
         <UploadReceipt />
-        <Button variant="primary" className="rounded-lg mobile:w-full">
-          분석하기
-        </Button>
         <div className="flex h-full flex-grow flex-col gap-4 rounded-lg border p-[12px]">
           <div className="p-[8px] text-size-font-card-title">직접 입력하기</div>
           <Button
