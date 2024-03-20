@@ -5,18 +5,18 @@ import { getAnalyzeReceipt } from '@/_utils/getQuery';
 import { useQuery } from '@tanstack/react-query';
 import { useRouter } from 'next/navigation';
 import { ChangeEvent, useRef, useState } from 'react';
+import Resizer from 'react-image-file-resizer';
 
 const UploadReceipt = () => {
   const fileInput = useRef<HTMLInputElement>(null);
-  const [incodedFile, setIncodedFile] = useState<
-    string | ArrayBuffer | null | undefined
-  >('');
-  const [imgType, setImgType] = useState<string>('');
+  const [incodedFile, setIncodedFile] = useState<string | PromiseLike<string>>(
+    '',
+  );
   const [analyzeReceipt, setAnalyzeReceipt] = useState(false);
   const router = useRouter();
   const { isSuccess, isError } = useQuery({
     queryKey: ['receipt', 'anaylze'],
-    queryFn: () => getAnalyzeReceipt(incodedFile, imgType),
+    queryFn: () => getAnalyzeReceipt(incodedFile, 'JPEG'),
     enabled: analyzeReceipt,
   });
   if (isSuccess) {
@@ -29,22 +29,18 @@ const UploadReceipt = () => {
     fileInput.current!.click();
   };
 
-  const imgUpload = async (file: File) => {
-    return new Promise((resolve, reject) => {
-      const reader = new FileReader();
-      reader.readAsDataURL(file);
-      reader.onload = (event: ProgressEvent<FileReader>) => {
-        setIncodedFile(event.target?.result);
-        resolve(event.target?.result);
-      };
-      reader.onerror = (error) => reject(error);
+  const imgUpload = async (file: File): Promise<string> => {
+    return new Promise<string>((resolve) => {
+      Resizer.imageFileResizer(file, 500, 500, 'JPEG', 100, 0, (image) => {
+        resolve(image as string | PromiseLike<string>);
+      });
     });
   };
 
-  const onChangeFile = (e: ChangeEvent<HTMLInputElement>) => {
+  const onChangeFile = async (e: ChangeEvent<HTMLInputElement>) => {
     if (e.target.files) {
-      setImgType(e.target.files[0].type);
-      imgUpload(e.target.files[0]);
+      const result = await imgUpload(e.target.files[0]);
+      setIncodedFile(result);
     }
   };
 
