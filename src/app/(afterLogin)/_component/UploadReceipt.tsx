@@ -1,7 +1,8 @@
 'use client';
 import PlusSvg from '@/_assets/PlusSvg';
 import Button from '@/_components/Button';
-import { getAnalyzeReceipt } from '@/_utils/getQuery';
+import { ReturnItemTypes } from '@/_types/ReturnTypes';
+import { getAnalyzeReceipt, getSearchCategory } from '@/_utils/getQuery';
 import { useQuery } from '@tanstack/react-query';
 import { useRouter } from 'next/navigation';
 import { ChangeEvent, useEffect, useRef, useState } from 'react';
@@ -11,23 +12,54 @@ const UploadReceipt = () => {
   const fileInput = useRef<HTMLInputElement>(null);
   const [incodedFile, setIncodedFile] = useState<string>('');
   const [analyzeReceipt, setAnalyzeReceipt] = useState(false);
+  const [analyzeSuccess, setAnalyzeSuccess] = useState(false);
+  const [searchLists, setSearchLists] = useState([]);
   const router = useRouter();
-  const { status } = useQuery({
+  const { status: analyzeStatus, data: receiptLists } = useQuery({
     queryKey: ['receipt', 'anaylze'],
     queryFn: () => getAnalyzeReceipt(incodedFile, 'JPEG'),
     enabled: analyzeReceipt,
+    staleTime: 60 * 60 * 1000,
+  });
+  const { status: searchStatus } = useQuery({
+    queryKey: ['search', 'category'],
+    queryFn: () => getSearchCategory(searchLists),
+    enabled: analyzeSuccess,
   });
 
   useEffect(() => {
-    console.log(status);
-    if (status === 'success') {
+    console.log(analyzeStatus);
+    if (analyzeStatus === 'success') {
       console.log('요청에 성공!');
-      router.push('/add/receipt/edit');
-    } else if (status === 'error') {
+      setSearchLists(
+        receiptLists.images[0].receipt.result.subResults[0].items.reduce(
+          (
+            acc: [string],
+            {
+              items: {
+                name: {
+                  formatted: { value },
+                },
+              },
+            }: ReturnItemTypes,
+          ) => {
+            acc.push(value);
+          },
+          [],
+        ),
+      );
+      setAnalyzeSuccess(true);
+    } else if (analyzeStatus === 'error') {
       //추후 toast로
       console.log('에러가 발생하였습니다 다시 파일을 업로드해주세요');
     }
-  }, [status]);
+  }, [analyzeStatus]);
+
+  useEffect(() => {
+    if (searchStatus === 'success') {
+      router.push('/add/receipt/edit');
+    }
+  }, [searchStatus]);
 
   const onClickButton = () => {
     fileInput.current!.click();
