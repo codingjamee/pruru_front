@@ -126,7 +126,7 @@ const createCustomReceiptFetch = ({ baseURL, headers }: CustomFetchType) => {
 };
 
 export const receiptApi = createCustomReceiptFetch({
-  baseURL: process.env.CLOVA_REQUEST_URL,
+  baseURL: '',
   headers: {
     'Content-Type': 'application/json',
     'X-OCR-SECRET': process.env.NEXT_PUBLIC_CLOVA_SECRET_KEY,

@@ -9,9 +9,7 @@ import Resizer from 'react-image-file-resizer';
 
 const UploadReceipt = () => {
   const fileInput = useRef<HTMLInputElement>(null);
-  const [incodedFile, setIncodedFile] = useState<string | PromiseLike<string>>(
-    '',
-  );
+  const [incodedFile, setIncodedFile] = useState<string>('');
   const [analyzeReceipt, setAnalyzeReceipt] = useState(false);
   const router = useRouter();
   const { isSuccess, isError } = useQuery({

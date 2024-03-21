@@ -1,3 +1,4 @@
+'use client';
 import dayjs from 'dayjs';
 import { api, receiptApi } from './createCustomFetch';
 
@@ -52,20 +53,18 @@ export const getReceiptItems = async (receipt_id: string) => {
   return res.json();
 };
 
-export const getAnalyzeReceipt = async (
-  file: string | PromiseLike<string>,
-  type: string,
-) => {
+export const getAnalyzeReceipt = async (file: string, type: string) => {
   const res = await receiptApi(
-    '',
+    `/custom/${process.env.NEXT_PUBLIC_CLOVA_REQUEST_PATH}`,
     {
+      method: 'POST',
       next: {
         tags: ['receipt', 'anaylze'],
       },
     },
     {
       format: type,
-      data: file,
+      data: file.split(',')[1],
     },
   );
   if (!res.ok) {
