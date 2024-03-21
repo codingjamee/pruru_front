@@ -52,7 +52,7 @@ const createCustomFetch = ({ baseURL, headers }: CustomFetchType) => {
 };
 
 export const api = createCustomFetch({
-  baseURL: 'http://localhost:9090/api',
+  baseURL: '/api',
   headers: {
     'Content-Type': 'application/json',
     Authorization: `Bearer ${process.env.API_TOKEN as string}`,
@@ -104,6 +104,11 @@ const createCustomReceiptFetch = ({ baseURL, headers }: CustomFetchType) => {
         baseBody.images[0].data = dynamicValues.data;
       }
     }
+    if (options && options.method && options.method.toUpperCase() !== 'GET') {
+      options.body = JSON.stringify(baseBody);
+    } else {
+      options && delete options.body;
+    }
     let response;
     try {
       response = await fetch(baseFullUrl, {
@@ -111,6 +116,7 @@ const createCustomReceiptFetch = ({ baseURL, headers }: CustomFetchType) => {
         headers: customHeaders,
         body: JSON.stringify(baseBody),
       });
+      console.log('요청 성공');
     } catch (err) {
       console.error(err);
       throw new Error('error occured!');
@@ -123,6 +129,6 @@ export const receiptApi = createCustomReceiptFetch({
   baseURL: process.env.CLOVA_REQUEST_URL,
   headers: {
     'Content-Type': 'application/json',
-    'X-OCR-SECRET': process.env.CLOVA_SECRET_KEY,
+    'X-OCR-SECRET': process.env.NEXT_PUBLIC_CLOVA_SECRET_KEY,
   },
 });
