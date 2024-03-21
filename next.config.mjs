@@ -13,6 +13,10 @@ const nextConfig = {
         source: '/custom/:path*',
         destination: `${process.env.NEXT_PUBLIC_CLOVA_REQUEST_URL}/custom/:path*`,
       },
+      {
+        source: '/search/:path*',
+        destination: `${process.env.NEXT_PUBLIC_NAVER_SEARCH_URL}/search/:path*`,
+      },
     ],
   }),
   webpack5: true,
