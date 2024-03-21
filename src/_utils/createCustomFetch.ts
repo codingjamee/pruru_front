@@ -1,32 +1,12 @@
+import {
+  CustomFetchType,
+  ExtendedRequestInit,
+} from '@/_types/CustomFetchTypes';
 import dayjs from 'dayjs';
 import uuid4 from 'uuid4';
 
-interface HeadersObjType {
-  [key: string]: string | undefined;
-}
-
-interface ImageType {
-  format: string;
-  name: string;
-  url?: string;
-  data?: string | PromiseLike<string>;
-}
-
-interface CustomFetchType {
-  baseURL?: string;
-  headers: HeadersObjType;
-  'X-OCR-SECRET'?: string;
-}
-
-interface DynamicValuesType {
-  format?: string;
-  imageUrl?: string;
-  timestamp?: number;
-  data?: string | PromiseLike<string>;
-}
-
 const createCustomFetch = ({ baseURL, headers }: CustomFetchType) => {
-  return async (url = '', options?: RequestInit): Promise<Response> => {
+  return async (url = '', options?: ExtendedRequestInit): Promise<Response> => {
     const baseFullUrl = `${baseURL}${url}`;
     const customHeaders = Object.entries(headers).reduce(
       (acc, [key, value]) => {
@@ -37,20 +17,52 @@ const createCustomFetch = ({ baseURL, headers }: CustomFetchType) => {
       },
       {} as Record<string, string>,
     );
-    let response;
+
+    let baseBody: any;
+    if (options?.baseBodyType === 'custom') {
+      //필요할때 custom body type설정
+      baseBody = {};
+    } else if (options?.dynamicValues) {
+      const { format, imageUrl, timestamp, data } = options.dynamicValues;
+      baseBody = {
+        images: [
+          {
+            format: format || 'png',
+            name: uuid4(),
+            data: data || undefined,
+            url: imageUrl || undefined,
+          },
+        ],
+        lang: 'ko',
+        requestId: uuid4(),
+        timestamp: timestamp || dayjs().unix(),
+        version: 'V2',
+      };
+    }
+
+    if (options && options?.method?.toUpperCase() !== 'GET' && baseBody) {
+      options.body = JSON.stringify(baseBody);
+    } else {
+      options && delete options.body;
+    }
+
     try {
-      response = await fetch(baseFullUrl, {
+      const response = await fetch(baseFullUrl, {
         ...options,
         headers: customHeaders,
       });
+
+      if (options?.dynamicValues) {
+        console.log('요청 성공');
+      }
+
+      return response;
     } catch (err) {
       console.error(err);
-      throw new Error('error occured!');
+      throw new Error('error occurred!');
     }
-    return response;
   };
 };
-
 export const api = createCustomFetch({
   baseURL: '/api',
   headers: {
@@ -59,76 +71,18 @@ export const api = createCustomFetch({
   },
 });
 
-const createCustomReceiptFetch = ({ baseURL, headers }: CustomFetchType) => {
-  return async (
-    url = '',
-    options?: RequestInit,
-    dynamicValues?: DynamicValuesType,
-  ): Promise<Response> => {
-    const baseFullUrl = `${baseURL}${url}`;
-    const customHeaders = Object.entries(headers).reduce(
-      (acc, [key, value]) => {
-        if (value !== undefined) {
-          acc[key] = value;
-        }
-        return acc;
-      },
-      {} as Record<string, string>,
-    );
-    const baseBody = {
-      images: [
-        {
-          format: 'png',
-          name: uuid4(),
-          data: undefined,
-          url: undefined,
-        },
-      ] as ImageType[],
-      lang: 'ko',
-      requestId: uuid4(),
-      timestamp: dayjs().unix(),
-      version: 'V2',
-    };
-
-    if (dynamicValues) {
-      if (dynamicValues.format) {
-        baseBody.images[0].format = dynamicValues.format;
-      }
-      if (dynamicValues.imageUrl) {
-        baseBody.images[0].url = dynamicValues.imageUrl;
-      }
-      if (dynamicValues.timestamp) {
-        baseBody.timestamp = dynamicValues.timestamp;
-      }
-      if (dynamicValues.data) {
-        baseBody.images[0].data = dynamicValues.data;
-      }
-    }
-    if (options && options.method && options.method.toUpperCase() !== 'GET') {
-      options.body = JSON.stringify(baseBody);
-    } else {
-      options && delete options.body;
-    }
-    let response;
-    try {
-      response = await fetch(baseFullUrl, {
-        ...options,
-        headers: customHeaders,
-        body: JSON.stringify(baseBody),
-      });
-      console.log('요청 성공');
-    } catch (err) {
-      console.error(err);
-      throw new Error('error occured!');
-    }
-    return response;
-  };
-};
-
-export const receiptApi = createCustomReceiptFetch({
+export const receiptApi = createCustomFetch({
   baseURL: '',
   headers: {
     'Content-Type': 'application/json',
     'X-OCR-SECRET': process.env.NEXT_PUBLIC_CLOVA_SECRET_KEY,
+  },
+});
+
+export const searchApi = createCustomFetch({
+  baseURL: '',
+  headers: {
+    'X-Naver-Client-Id': process.env.NEXT_PUBLIC_NAVER_CLIENT_ID,
+    'X-Naver-Client-Secret': process.env.NEXT_PUBLIC_NAVER_SECRET_KEY,
   },
 });
