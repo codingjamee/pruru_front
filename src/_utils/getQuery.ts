@@ -1,6 +1,6 @@
 'use client';
 import dayjs from 'dayjs';
-import { api } from './createCustomFetch';
+import { api, searchApi } from './createCustomFetch';
 // import { receiptApi } from './createCustomFetch';
 
 export const getFoodsByExpiry = async () => {
@@ -69,12 +69,29 @@ export const getAnalyzeReceipt = async (file: string, type: string) => {
   //     next: {
   //       tags: ['receipt', 'anaylze'],
   //     },
-  //   },
-  //   {
-  //     format: type,
-  //     data: file.split(',')[1],
+  //     dynamicValues: {
+  //       format: type,
+  //       data: file.split(',')[1],
+  //     },
   //   },
   // );
+  if (!res.ok) {
+    throw new Error('Failed to fetch data');
+  }
+  return res.json();
+};
+
+export const getSearchCategory = async (lists: object) => {
+  console.log(lists);
+  const res = await searchApi(
+    `/search/${process.env.NEXT_PUBLIC_NAVER_REQUEST_PATH}`,
+    {
+      method: 'GET',
+      next: {
+        tags: ['search', 'category'],
+      },
+    },
+  );
   if (!res.ok) {
     throw new Error('Failed to fetch data');
   }
