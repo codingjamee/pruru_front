@@ -1,6 +1,7 @@
 'use client';
 import dayjs from 'dayjs';
-import { api, receiptApi } from './createCustomFetch';
+import { api } from './createCustomFetch';
+// import { receiptApi } from './createCustomFetch';
 
 export const getFoodsByExpiry = async () => {
   const res = await api(`/food?storage=total&sort=expiry_date`, {
@@ -54,19 +55,26 @@ export const getReceiptItems = async (receipt_id: string) => {
 };
 
 export const getAnalyzeReceipt = async (file: string, type: string) => {
-  const res = await receiptApi(
-    `/custom/${process.env.NEXT_PUBLIC_CLOVA_REQUEST_PATH}`,
-    {
-      method: 'POST',
-      next: {
-        tags: ['receipt', 'anaylze'],
-      },
+  console.log(file, type);
+  const res = await api(`/analyze/receipt`, {
+    method: 'POST',
+    next: {
+      tags: ['receipt', 'anaylze'],
     },
-    {
-      format: type,
-      data: file.split(',')[1],
-    },
-  );
+  });
+  // const res = await receiptApi(
+  //   `/custom/${process.env.NEXT_PUBLIC_CLOVA_REQUEST_PATH}`,
+  //   {
+  //     method: 'POST',
+  //     next: {
+  //       tags: ['receipt', 'anaylze'],
+  //     },
+  //   },
+  //   {
+  //     format: type,
+  //     data: file.split(',')[1],
+  //   },
+  // );
   if (!res.ok) {
     throw new Error('Failed to fetch data');
   }
