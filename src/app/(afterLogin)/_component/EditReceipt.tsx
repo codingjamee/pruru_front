@@ -2,16 +2,16 @@
 import Button from '@/_components/Button';
 import Card from '@/_components/Card';
 import PlusSvg from '@/_assets/PlusSvg';
-import { purchaseReceiptInfo } from './ReceiptDetailCard';
 import { useMemo } from 'react';
 import MinusSvg from '@/_assets/MinusSvg';
 import Input from '@/_components/Input';
 import { useFieldArray, useForm } from 'react-hook-form';
+import { purchaseReceiptInfo } from '@/mocks/data';
 
 const EditReceipt = () => {
   const total_price = useMemo(
     () =>
-      purchaseReceiptInfo.receiptItems.reduce((acc, cur) => {
+      purchaseReceiptInfo[0].receiptItems.reduce((acc, cur) => {
         return cur.purchase_price * cur.quantity + acc;
       }, 0),
     [purchaseReceiptInfo],
@@ -19,7 +19,7 @@ const EditReceipt = () => {
 
   const { control, handleSubmit, register } = useForm({
     defaultValues: {
-      receiptArr: [...purchaseReceiptInfo.receiptItems],
+      receiptArr: [...purchaseReceiptInfo[0].receiptItems],
     },
   });
 
@@ -41,10 +41,10 @@ const EditReceipt = () => {
         className="flex min-h-[695px] w-[635px] flex-col gap-[30px] px-[55px] mobile:min-h-[450px] mobile:border-0 mobile:px-4">
         <div className="flex w-full justify-between gap-[10px] mobile:flex-col">
           <div className="w-[213px] rounded-lg border border-solid border-color-default-text px-[30px] py-[7px] text-center mobile:w-full">
-            {purchaseReceiptInfo.purchase_date} 구매
+            {purchaseReceiptInfo[0].purchase_date} 구매
           </div>
           <Button variant="primary" className="rounded-lg mobile:w-full">
-            {purchaseReceiptInfo.purchase_location}
+            {purchaseReceiptInfo[0].purchase_location}
           </Button>
         </div>
         <div className="flex flex-1 flex-col gap-[10px] mobile:gap-[15px]">
@@ -97,6 +97,7 @@ const EditReceipt = () => {
               className="flex basis-1/12"
               onClick={() =>
                 append({
+                  food_id: Math.random() * 4,
                   food_category: '',
                   food_name: '',
                   food_weight: '',
@@ -111,7 +112,7 @@ const EditReceipt = () => {
         </div>
 
         <div className="flex justify-end gap-[30px]">
-          <div>품목 {purchaseReceiptInfo.receiptItems.length}개</div>
+          <div>품목 {purchaseReceiptInfo[0].receiptItems.length}개</div>
           <div>총{total_price.toLocaleString()}원</div>
         </div>
 
