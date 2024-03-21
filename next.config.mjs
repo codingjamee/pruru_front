@@ -6,7 +6,7 @@ const nextConfig = {
   rewrites: async () => ({
     beforeFiles: [
       {
-        source: '/api/:path*',
+        source: '/api/:path((?!auth).*)',
         destination: `${process.env.NEXT_PUBLIC_BASE_URL}/api/:path*`,
       },
       {
