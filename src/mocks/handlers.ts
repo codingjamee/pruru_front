@@ -3,6 +3,8 @@ import dayjs from 'dayjs';
 import customParseFormat from 'dayjs/plugin/customParseFormat';
 import { foodCardDummyArr, purchaseReceiptInfo, receiptDummyArr } from './data';
 dayjs.extend(customParseFormat);
+import path from 'path';
+import fs from 'fs';
 
 export const handlers = [
   http.post('/api/login', () => {
@@ -95,5 +97,11 @@ export const handlers = [
         (items) => items.receipt_id === parseInt(receipt_id[0]),
       ),
     );
+  }),
+  http.post('/api/analyze/receipt', () => {
+    const resJsonPath = path.resolve('', 'responseEx.json');
+    const exData = fs.readFileSync(resJsonPath, 'utf-8');
+
+    return HttpResponse.json(JSON.parse(exData));
   }),
 ];
