@@ -59,10 +59,14 @@ const UploadReceipt = () => {
         <Button
           onClick={onClickButton}
           className=" flex h-[50%] w-full flex-grow flex-col items-center justify-center rounded-lg hover:bg-color-primary-m">
-          <PlusSvg className="flex h-[44px] w-[44px] items-center justify-center" />
+          <PlusSvg
+            cyAttribute="upload-receipt"
+            className="flex h-[44px] w-[44px] items-center justify-center"
+          />
         </Button>
       </div>
       <Button
+        cyAttribute="analyze-receipt"
         onClick={() => setAnalyzeReceipt(true)}
         variant="primary"
         className="rounded-lg mobile:w-full">

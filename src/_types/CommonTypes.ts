@@ -14,6 +14,7 @@ export interface ButtonPropsType extends ComponentPropsWithoutRef<'button'> {
     event: React.MouseEvent<HTMLButtonElement, MouseEvent>,
   ) => void | undefined | any;
   variant?: ButtonVariant;
+  cyAttribute?: string;
 }
 
 export interface CarouselProps {

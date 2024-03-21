@@ -13,6 +13,7 @@ const Button = ({
   customClassName,
   variant,
   className,
+  cyAttribute,
   ...props
 }: ButtonPropsType) => {
   const getClassName = () => {
@@ -42,6 +43,7 @@ const Button = ({
         <Link href={href} className={className}>
           {/* @ts-expect-error Server Component */}
           <Component
+            data-cy={cyAttribute}
             className={`button ${variant && getClassName()} ${customClassName} ${className}`}
             {...buttonProps}
             {...props}>
@@ -52,6 +54,7 @@ const Button = ({
         <>
           {/* @ts-expect-error Server Component */}
           <Component
+            data-cy={cyAttribute}
             className={`button ${variant && getClassName()} ${className}`}
             {...buttonProps}
             {...props}>
