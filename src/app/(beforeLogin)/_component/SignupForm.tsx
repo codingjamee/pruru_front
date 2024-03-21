@@ -60,7 +60,7 @@ const SignupForm = () => {
   const router = useRouter();
 
   useEffect(() => {
-    if (session) {
+    if (session.data) {
       router.replace('/home');
     }
   }, []);
@@ -75,11 +75,6 @@ const SignupForm = () => {
         redirect: false,
       });
       showRedirect = true;
-      await signIn('credentials', {
-        username: data.email,
-        password: data.password,
-        redirect: false,
-      });
     } catch (err) {
       //추후 toast로 설정
       console.error(err);
@@ -155,7 +150,7 @@ const SignupForm = () => {
             variant="outlined"
             className="btn-defaultsize w-[200px]"
             onClick={() => {
-              router.push('/welcome/Signup');
+              router.push('/welcome/login');
             }}>
             로그인 하러가기
           </Button>
