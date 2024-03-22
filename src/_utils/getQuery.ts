@@ -62,6 +62,7 @@ export const getAnalyzeReceipt = async (file: string, type: string) => {
       tags: ['receipt', 'anaylze'],
     },
   });
+  // ==================실제 요청 api (지우면안됨)==================
   // const res = await receiptApi(
   //   `/custom/${process.env.NEXT_PUBLIC_CLOVA_REQUEST_PATH}`,
   //   {
@@ -81,10 +82,9 @@ export const getAnalyzeReceipt = async (file: string, type: string) => {
   return res.json();
 };
 
-export const getSearchCategory = async (lists: object) => {
-  console.log(lists);
+export const getSearchCategory = async (searchString: string) => {
   const res = await searchApi(
-    `/search/${process.env.NEXT_PUBLIC_NAVER_REQUEST_PATH}`,
+    `/search/${process.env.NEXT_PUBLIC_NAVER_REQUEST_PATH}${searchString}&display=1`,
     {
       method: 'GET',
       next: {
