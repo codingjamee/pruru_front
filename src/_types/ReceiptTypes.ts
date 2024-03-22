@@ -1,12 +1,13 @@
-export interface purchaseReceiptInfoType {
+export interface PurchaseReceiptInfoType {
   receipt_id: number;
   purchase_location: string;
   purchase_date: string;
-  receiptItems: receiptDetailType[];
+  receiptItems: ReceiptDetailType[];
 }
 
-export interface receiptDetailType {
+export interface ReceiptDetailType {
   food_id?: number;
+  food_image?: string;
   food_category: string;
   food_name: string;
   food_weight: string;
