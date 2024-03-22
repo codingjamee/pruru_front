@@ -3,7 +3,7 @@ import PlusSvg from '@/_assets/PlusSvg';
 import RefrigerIcon from '@/_assets/RefrigerIcon';
 import Button from '@/_components/Button';
 import Card from '@/_components/Card';
-import { receiptDetailType } from '@/_types/ReceiptTypes';
+import { ReceiptDetailType } from '@/_types/ReceiptTypes';
 import { getReceiptItems } from '@/_utils/getQuery';
 import { useQuery } from '@tanstack/react-query';
 import { useRouter } from 'next/navigation';
@@ -20,7 +20,7 @@ const ReceiptDetailCard = ({ receipt_id }: { receipt_id: string }) => {
     () =>
       purchaseReceiptInfo &&
       purchaseReceiptInfo[0]?.receiptItems.reduce(
-        (acc: number, cur: receiptDetailType) => {
+        (acc: number, cur: ReceiptDetailType) => {
           return cur.purchase_price * cur.quantity + acc;
         },
         0,
@@ -54,7 +54,7 @@ const ReceiptDetailCard = ({ receipt_id }: { receipt_id: string }) => {
               <div className="basis-1/12">등록</div>
             </div>
             {purchaseReceiptInfo[0].receiptItems.map(
-              (receipt: receiptDetailType) => (
+              (receipt: ReceiptDetailType) => (
                 <div
                   className="flex w-full justify-between truncate"
                   key={receipt.food_id}>
