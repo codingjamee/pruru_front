@@ -71,6 +71,13 @@ export const api = createCustomFetch({
   },
 });
 
+export const authApi = createCustomFetch({
+  baseURL: `${process.env.NEXT_PUBLIC_BASE_URL}/api`,
+  headers: {
+    'Content-Type': 'application/json',
+  },
+});
+
 export const receiptApi = createCustomFetch({
   baseURL: '',
   headers: {
