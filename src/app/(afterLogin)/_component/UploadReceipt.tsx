@@ -10,15 +10,17 @@ import { useQueries, useQuery, useQueryClient } from '@tanstack/react-query';
 import { useRouter } from 'next/navigation';
 import { ChangeEvent, useEffect, useRef, useState } from 'react';
 import Resizer from 'react-image-file-resizer';
-import useAllQueriesSuccess from '../_hooks/useAllQueriesSuccess';
+import {
+  PurchaseReceiptInfoType,
+  ReceiptDetailType,
+} from '@/_types/ReceiptTypes';
 
 const UploadReceipt = () => {
   const fileInput = useRef<HTMLInputElement>(null);
   const [incodedFile, setIncodedFile] = useState<string>('');
   const [triggerAnalyzeReceipt, setTriggerAnalyzeReceipt] = useState(false);
-  const [analyzeSuccess, setAnalyzeSuccess] = useState(false);
+  const [triggerSearch, setTriggerSearch] = useState(false);
   const [searchLists, setSearchLists] = useState([]);
-  const anaylzedReceiptInfo = [];
   const queryClient = useQueryClient();
   const router = useRouter();
   const reg_exceptgiho = /[`~!@#$%^&*()_|+\-=?;:'",.<>{}[\]\\/]/gim;
@@ -26,31 +28,36 @@ const UploadReceipt = () => {
     queryKey: ['receipt', 'anaylze'],
     queryFn: () => getAnalyzeReceipt(incodedFile, 'JPEG'),
     enabled: triggerAnalyzeReceipt,
-    select: (data) => {
-      return {
-        purchase_location:
-          data.images[0].receipt.result.storeInfo.name.formatted +
-          ' ' +
-          data.images[0].receipt.result.storeInfo.subName,
-        items: data.images[0]?.receipt?.result.subResults[0].items.map(
-          (item: AnalyzedReceiptAllType) => {
-            return {
-              food_name: item.name.formatted.value.replace(reg_exceptgiho, ''),
-              purchase_price: item.price.price.formatted.value,
-              quantity: item.count.formatted.value,
-            };
-          },
-        ),
-      };
-    },
   });
-
+  let analyzedReceiptData_2: PurchaseReceiptInfoType | any = [];
   // 영수증 인식 성공이라면 searchList를 만듦
   useEffect(() => {
     if (analyzeStatus === 'success') {
+      analyzedReceiptData_2 = {
+        purchase_location:
+          (analyzedReceiptData.images[0].receipt.result.storeInfo.name.formatted
+            .value || '') +
+          ' ' +
+          (analyzedReceiptData.images[0].receipt.result.storeInfo.subName
+            .text || ''),
+        receiptItems:
+          analyzedReceiptData.images[0]?.receipt?.result?.subResults[0]?.items.map(
+            (item: AnalyzedReceiptAllType) => {
+              return {
+                food_name: item.name.formatted.value.replace(
+                  reg_exceptgiho,
+                  '',
+                ),
+                purchase_price: item.price.price.formatted.value,
+                quantity: item.count?.formatted.value,
+              };
+            },
+          ),
+      };
+      queryClient.setQueryData(['analyzedReceiptData'], analyzedReceiptData_2);
       console.log('요청에 성공!');
       setSearchLists(
-        analyzedReceiptData.items.reduce(
+        analyzedReceiptData_2?.receiptItems.reduce(
           (acc: string[], cur: ModifiedAnalyzeReceiptType) => {
             acc.push(cur.food_name);
             return acc;
@@ -58,28 +65,27 @@ const UploadReceipt = () => {
           [],
         ),
       );
-      setAnalyzeSuccess(true);
+      setTriggerSearch(true);
     } else if (analyzeStatus === 'error') {
       //추후 toast로
       if (fileInput.current) {
         fileInput.current.value = '';
       }
-      console.log({ analyzeStatus });
       console.log('에러가 발생하였습니다 다시 파일을 업로드해주세요');
     }
   }, [analyzeStatus]);
 
   //네이버검색 요청 쿼리 - 영수증 인식성공시 트리거
-  const { data: searchResults } = useQueries({
-    queries: searchLists.map((search, idx) => ({
+  const { data: searchResults, searchSuccess } = useQueries({
+    queries: searchLists?.map((search, idx) => ({
       queryKey: ['search', 'category', idx],
       queryFn: () => getSearchCategory(search),
-      enabled: analyzeSuccess,
+      enabled: triggerSearch,
       staleTime: 60 * 60 * 1000,
     })),
     combine: (results) => {
       return {
-        data: results.map((result, index) => {
+        data: results?.map((result, index) => {
           if (result?.data?.items[0]?.category1 === '식품')
             return {
               index: index,
@@ -87,50 +93,40 @@ const UploadReceipt = () => {
               food_image: result.data.items[0].image,
             };
         }),
+        searchSuccess: results.every((result) => result.isSuccess),
       };
     },
   });
 
-  useEffect(() => {
-    console.log(analyzedReceiptData);
-  }, [analyzedReceiptData]);
-
   //모든 검색 요청이 성공하였다
-  const isSearchesSuccess = useAllQueriesSuccess(searchResults);
-
   //영수증 인식 데이터와 검색 성공 데이터를 수정하여 receiptWithCateLists에 저장해야함
   useEffect(() => {
-    console.log(isSearchesSuccess);
-    if (searchResults.length < 1) return;
-    const searchedDataWithCate = [...searchResults];
-    const receiptData = analyzedReceiptData && [...analyzedReceiptData.items];
-    const modifiedData =
-      receiptData &&
-      receiptData.map((data, index) => {
-        const searchedCateData = searchedDataWithCate.find(
-          (cateData) => cateData?.index === index,
-        );
-        if (searchedCateData) {
-          return data.push(searchedCateData);
-        }
-      });
-    anaylzedReceiptInfo.push();
-    queryClient.setQueryData(['allSearchResults'], modifiedData);
-    console.log(modifiedData);
-  }, [isSearchesSuccess]);
-
-  useEffect(() => {
-    console.log({ triggerAnalyzeReceipt });
-  }, [triggerAnalyzeReceipt]);
-
-  useEffect(() => {
-    if (isSearchesSuccess) {
+    if (searchResults.length < 1 || !searchSuccess) return;
+    if (searchSuccess) {
+      const searchedDataWithCate = [...searchResults];
+      const getAnalyzedReceiptData_2: PurchaseReceiptInfoType | undefined =
+        queryClient.getQueryData(['analyzedReceiptData']);
+      const modifiedData = {
+        ...getAnalyzedReceiptData_2,
+        receiptItems:
+          getAnalyzedReceiptData_2?.receiptItems &&
+          getAnalyzedReceiptData_2?.receiptItems?.map(
+            (data: ReceiptDetailType, index: number) => {
+              const searchedCateData = searchedDataWithCate.find(
+                (cateData) => cateData?.index === index,
+              );
+              if (searchedCateData) {
+                return { ...data, ...searchedCateData };
+              }
+            },
+          ),
+      };
+      queryClient.setQueryData(['allSearchResults'], modifiedData);
       router.push('/add/receipt/edit');
     }
-  }, [isSearchesSuccess]);
+  }, [searchSuccess]);
 
   const onClickButton = () => {
-    console.log(fileInput.current);
     fileInput.current!.click();
   };
 
@@ -148,7 +144,7 @@ const UploadReceipt = () => {
         .then((result) => setIncodedFile(result))
         .catch((error) => {
           console.error('Image upload failed:', error);
-          // e.target.value = '';
+          e.target.value = '';
         });
     }
   };
