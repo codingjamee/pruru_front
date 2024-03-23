@@ -8,13 +8,13 @@ export interface PurchaseReceiptInfoType {
 export interface ReceiptDetailType {
   food_id?: number;
   food_image?: string;
-  food_category: string;
-  food_name: string;
-  food_weight: string;
-  purchase_price: number;
-  price_per_amount: number;
-  quantity: number;
-  registered: boolean;
+  food_category?: string;
+  food_name?: string;
+  food_weight?: string;
+  purchase_price?: number;
+  price_per_amount?: number;
+  quantity?: number;
+  registered?: boolean;
 }
 
 export interface ReceiptArrType {
