@@ -15,7 +15,7 @@ import {
   ReceiptDetailType,
 } from '@/_types/ReceiptTypes';
 
-const UploadReceipt = () => {
+const AnalyzeReceipt = () => {
   const fileInput = useRef<HTMLInputElement>(null);
   const [incodedFile, setIncodedFile] = useState<string>('');
   const [triggerAnalyzeReceipt, setTriggerAnalyzeReceipt] = useState(false);
@@ -40,6 +40,8 @@ const UploadReceipt = () => {
           ' ' +
           (analyzedReceiptData.images[0].receipt.result.storeInfo.subName
             .text || ''),
+        purchase_date:
+          analyzedReceiptData.images[0].receipt.result.paymentInfo.date.text,
         receiptItems:
           analyzedReceiptData.images[0]?.receipt?.result?.subResults[0]?.items.map(
             (item: AnalyzedReceiptAllType) => {
@@ -48,7 +50,10 @@ const UploadReceipt = () => {
                   reg_exceptgiho,
                   '',
                 ),
-                purchase_price: item.price.price.formatted.value,
+                purchase_price: item.price.price.formatted.value.replace(
+                  '.',
+                  '',
+                ),
                 quantity: item.count?.formatted.value,
               };
             },
@@ -174,4 +179,4 @@ const UploadReceipt = () => {
   );
 };
 
-export default UploadReceipt;
+export default AnalyzeReceipt;
