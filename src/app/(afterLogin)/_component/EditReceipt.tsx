@@ -2,13 +2,22 @@
 import Button from '@/_components/Button';
 import Card from '@/_components/Card';
 import PlusSvg from '@/_assets/PlusSvg';
-import { useMemo } from 'react';
+import { useEffect, useMemo } from 'react';
 import MinusSvg from '@/_assets/MinusSvg';
 import Input from '@/_components/Input';
 import { useFieldArray, useForm } from 'react-hook-form';
 import { purchaseReceiptInfo } from '@/mocks/data';
+import { useQueryClient } from '@tanstack/react-query';
 
 const EditReceipt = () => {
+  //receipt정보가 있다면 가져와서 데이터 input의 value로 설정해주기
+  const queryClient = useQueryClient();
+  const foundReceiptData = queryClient.getQueryData(['allSearchResults']);
+
+  useEffect(() => {
+    if (foundReceiptData) console.log(foundReceiptData);
+  }, [foundReceiptData]);
+
   const total_price = useMemo(
     () =>
       purchaseReceiptInfo[0].receiptItems.reduce((acc, cur) => {
