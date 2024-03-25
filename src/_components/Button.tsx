@@ -3,8 +3,9 @@
 import { useButtonProps } from '@/_hooks/useButtonProps';
 import { ButtonPropsType } from '@/_types/CommonTypes';
 import Link from 'next/link';
+import { FC, PropsWithChildren } from 'react';
 
-const Button = ({
+const Button: FC<PropsWithChildren<ButtonPropsType>> = ({
   href,
   disabled,
   children,
