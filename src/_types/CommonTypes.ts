@@ -4,7 +4,6 @@ export type ButtonVariant = 'disabled' | 'primary' | 'outlined' | undefined;
 export type CardVariant = 'primary' | 'outlined' | undefined;
 
 export interface ButtonPropsType extends ComponentPropsWithoutRef<'button'> {
-  children?: string | ReactElement | number | string[];
   disabled?: boolean;
   as?: React.ElementType;
   to?: string;

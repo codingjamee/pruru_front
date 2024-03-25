@@ -2,7 +2,8 @@ export interface PurchaseReceiptInfoType {
   receipt_id: number;
   purchase_location: string;
   purchase_date: string;
-  receiptItems: ReceiptDetailType[];
+  total_price:number;
+  receipt_items: ReceiptDetailType[];
 }
 
 export interface ReceiptDetailType {

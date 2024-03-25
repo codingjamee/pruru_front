@@ -2,6 +2,7 @@ import { ReactElement } from 'react';
 
 export type FoodPropType = {
   id: number;
+  category?: string;
   storage_id?: number;
   receipt_id?: number;
   food_name?: string;
@@ -9,12 +10,13 @@ export type FoodPropType = {
   amount?: number;
   quantity?: number;
   unit?: string;
-  remain_amount?: number;
+  remain_amount?: string;
   image_url?: string;
   purchase_price?: number;
-  purchase_date?: Date;
+  purchase_date?: string;
   expiry_date?: string;
   registered?: boolean;
+  purchase_location?: string;
 };
 
 export type FoodCardType = {
