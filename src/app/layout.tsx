@@ -22,6 +22,7 @@ export default function RootLayout({
     <html lang="en">
       <body className={inter.className}>
         <MSWComponent />
+        <div id="modal-root" />
         <SessionProvider>{children}</SessionProvider>
       </body>
     </html>
