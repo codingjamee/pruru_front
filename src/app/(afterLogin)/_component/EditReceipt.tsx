@@ -6,9 +6,26 @@ import { useEffect, useState } from 'react';
 import MinusSvg from '@/_assets/MinusSvg';
 import Input from '@/_components/Input';
 import { useFieldArray, useForm } from 'react-hook-form';
-import { useQueryClient } from '@tanstack/react-query';
+import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { PurchaseReceiptInfoType } from '@/_types/ReceiptTypes';
 import dayjs from 'dayjs';
+import { postReceiptData } from '@/_utils/postQuery';
+import { useRouter } from 'next/navigation';
+import customParseFormat from 'dayjs/plugin/customParseFormat';
+dayjs.extend(customParseFormat);
+
+const editReceiptForm: {
+  field: 'food_category' | 'food_name' | 'food_weight' | 'purchase_price';
+  label: string;
+  basis: string;
+  maxWidth?: string;
+  min?: number;
+}[] = [
+  { field: 'food_category', label: 'Food Category', basis: '2/12' },
+  { field: 'food_name', label: 'Food Name', basis: '5/12', maxWidth: '127px' },
+  { field: 'food_weight', label: 'Food Weight', basis: '2/12' },
+  { field: 'purchase_price', label: 'Purchase Price', basis: '2/12', min: 1 },
+];
 
 const EditReceipt = () => {
   const queryClient = useQueryClient();
@@ -16,6 +33,17 @@ const EditReceipt = () => {
     queryClient.getQueryData(['allSearchResults']);
   const [length, setLength] = useState<number | undefined>(0);
   const [totalPrice, setTotalPrice] = useState<number | undefined>(0);
+  const [receiptData, setReceiptData] = useState<
+    PurchaseReceiptInfoType | undefined
+  >();
+  const [submitTrigger, setSubmitTrigger] = useState(false);
+  const router = useRouter();
+
+  const { status } = useQuery({
+    queryKey: ['posted', 'receipt', 'data'],
+    queryFn: () => postReceiptData(receiptData),
+    enabled: submitTrigger,
+  });
 
   const {
     control,
@@ -32,8 +60,8 @@ const EditReceipt = () => {
         dayjs(foundReceiptData && foundReceiptData.purchase_date).format(
           'YY.MM.DD',
         ) + ' 구매',
-      receiptItems: foundReceiptData
-        ? foundReceiptData.receiptItems.map((data) => {
+      receipt_items: foundReceiptData
+        ? foundReceiptData.receipt_items.map((data) => {
             return {
               food_category: data?.food_category || '',
               food_name: data?.food_name || '',
@@ -41,6 +69,7 @@ const EditReceipt = () => {
               food_weight: '',
               food_id: Math.random() * 4,
               quantity: data?.quantity,
+              food_image: data.food_image,
               registered: false,
             };
           })
@@ -52,6 +81,7 @@ const EditReceipt = () => {
               food_weight: undefined,
               purchase_price: undefined,
               quantity: undefined,
+              food_image: '',
               registered: false,
             },
           ],
@@ -60,15 +90,15 @@ const EditReceipt = () => {
 
   const { fields, append, remove } = useFieldArray({
     control,
-    name: 'receiptItems',
+    name: 'receipt_items',
   });
 
   useEffect(() => {
     const { unsubscribe } = watch((value) => {
-      setLength(value.receiptItems && value.receiptItems.length);
+      setLength(value.receipt_items && value.receipt_items.length);
       setTotalPrice(
-        value.receiptItems &&
-          value.receiptItems.reduce(
+        value.receipt_items &&
+          value.receipt_items.reduce(
             (acc: number, cur) => acc + (Number(cur?.purchase_price) || 0),
             0,
           ),
@@ -77,7 +107,19 @@ const EditReceipt = () => {
     return () => unsubscribe();
   }, [watch]);
 
+  useEffect(() => {
+    if (status === 'success') {
+      const editMonth = dayjs(
+        foundReceiptData?.purchase_date.split(' ')[0],
+        'YY.MM',
+      );
+      router.push(`receipt?month=${editMonth}`);
+    }
+  }, [status]);
+
   const onSubmit = (data: PurchaseReceiptInfoType) => {
+    setReceiptData(data);
+    setSubmitTrigger(true);
     console.log(data);
   };
 
@@ -123,75 +165,40 @@ const EditReceipt = () => {
               <div
                 className="flex w-full items-center justify-between gap-[5px] truncate"
                 key={`receipt-${index}`}>
-                <Input
-                  variant={
-                    errors?.receiptItems?.[index]?.food_category
-                      ? 'danger'
-                      : 'underline'
-                  }
-                  {...register(`receiptItems.${index}.food_category`, {
-                    required: {
-                      value: true,
-                      message: '빈 칸이 없게 작성해주세요',
-                    },
-                    minLength: 1,
-                  })}
-                  className="basis-2/12"
-                />
-                <Input
-                  variant={
-                    errors?.receiptItems?.[index]?.food_name
-                      ? 'danger'
-                      : 'underline'
-                  }
-                  {...register(`receiptItems.${index}.food_name`, {
-                    required: {
-                      value: true,
-                      message: '빈 칸이 없게 작성해주세요',
-                    },
-                    minLength: 1,
-                  })}
-                  className="max-w-[127px] basis-5/12 truncate"
-                />
-                <Input
-                  variant={
-                    errors?.receiptItems?.[index]?.food_weight
-                      ? 'danger'
-                      : 'underline'
-                  }
-                  {...register(`receiptItems.${index}.food_weight`, {
-                    required: {
-                      value: true,
-                      message: '빈 칸이 없게 작성해주세요',
-                    },
-                    minLength: 1,
-                  })}
-                  className="basis-2/12"
-                />
-                <Input
-                  variant={
-                    errors?.receiptItems?.[index]?.purchase_price
-                      ? 'danger'
-                      : 'underline'
-                  }
-                  {...register(`receiptItems.${index}.purchase_price`, {
-                    required: {
-                      value: true,
-                      message: '빈 칸이 없게 작성해주세요',
-                    },
-                    min: 1,
-                  })}
-                  className="basis-2/12"
-                />
+                {editReceiptForm.map(({ field, basis, maxWidth, min }) => (
+                  <>
+                    <Input
+                      variant={
+                        errors?.receipt_items?.[index]?.[field]
+                          ? 'danger'
+                          : 'underline'
+                      }
+                      {...register(`receipt_items.${index}.${field}`, {
+                        required: {
+                          value: true,
+                          message: '빈 칸이 없게 작성해주세요',
+                        },
+                        minLength: min ? undefined : 1,
+                        min: 1,
+                      })}
+                      className={`${maxWidth ? `max-w-[${maxWidth}]` : ''} basis-${basis} ${field === 'food_name' ? 'truncate' : ''}`}
+                    />
+                  </>
+                ))}
                 <div className="basis-1/12 cursor-pointer">
-                  {index !== 0 && <MinusSvg onClick={() => remove(index)} />}
+                  {index !== 0 && (
+                    <MinusSvg
+                      className={index === 0 ? 'hidden' : undefined}
+                      onClick={() => remove(index)}
+                    />
+                  )}
                 </div>
               </div>
             ))}
             <div className="flex gap-[5px]">
               <div className="basis-11/12"></div>
               <PlusSvg
-                className="flex basis-1/12"
+                className="flex basis-1/12 cursor-pointer"
                 onClick={() =>
                   append({
                     food_id: Math.random() * 4,
