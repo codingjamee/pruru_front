@@ -4,29 +4,18 @@ import RefrigerIcon from '@/_assets/RefrigerIcon';
 import Button from '@/_components/Button';
 import Card from '@/_components/Card';
 import { ReceiptDetailType } from '@/_types/ReceiptTypes';
-import { getReceiptItems } from '@/_utils/getQuery';
+import { getreceipt_items } from '@/_utils/getQuery';
 import { useQuery } from '@tanstack/react-query';
 import { useRouter } from 'next/navigation';
-import { useMemo } from 'react';
 
 const ReceiptDetailCard = ({ receipt_id }: { receipt_id: string }) => {
   const { data: purchaseReceiptInfo } = useQuery({
     queryKey: ['receipt', 'items', receipt_id],
-    queryFn: () => getReceiptItems(receipt_id),
+    queryFn: () => getreceipt_items(receipt_id),
   });
   console.log(receipt_id);
   console.log(purchaseReceiptInfo);
-  const total_price = useMemo(
-    () =>
-      purchaseReceiptInfo &&
-      purchaseReceiptInfo[0]?.receiptItems.reduce(
-        (acc: number, cur: ReceiptDetailType) => {
-          return cur.purchase_price * cur.quantity + acc;
-        },
-        0,
-      ),
-    [purchaseReceiptInfo],
-  );
+
   const router = useRouter();
   return (
     <div className="py-[20px] mobile:py-[10px]">
@@ -53,7 +42,7 @@ const ReceiptDetailCard = ({ receipt_id }: { receipt_id: string }) => {
               <div className="basis-2/12">금액</div>
               <div className="basis-1/12">등록</div>
             </div>
-            {purchaseReceiptInfo[0].receiptItems.map(
+            {purchaseReceiptInfo[0].receipt_items.map(
               (receipt: ReceiptDetailType) => (
                 <div
                   className="flex w-full justify-between truncate"
@@ -64,7 +53,7 @@ const ReceiptDetailCard = ({ receipt_id }: { receipt_id: string }) => {
                   </div>
                   <div className="basis-2/12">{receipt.food_weight}</div>
                   <div className="basis-2/12">
-                    {receipt.price_per_amount * receipt.quantity}
+                    {receipt.purchase_price?.toLocaleString()}
                   </div>
                   <div className="basis-1/12 cursor-pointer">
                     {receipt.registered ? (
@@ -81,8 +70,10 @@ const ReceiptDetailCard = ({ receipt_id }: { receipt_id: string }) => {
           </div>
 
           <div className="flex justify-end gap-[30px]">
-            <div>품목 {purchaseReceiptInfo[0].receiptItems.length}개</div>
-            <div>총{total_price.toLocaleString()}원</div>
+            <div>품목 {purchaseReceiptInfo[0].receipt_items.length}개</div>
+            <div>
+              총{purchaseReceiptInfo[0].total_price?.toLocaleString()}원
+            </div>
           </div>
         </Card>
       )}
