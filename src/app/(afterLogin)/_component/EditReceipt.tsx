@@ -12,20 +12,8 @@ import dayjs from 'dayjs';
 import { postReceiptData } from '@/_utils/postQuery';
 import { useRouter } from 'next/navigation';
 import customParseFormat from 'dayjs/plugin/customParseFormat';
+import { editReceiptForm, receiptItemsInit } from '@/_utils/listData';
 dayjs.extend(customParseFormat);
-
-const editReceiptForm: {
-  field: 'food_category' | 'food_name' | 'food_weight' | 'purchase_price';
-  label: string;
-  basis: string;
-  maxWidth?: string;
-  min?: number;
-}[] = [
-  { field: 'food_category', label: 'Food Category', basis: '2/12' },
-  { field: 'food_name', label: 'Food Name', basis: '5/12', maxWidth: '127px' },
-  { field: 'food_weight', label: 'Food Weight', basis: '2/12' },
-  { field: 'purchase_price', label: 'Purchase Price', basis: '2/12', min: 1 },
-];
 
 const EditReceipt = () => {
   const queryClient = useQueryClient();
@@ -60,6 +48,7 @@ const EditReceipt = () => {
         dayjs(foundReceiptData && foundReceiptData.purchase_date).format(
           'YY.MM.DD',
         ) + ' 구매',
+      total_price: totalPrice,
       receipt_items: foundReceiptData
         ? foundReceiptData.receipt_items.map((data) => {
             return {
@@ -73,18 +62,7 @@ const EditReceipt = () => {
               registered: false,
             };
           })
-        : [
-            {
-              food_id: Math.random() * 4,
-              food_category: undefined,
-              food_name: undefined,
-              food_weight: undefined,
-              purchase_price: undefined,
-              quantity: undefined,
-              food_image: '',
-              registered: false,
-            },
-          ],
+        : receiptItemsInit,
     },
   });
 
@@ -199,17 +177,7 @@ const EditReceipt = () => {
               <div className="basis-11/12"></div>
               <PlusSvg
                 className="flex basis-1/12 cursor-pointer"
-                onClick={() =>
-                  append({
-                    food_id: Math.random() * 4,
-                    food_category: undefined,
-                    food_name: undefined,
-                    food_weight: undefined,
-                    purchase_price: undefined,
-                    quantity: undefined,
-                    registered: false,
-                  })
-                }
+                onClick={() => append(receiptItemsInit[0])}
               />
             </div>
           </div>
