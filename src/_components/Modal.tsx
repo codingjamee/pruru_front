@@ -1,5 +1,5 @@
 'use client';
-import ModalPortal from '@/_components/ModalPortal';
+import Portal from '@/_components/Portal';
 import BackDrop from './BackDrop';
 import Card from './Card';
 import { FC, PropsWithChildren } from 'react';
@@ -8,7 +8,7 @@ const Modal: FC<
   PropsWithChildren<{ onClick: () => void; modalIsOpen: boolean }>
 > = ({ children, onClick, modalIsOpen }) => {
   return (
-    <ModalPortal>
+    <Portal portalTargetId="modal-root">
       <BackDrop onClick={onClick}>
         {modalIsOpen && (
           <Card
@@ -19,7 +19,7 @@ const Modal: FC<
           </Card>
         )}
       </BackDrop>
-    </ModalPortal>
+    </Portal>
   );
 };
 
