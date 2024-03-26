@@ -101,3 +101,17 @@ export const getSearchCategory = async (
   }
   return res.json();
 };
+
+export const getFoodDataById = async (foodId: string) => {
+  const res = await api(`/food?${foodId}`, {
+    method: 'GET',
+    next: {
+      tags: ['addFood', foodId],
+    },
+  });
+  if (!res.ok) {
+    throw new Error('Failed to fetch food Data');
+  }
+
+  return res.json();
+};
