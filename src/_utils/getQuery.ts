@@ -42,7 +42,7 @@ export const getReceiptsByMonth = async (YM?: string) => {
   return res.json();
 };
 
-export const getReceiptItems = async (receipt_id: string) => {
+export const getreceipt_items = async (receipt_id: string) => {
   const res = await api(`/receipt/${receipt_id}`, {
     next: {
       tags: ['receipt', 'items', receipt_id],
@@ -82,13 +82,17 @@ export const getAnalyzeReceipt = async (file: string, type: string) => {
   return res.json();
 };
 
-export const getSearchCategory = async (searchString: string) => {
+export const getSearchCategory = async (
+  display: number,
+  tags: string[],
+  searchString?: string,
+) => {
   const res = await searchApi(
-    `/search/${process.env.NEXT_PUBLIC_NAVER_REQUEST_PATH}${searchString}&display=1`,
+    `/search/${process.env.NEXT_PUBLIC_NAVER_REQUEST_PATH}${searchString}&display=${display}`,
     {
       method: 'GET',
       next: {
-        tags: ['search', 'category'],
+        tags: tags,
       },
     },
   );
