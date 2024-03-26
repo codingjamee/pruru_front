@@ -1,13 +1,13 @@
 import { ReactElement } from 'react';
 
 export type FoodPropType = {
-  id: number;
+  id?: number;
   category?: string;
   storage_id?: number;
   receipt_id?: number;
   food_name?: string;
   method?: 'refrigerated' | 'frozen' | 'room_temp';
-  amount?: number;
+  amount?: string;
   quantity?: number;
   unit?: string;
   remain_amount?: string;
