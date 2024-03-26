@@ -4,14 +4,20 @@ import Search from './Search';
 import Button from '@/_components/Button';
 import Input from '@/_components/Input';
 import { useForm } from 'react-hook-form';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import Modal from '@/_components/Modal';
 import { FoodPropType } from '@/_types/FoodTypes';
+import { useQuery } from '@tanstack/react-query';
+import { SearchReturnType } from '@/_types/ReturnTypes';
+import { getSearchCategory } from '@/_utils/getQuery';
 
 const AddFood = () => {
   const [modalIsOpen, setModalIsOpen] = useState(false);
-  //캐싱된 food data 가져오기
-  const { register, handleSubmit } = useForm<FoodPropType>({
+  const [searchTrigger, setSearchTrigger] = useState(false);
+  const [searchValue, setSearchValue] = useState<string | undefined>('');
+  const { register, handleSubmit, watch } = useForm<
+    FoodPropType & { search_name: string }
+  >({
     defaultValues: {
       category: '카테고리',
       method: 'room_temp',
@@ -21,7 +27,24 @@ const AddFood = () => {
       expiry_date: '',
       purchase_location: '',
       purchase_price: 0,
+      search_name: '',
     },
+  });
+
+  const searchFoodName = watch('food_name');
+  const remainAmount = watch('remain_amount');
+
+  useEffect(() => {
+    console.log('watch is changed!');
+    console.log(remainAmount);
+    setSearchValue(searchFoodName);
+  }, [searchFoodName, remainAmount]);
+
+  //검색 요청 api
+  const { data } = useQuery<SearchReturnType>({
+    queryKey: ['search', 'foodname'],
+    queryFn: () => getSearchCategory(10, ['search', 'foodname'], searchValue),
+    enabled: searchTrigger,
   });
 
   const onClickSearch = () => {
@@ -32,11 +55,24 @@ const AddFood = () => {
   const onAddFood = (data: FoodPropType) => {
     console.log(data);
   };
+
+  const onClickSearchTrigger = () => {
+    setSearchTrigger(true);
+    console.log('search is Triggered', 'value is : ', searchValue);
+  };
   return (
     <>
       {modalIsOpen && (
         <Modal modalIsOpen={modalIsOpen} onClick={() => setModalIsOpen(false)}>
-          <Search {...register('food_name')} name="search" />
+          <Search
+            onClickSearch={onClickSearchTrigger}
+            {...register('food_name')}
+            name="food_name"
+          />
+          {data &&
+            data.items.map((result) => (
+              <div key={result.productId}>{result.title}</div>
+            ))}
         </Modal>
       )}
       <Card variant="outlined" className="min-h-[695px] w-[635px] ">
@@ -56,7 +92,7 @@ const AddFood = () => {
               <Search
                 onClickSearch={onClickSearch}
                 {...register('food_name')}
-                name="search"
+                name="food_name"
               />
             </div>
             <Button
@@ -129,7 +165,10 @@ const AddFood = () => {
             </div>
           </div>
 
-          <Button variant="primary" className="rounded-lg mobile:w-full">
+          <Button
+            type="submit"
+            variant="primary"
+            className="rounded-lg mobile:w-full">
             추가하기
           </Button>
         </form>
