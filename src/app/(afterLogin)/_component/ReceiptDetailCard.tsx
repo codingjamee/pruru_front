@@ -5,18 +5,40 @@ import Button from '@/_components/Button';
 import Card from '@/_components/Card';
 import { ReceiptDetailType } from '@/_types/ReceiptTypes';
 import { getreceipt_items } from '@/_utils/getQuery';
-import { useQuery } from '@tanstack/react-query';
+import { postFoodDataById } from '@/_utils/postQuery';
+import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { useRouter } from 'next/navigation';
 
 const ReceiptDetailCard = ({ receipt_id }: { receipt_id: string }) => {
+  const router = useRouter();
+
   const { data: purchaseReceiptInfo } = useQuery({
     queryKey: ['receipt', 'items', receipt_id],
     queryFn: () => getreceipt_items(receipt_id),
   });
+  const queryClient = useQueryClient();
+
   console.log(receipt_id);
   console.log(purchaseReceiptInfo);
 
-  const router = useRouter();
+  const onClickAddFood = (index: number, foodId?: string) => {
+    if (foodId) {
+      queryClient
+        .fetchQuery({
+          queryKey: ['addFood', foodId],
+          queryFn: () =>
+            postFoodDataById(purchaseReceiptInfo[0][index], foodId),
+        })
+        .then(() => {
+          console.log('성공 적으로 식재료를 추가하였다!');
+          router.push(`/add/food?foodId=${foodId}`);
+        })
+        .catch((err) => {
+          console.error('an error occurred! when adding Food', err);
+        });
+    }
+  };
+
   return (
     <div className="py-[20px] mobile:py-[10px]">
       <div className="px-20 py-10 text-size-font-card-title mobile:px-10 mobile:py-[10px]">
@@ -43,7 +65,7 @@ const ReceiptDetailCard = ({ receipt_id }: { receipt_id: string }) => {
               <div className="basis-1/12">등록</div>
             </div>
             {purchaseReceiptInfo[0].receipt_items.map(
-              (receipt: ReceiptDetailType) => (
+              (receipt: ReceiptDetailType, index: number) => (
                 <div
                   className="flex w-full justify-between truncate"
                   key={receipt.food_id}>
@@ -61,7 +83,11 @@ const ReceiptDetailCard = ({ receipt_id }: { receipt_id: string }) => {
                         <RefrigerIcon />
                       </div>
                     ) : (
-                      <PlusSvg onClick={() => router.push('')} />
+                      <PlusSvg
+                        onClick={() =>
+                          onClickAddFood(index, receipt.food_id?.toString())
+                        }
+                      />
                     )}
                   </div>
                 </div>

@@ -19,6 +19,8 @@ import 'react-datepicker/dist/react-datepicker.css';
 const AddFood = () => {
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const [searchTrigger, setSearchTrigger] = useState(false);
+  const [expiryDate, setExpiryDate] = useState<Date | null>(null);
+  const [purchaseDate, setPurchaseDate] = useState<Date | null>(null);
   const { register, handleSubmit, watch, setValue, control } = useForm<
     FoodPropType & { search_name: string }
   >({
@@ -160,34 +162,51 @@ const AddFood = () => {
                 />
               </div>
               <div className="flex flex-row justify-between mobile:flex-col">
-                <div>유통기한</div>
+                <div>구매일자</div>
                 <Controller
-                  name="expiry_date"
+                  name="purchase_date"
                   control={control}
-                  render={({ field: { onChange, onBlur, name } }) => (
+                  render={({
+                    field: { onChange: onChangeForm, onBlur, name },
+                  }) => (
                     <DatePicker
                       name={name}
-                      onChange={onChange}
+                      onChange={(datestring) => {
+                        setPurchaseDate(dayjs(datestring).toDate());
+                        return onChangeForm(
+                          dayjs(datestring).format('YY.MM.DD'),
+                        );
+                      }}
+                      dateFormat="yy.MM.dd"
                       onBlur={onBlur}
-                      selected={dayjs().toDate()}
+                      selected={purchaseDate}
                       className="h-[29px] w-[213px] rounded-lg border border-solid border-color-default-text bg-transparent text-center mobile:w-full"
-                      dateFormat="YY.MM.DD"
                     />
                   )}
                 />
               </div>
               <div className="flex flex-row justify-between mobile:flex-col">
-                <div>구매일자</div>
-                <DatePicker
-                  onChange={(date) =>
-                    setValue(
-                      'purchase_date',
-                      date?.toString() || dayjs().format('YY.MM.DD'),
-                    )
-                  }
-                  className="h-[29px] w-[213px] rounded-lg border border-solid border-color-default-text bg-transparent text-center mobile:w-full"
-                  selected={dayjs().toDate()}
-                  dateFormat="YY.MM.DD"
+                <div>유통기한</div>
+                <Controller
+                  name="expiry_date"
+                  control={control}
+                  render={({
+                    field: { onChange: onChangeForm, onBlur, name },
+                  }) => (
+                    <DatePicker
+                      name={name}
+                      onChange={(datestring) => {
+                        setExpiryDate(dayjs(datestring).toDate());
+                        return onChangeForm(
+                          dayjs(datestring).format('YY.MM.DD'),
+                        );
+                      }}
+                      dateFormat="yy.MM.dd"
+                      onBlur={onBlur}
+                      selected={expiryDate}
+                      className="h-[29px] w-[213px] rounded-lg border border-solid border-color-default-text bg-transparent text-center mobile:w-full"
+                    />
+                  )}
                 />
               </div>
               <div className="flex flex-row justify-between mobile:flex-col">
