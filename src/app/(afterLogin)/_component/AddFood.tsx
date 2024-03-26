@@ -3,7 +3,7 @@ import Card from '@/_components/Card';
 import Search from './Search';
 import Button from '@/_components/Button';
 import Input from '@/_components/Input';
-import { useForm } from 'react-hook-form';
+import { Controller, useForm } from 'react-hook-form';
 import { useState } from 'react';
 import Modal from '@/_components/Modal';
 import { FoodPropType } from '@/_types/FoodTypes';
@@ -11,26 +11,18 @@ import { useQuery } from '@tanstack/react-query';
 import { SearchReturnType } from '@/_types/ReturnTypes';
 import { getSearchCategory } from '@/_utils/getQuery';
 import Image from 'next/image';
+import { AddFoodInit, selectLists } from '@/_utils/listData';
+import DatePicker from 'react-datepicker';
 import dayjs from 'dayjs';
+import 'react-datepicker/dist/react-datepicker.css';
 
 const AddFood = () => {
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const [searchTrigger, setSearchTrigger] = useState(false);
-  const { register, handleSubmit, watch, setValue } = useForm<
+  const { register, handleSubmit, watch, setValue, control } = useForm<
     FoodPropType & { search_name: string }
   >({
-    defaultValues: {
-      category: '카테고리',
-      method: 'room_temp',
-      food_name: '',
-      remain_amount: '',
-      purchase_date: dayjs().format('YY.MM.DD'),
-      expiry_date: '',
-      purchase_location: '',
-      purchase_price: 0,
-      image_url: '',
-      search_name: '',
-    },
+    defaultValues: AddFoodInit,
   });
 
   const searchFoodName = watch('food_name');
@@ -64,6 +56,7 @@ const AddFood = () => {
     setSearchTrigger(true);
     console.log('search is Triggered', 'value is : ', searchFoodName);
   };
+
   return (
     <>
       {modalIsOpen && (
@@ -133,20 +126,26 @@ const AddFood = () => {
               </div>
             ) : (
               <div className="mobile:h- flex w-[200px] items-center justify-center rounded-lg border border-solid border-color-default-text mobile:h-[150px] mobile:w-full">
-                재료 사진 등록
+                재료 사진
               </div>
             )}
             <div className="flex flex-grow flex-col gap-[20px]">
               <div className="flex flex-row justify-between mobile:flex-col">
                 <div>보관방법</div>
-                <Input
-                  variant="outlined"
-                  placeholder="상온"
-                  className="h-[29px] w-[213px] rounded-lg border border-solid border-color-default-text text-center mobile:w-full"
-                  {...register('method', {
-                    required: '빈 칸이 없게 작성해주세요',
-                    minLength: 1,
-                  })}
+                <Controller
+                  name="method"
+                  control={control}
+                  render={({ field }) => (
+                    <select
+                      onChange={(e) => field.onChange(e.target.value)}
+                      className="h-[29px] w-[213px] rounded-lg border border-solid border-color-default-text bg-transparent text-center mobile:w-full">
+                      {selectLists.map(({ value, label }) => (
+                        <option value={value} key={value}>
+                          {label}
+                        </option>
+                      ))}
+                    </select>
+                  )}
                 />
               </div>
               <div className="flex flex-row justify-between mobile:flex-col">
@@ -162,18 +161,33 @@ const AddFood = () => {
               </div>
               <div className="flex flex-row justify-between mobile:flex-col">
                 <div>유통기한</div>
-                <Input
-                  {...register('expiry_date')}
-                  variant="outlined"
-                  className="h-[29px] w-[213px] rounded-lg border border-solid border-color-default-text text-center mobile:w-full"
+                <Controller
+                  name="expiry_date"
+                  control={control}
+                  render={({ field: { onChange, onBlur, name } }) => (
+                    <DatePicker
+                      name={name}
+                      onChange={onChange}
+                      onBlur={onBlur}
+                      selected={dayjs().toDate()}
+                      className="h-[29px] w-[213px] rounded-lg border border-solid border-color-default-text bg-transparent text-center mobile:w-full"
+                      dateFormat="YY.MM.DD"
+                    />
+                  )}
                 />
               </div>
               <div className="flex flex-row justify-between mobile:flex-col">
                 <div>구매일자</div>
-                <Input
-                  {...register('purchase_date')}
-                  variant="outlined"
-                  className="h-[29px] w-[213px] rounded-lg border border-solid border-color-default-text text-center mobile:w-full"
+                <DatePicker
+                  onChange={(date) =>
+                    setValue(
+                      'purchase_date',
+                      date?.toString() || dayjs().format('YY.MM.DD'),
+                    )
+                  }
+                  className="h-[29px] w-[213px] rounded-lg border border-solid border-color-default-text bg-transparent text-center mobile:w-full"
+                  selected={dayjs().toDate()}
+                  dateFormat="YY.MM.DD"
                 />
               </div>
               <div className="flex flex-row justify-between mobile:flex-col">
