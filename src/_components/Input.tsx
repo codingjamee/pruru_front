@@ -1,4 +1,4 @@
-import { ComponentPropsWithRef, forwardRef } from 'react';
+import { ComponentPropsWithRef, SyntheticEvent, forwardRef } from 'react';
 
 type InputProps = ComponentPropsWithRef<'input'>;
 type InputVariantType =
@@ -12,11 +12,26 @@ interface InputType {
   placeholder?: string;
   variant: InputVariantType;
   className?: string;
+  onChange?: (e: SyntheticEvent) => void;
+  onBlur?: (e: SyntheticEvent) => void;
+  name?: string;
 }
 type CombinedInputProps = InputProps & InputType;
 
 const Input = forwardRef<HTMLInputElement, CombinedInputProps>(
-  ({ type, placeholder, variant, className, ...props }: InputType, ref) => {
+  (
+    {
+      type,
+      placeholder,
+      variant,
+      className,
+      onChange,
+      onBlur,
+      name,
+      ...props
+    }: InputType,
+    ref,
+  ) => {
     const getClassName = () => {
       const variantClasses = {
         primary: 'input-primary',
@@ -31,10 +46,13 @@ const Input = forwardRef<HTMLInputElement, CombinedInputProps>(
 
     return (
       <input
+        ref={ref}
+        name={name}
+        onChange={onChange}
+        onBlur={onBlur}
         className={`input ${variant && getClassName()} ${className}`}
         type={type || 'text'}
         placeholder={placeholder}
-        ref={ref}
         autoComplete="off"
         {...props}
       />
