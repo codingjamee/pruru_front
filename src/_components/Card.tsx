@@ -11,7 +11,7 @@ const Card = ({
   children: ReactNode;
   variant?: CardVariant;
   className?: string;
-  onClick?: () => void;
+  onClick?: (e?: any) => void;
 }) => {
   const getClassName = (variant: CardVariant) => `card-${variant}`;
   return (
