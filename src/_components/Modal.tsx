@@ -13,7 +13,7 @@ const Modal: FC<
         {modalIsOpen && (
           <Card
             variant="outlined"
-            className="z-[999] m-0 flex min-h-[390px] w-[636px] flex-col p-[30px] opacity-100 mobile:w-[370px]"
+            className="z-[999] m-0 flex min-h-[390px] w-[636px] flex-col bg-color-bg-main p-[30px] opacity-100 mobile:w-[370px] "
             onClick={(e) => e.stopPropagation()}>
             {children}
           </Card>
