@@ -1,5 +1,6 @@
 'use client';
 import Card from '@/_components/Card';
+import { useRouter, useSearchParams } from 'next/navigation';
 import Search from './Search';
 import Button from '@/_components/Button';
 import Input from '@/_components/Input';
@@ -7,32 +8,56 @@ import { Controller, useForm } from 'react-hook-form';
 import { useState } from 'react';
 import Modal from '@/_components/Modal';
 import { FoodPropType } from '@/_types/FoodTypes';
-import { useQuery } from '@tanstack/react-query';
+import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { SearchReturnType } from '@/_types/ReturnTypes';
-import { getSearchCategory } from '@/_utils/getQuery';
+import { getFoodDataById, getSearchCategory } from '@/_utils/getQuery';
 import Image from 'next/image';
 import { AddFoodInit, selectLists } from '@/_utils/listData';
 import DatePicker from 'react-datepicker';
 import dayjs from 'dayjs';
 import 'react-datepicker/dist/react-datepicker.css';
+import { postFoodData, postFoodDataById } from '@/_utils/postQuery';
+import customParseFormat from 'dayjs/plugin/customParseFormat';
+dayjs.extend(customParseFormat);
 
 const AddFood = () => {
+  const existFoodId = useSearchParams().get('foodId') || '';
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const [searchTrigger, setSearchTrigger] = useState(false);
   const [expiryDate, setExpiryDate] = useState<Date | null>(null);
   const [purchaseDate, setPurchaseDate] = useState<Date | null>(null);
+  const { data: foodData } = useQuery<FoodPropType, any, FoodPropType>({
+    queryKey: ['addFood', existFoodId],
+    queryFn: () => getFoodDataById(existFoodId),
+    enabled: !!existFoodId,
+  });
+  const router = useRouter();
+  const queryClient = useQueryClient();
   const { register, handleSubmit, watch, setValue, control } = useForm<
     FoodPropType & { search_name: string }
   >({
-    defaultValues: AddFoodInit,
+    defaultValues: foodData
+      ? {
+          category: foodData.category,
+          method: foodData.method,
+          food_name: foodData.food_name,
+          remain_amount: foodData.amount,
+          purchase_date: foodData.purchase_date || dayjs().format('YY.MM.DD'),
+          expiry_date: foodData.expiry_date,
+          purchase_location: foodData.purchase_location,
+          purchase_price: foodData.purchase_price,
+          image_url: foodData.image_url,
+          registered: true,
+        }
+      : AddFoodInit,
   });
 
   const searchFoodName = watch('food_name');
   const searchName = watch('search_name');
   const searchIamgeUrl = watch('image_url');
 
-  //검색 요청 api
-  const { data } = useQuery<SearchReturnType>({
+  //검색결과
+  const { data: searchedData } = useQuery<SearchReturnType>({
     queryKey: ['search', 'foodname'],
     queryFn: () =>
       getSearchCategory(
@@ -52,6 +77,26 @@ const AddFood = () => {
 
   const onAddFood = (data: FoodPropType) => {
     console.log(data);
+    const requestYM = dayjs(purchaseDate, ['YY.MM.DD']).format('YY.MM');
+    if (existFoodId) {
+      queryClient
+        .fetchQuery({
+          queryKey: ['editExistFood'],
+          queryFn: () => postFoodDataById(data, existFoodId),
+        })
+        .then(() => router.push(`/food?storage=total&sort=${requestYM}`))
+        .catch((err) => console.log(err));
+    } else {
+      queryClient
+        .fetchQuery({
+          queryKey: ['addFirstFood'],
+          queryFn: () => postFoodData(data),
+        })
+        .then(() => router.push(`/food?storage=total&sort=${requestYM}`))
+        .catch((err) => console.log(err));
+    }
+
+    //성공하면 /food?storage=total&sort=date&direction=up으로 이동
   };
 
   const onClickSearchTrigger = () => {
@@ -69,8 +114,8 @@ const AddFood = () => {
             name="search_name"
           />
           <div>
-            {data &&
-              data.items.map((result) => (
+            {searchedData &&
+              searchedData.items.map((result) => (
                 <div
                   className="cursor-pointer"
                   onClick={() => {
