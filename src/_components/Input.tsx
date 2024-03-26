@@ -15,6 +15,7 @@ interface InputType {
   onChange?: (e: SyntheticEvent) => void;
   onBlur?: (e: SyntheticEvent) => void;
   name?: string;
+  truncate?: boolean;
 }
 type CombinedInputProps = InputProps & InputType;
 
@@ -28,6 +29,7 @@ const Input = forwardRef<HTMLInputElement, CombinedInputProps>(
       onChange,
       onBlur,
       name,
+      truncate,
       ...props
     }: InputType,
     ref,
@@ -50,7 +52,7 @@ const Input = forwardRef<HTMLInputElement, CombinedInputProps>(
         name={name}
         onChange={onChange}
         onBlur={onBlur}
-        className={`input ${variant && getClassName()} ${className}`}
+        className={`input ${variant && getClassName()} ${className} ${truncate && 'truncate'}`}
         type={type || 'text'}
         placeholder={placeholder}
         autoComplete="off"
