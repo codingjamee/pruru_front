@@ -11,6 +11,7 @@ import { useQuery } from '@tanstack/react-query';
 import { SearchReturnType } from '@/_types/ReturnTypes';
 import { getSearchCategory } from '@/_utils/getQuery';
 import Image from 'next/image';
+import dayjs from 'dayjs';
 
 const AddFood = () => {
   const [modalIsOpen, setModalIsOpen] = useState(false);
@@ -23,7 +24,7 @@ const AddFood = () => {
       method: 'room_temp',
       food_name: '',
       remain_amount: '',
-      purchase_date: '',
+      purchase_date: dayjs().format('YY.MM.DD'),
       expiry_date: '',
       purchase_location: '',
       purchase_price: 0,
@@ -121,13 +122,15 @@ const AddFood = () => {
           </div>
           <div className="flex flex-row gap-[20px] mobile:flex-col">
             {searchIamgeUrl ? (
-              <Image
-                src={searchIamgeUrl}
-                alt={searchFoodName || ''}
-                width="100"
-                height="100"
-                className="h-full w-full"
-              />
+              <div className="mobile:h- flex w-[200px] items-center justify-center rounded-lg border border-solid border-color-default-text mobile:h-[150px] mobile:w-full">
+                <Image
+                  src={searchIamgeUrl}
+                  alt={searchFoodName || ''}
+                  width="100"
+                  height="100"
+                  className="h-full desktop:w-[200px]"
+                />
+              </div>
             ) : (
               <div className="mobile:h- flex w-[200px] items-center justify-center rounded-lg border border-solid border-color-default-text mobile:h-[150px] mobile:w-full">
                 재료 사진 등록
