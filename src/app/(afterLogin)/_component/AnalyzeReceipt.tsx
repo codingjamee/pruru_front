@@ -14,6 +14,7 @@ import {
   PurchaseReceiptInfoType,
   ReceiptDetailType,
 } from '@/_types/ReceiptTypes';
+import { reg_exceptgiho } from '@/_utils/regExp';
 
 const AnalyzeReceipt = () => {
   const fileInput = useRef<HTMLInputElement>(null);
@@ -23,7 +24,6 @@ const AnalyzeReceipt = () => {
   const [searchLists, setSearchLists] = useState([]);
   const queryClient = useQueryClient();
   const router = useRouter();
-  const reg_exceptgiho = /[`~!@#$%^&*()_|+\-=?;:'",.<>{}[\]\\/]/gim;
   const { status: analyzeStatus, data: analyzedReceiptData } = useQuery({
     queryKey: ['receipt', 'anaylze'],
     queryFn: () => getAnalyzeReceipt(incodedFile, 'JPEG'),
@@ -84,7 +84,8 @@ const AnalyzeReceipt = () => {
   const { data: searchResults, searchSuccess } = useQueries({
     queries: searchLists?.map((search, idx) => ({
       queryKey: ['search', 'category', idx],
-      queryFn: () => getSearchCategory(search),
+      queryFn: () =>
+        getSearchCategory(1, ['search', 'category', idx.toString()], search),
       enabled: triggerSearch,
       staleTime: 60 * 60 * 1000,
     })),
