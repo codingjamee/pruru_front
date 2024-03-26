@@ -42,7 +42,7 @@ const AnalyzeReceipt = () => {
             .text || ''),
         purchase_date:
           analyzedReceiptData.images[0].receipt.result.paymentInfo.date.text,
-        receiptItems:
+        receipt_items:
           analyzedReceiptData.images[0]?.receipt?.result?.subResults[0]?.items.map(
             (item: AnalyzedReceiptAllType) => {
               return {
@@ -62,7 +62,7 @@ const AnalyzeReceipt = () => {
       queryClient.setQueryData(['analyzedReceiptData'], analyzedReceiptData_2);
       console.log('요청에 성공!');
       setSearchLists(
-        analyzedReceiptData_2?.receiptItems.reduce(
+        analyzedReceiptData_2?.receipt_items.reduce(
           (acc: string[], cur: ModifiedAnalyzeReceiptType) => {
             acc.push(cur.food_name);
             return acc;
@@ -113,9 +113,9 @@ const AnalyzeReceipt = () => {
         queryClient.getQueryData(['analyzedReceiptData']);
       const modifiedData = {
         ...getAnalyzedReceiptData_2,
-        receiptItems:
-          getAnalyzedReceiptData_2?.receiptItems &&
-          getAnalyzedReceiptData_2?.receiptItems?.map(
+        receipt_items:
+          getAnalyzedReceiptData_2?.receipt_items &&
+          getAnalyzedReceiptData_2?.receipt_items?.map(
             (data: ReceiptDetailType, index: number) => {
               const searchedCateData = searchedDataWithCate.find(
                 (cateData) => cateData?.index === index,
