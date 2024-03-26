@@ -15,12 +15,13 @@ interface SearchProps {
   onBlur?: (e: SyntheticEvent) => void;
   name?: string;
   setSearchVal?: (value: SetStateAction<string | undefined>) => void;
+  truncate?: boolean;
 }
 
 type CombinedInputProps = SearchProps & InputProps;
 
 const Search = forwardRef<HTMLInputElement, CombinedInputProps>(
-  ({ onClickSearch, onChange, onBlur, name }: SearchProps, ref) => {
+  ({ onClickSearch, onChange, onBlur, name, truncate }: SearchProps, ref) => {
     return (
       <div className="flex w-full items-center justify-center">
         <Input
@@ -30,6 +31,7 @@ const Search = forwardRef<HTMLInputElement, CombinedInputProps>(
           placeholder="재료명"
           onChange={onChange}
           onBlur={onBlur}
+          truncate={truncate}
         />
         <div
           onClick={onClickSearch}
