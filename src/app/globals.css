@@ -148,4 +148,8 @@ input::placeholder {
   .primary {
     @apply bg-color-primary;
   }
+
+  #modal-root .backdrop {
+    background-color: rgba(0, 0, 0, 0.8);
+  }
 }
