@@ -4,18 +4,20 @@ import Search from './Search';
 import Button from '@/_components/Button';
 import Input from '@/_components/Input';
 import { useForm } from 'react-hook-form';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import Modal from '@/_components/Modal';
 import { FoodPropType } from '@/_types/FoodTypes';
 import { useQuery } from '@tanstack/react-query';
 import { SearchReturnType } from '@/_types/ReturnTypes';
 import { getSearchCategory } from '@/_utils/getQuery';
+import Image from 'next/image';
 
 const AddFood = () => {
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const [searchTrigger, setSearchTrigger] = useState(false);
-  const [searchValue, setSearchValue] = useState<string | undefined>('');
-  const { register, handleSubmit, watch } = useForm<FoodPropType>({
+  const { register, handleSubmit, watch, setValue } = useForm<
+    FoodPropType & { search_name: string }
+  >({
     defaultValues: {
       category: '카테고리',
       method: 'room_temp',
@@ -25,25 +27,32 @@ const AddFood = () => {
       expiry_date: '',
       purchase_location: '',
       purchase_price: 0,
+      image_url: '',
+      search_name: '',
     },
   });
 
   const searchFoodName = watch('food_name');
-
-  useEffect(() => {
-    setSearchValue(searchFoodName);
-  }, [searchFoodName]);
+  const searchName = watch('search_name');
+  const searchIamgeUrl = watch('image_url');
 
   //검색 요청 api
   const { data } = useQuery<SearchReturnType>({
     queryKey: ['search', 'foodname'],
-    queryFn: () => getSearchCategory(10, ['search', 'foodname'], searchValue),
+    queryFn: () =>
+      getSearchCategory(
+        10,
+        ['search', 'foodname'],
+        searchFoodName || searchName,
+      ),
     enabled: searchTrigger,
   });
 
   const onClickSearch = () => {
-    console.log('search is Clicked!');
     setModalIsOpen(true);
+    setValue('image_url', '');
+    setValue('search_name', searchFoodName || '');
+    setValue('food_name', '');
   };
 
   const onAddFood = (data: FoodPropType) => {
@@ -52,7 +61,7 @@ const AddFood = () => {
 
   const onClickSearchTrigger = () => {
     setSearchTrigger(true);
-    console.log('search is Triggered', 'value is : ', searchValue);
+    console.log('search is Triggered', 'value is : ', searchFoodName);
   };
   return (
     <>
@@ -60,13 +69,26 @@ const AddFood = () => {
         <Modal modalIsOpen={modalIsOpen} onClick={() => setModalIsOpen(false)}>
           <Search
             onClickSearch={onClickSearchTrigger}
-            {...register('food_name')}
-            name="food_name"
+            {...register('search_name')}
+            name="search_name"
           />
-          {data &&
-            data.items.map((result) => (
-              <div key={result.productId}>{result.title}</div>
-            ))}
+          <div>
+            {data &&
+              data.items.map((result) => (
+                <div
+                  className="cursor-pointer"
+                  onClick={() => {
+                    setValue('food_name', result.title.replace(/<\/?b>/g, ''));
+                    setValue('image_url', result.image);
+                    setValue('category', result.category3);
+                    setSearchTrigger(false);
+                    setModalIsOpen(false);
+                  }}
+                  key={result.productId}>
+                  {result.title.replace(/<\/?b>/g, '')}
+                </div>
+              ))}
+          </div>
         </Modal>
       )}
       <Card variant="outlined" className="min-h-[695px] w-[635px] ">
@@ -87,6 +109,7 @@ const AddFood = () => {
                 onClickSearch={onClickSearch}
                 {...register('food_name')}
                 name="food_name"
+                truncate={true}
               />
             </div>
             <Button
@@ -97,9 +120,19 @@ const AddFood = () => {
             </Button>
           </div>
           <div className="flex flex-row gap-[20px] mobile:flex-col">
-            <div className="mobile:h- flex w-[200px] items-center justify-center rounded-lg border border-solid border-color-default-text mobile:h-[150px] mobile:w-full">
-              재료 사진 등록
-            </div>
+            {searchIamgeUrl ? (
+              <Image
+                src={searchIamgeUrl}
+                alt={searchFoodName || ''}
+                width="100"
+                height="100"
+                className="h-full w-full"
+              />
+            ) : (
+              <div className="mobile:h- flex w-[200px] items-center justify-center rounded-lg border border-solid border-color-default-text mobile:h-[150px] mobile:w-full">
+                재료 사진 등록
+              </div>
+            )}
             <div className="flex flex-grow flex-col gap-[20px]">
               <div className="flex flex-row justify-between mobile:flex-col">
                 <div>보관방법</div>
