@@ -15,9 +15,7 @@ const AddFood = () => {
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const [searchTrigger, setSearchTrigger] = useState(false);
   const [searchValue, setSearchValue] = useState<string | undefined>('');
-  const { register, handleSubmit, watch } = useForm<
-    FoodPropType & { search_name: string }
-  >({
+  const { register, handleSubmit, watch } = useForm<FoodPropType>({
     defaultValues: {
       category: '카테고리',
       method: 'room_temp',
@@ -27,18 +25,14 @@ const AddFood = () => {
       expiry_date: '',
       purchase_location: '',
       purchase_price: 0,
-      search_name: '',
     },
   });
 
   const searchFoodName = watch('food_name');
-  const remainAmount = watch('remain_amount');
 
   useEffect(() => {
-    console.log('watch is changed!');
-    console.log(remainAmount);
     setSearchValue(searchFoodName);
-  }, [searchFoodName, remainAmount]);
+  }, [searchFoodName]);
 
   //검색 요청 api
   const { data } = useQuery<SearchReturnType>({
