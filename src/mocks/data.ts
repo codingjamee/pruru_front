@@ -106,7 +106,8 @@ export const purchaseReceiptInfo = [
     receipt_id: 1,
     purchase_location: '이마트',
     purchase_date: '24.2.17',
-    receiptItems: [
+    total_price: 21890,
+    receipt_items: [
       {
         food_id: 1,
         food_category: '콩류',
@@ -153,7 +154,7 @@ export const purchaseReceiptInfo = [
     receipt_id: 2,
     purchase_location: '이이마트',
     purchase_date: '24.3.17',
-    receiptItems: [
+    receipt_items: [
       {
         food_id: 1,
         food_category: '콩콩류',
