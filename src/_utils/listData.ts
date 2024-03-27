@@ -2,27 +2,27 @@ import { FoodPropType } from '@/_types/FoodTypes';
 import dayjs from 'dayjs';
 
 export const editReceiptForm: {
-  field: 'food_category' | 'food_name' | 'food_weight' | 'purchase_price';
+  field: 'category' | 'name' | 'amount' | 'purchase_price';
   label: string;
   basis: string;
   maxWidth?: string;
   min?: number;
 }[] = [
-  { field: 'food_category', label: 'Food Category', basis: '2/12' },
-  { field: 'food_name', label: 'Food Name', basis: '5/12', maxWidth: '127px' },
-  { field: 'food_weight', label: 'Food Weight', basis: '2/12' },
+  { field: 'category', label: 'Food Category', basis: '2/12' },
+  { field: 'name', label: 'Food Name', basis: '5/12', maxWidth: '127px' },
+  { field: 'amount', label: 'Food Weight', basis: '2/12' },
   { field: 'purchase_price', label: 'Purchase Price', basis: '2/12', min: 1 },
 ];
 
 export const receiptItemsInit = [
   {
     food_id: Math.random() * 4,
-    food_category: undefined,
-    food_name: undefined,
-    food_weight: undefined,
+    category: undefined,
+    name: undefined,
+    amount: undefined,
     purchase_price: undefined,
     quantity: undefined,
-    food_image: '',
+    image_url: '',
     registered: false,
   },
 ];
@@ -39,7 +39,7 @@ export const selectLists: {
 export const AddFoodInit: FoodPropType & { search_name: string } = {
   category: '카테고리',
   method: 'refrigerated',
-  food_name: '',
+  name: '',
   remain_amount: '',
   purchase_date: dayjs().format('YY.MM.DD'),
   expiry_date: '',

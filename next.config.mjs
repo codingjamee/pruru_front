@@ -1,7 +1,7 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   images: {
-    domains: ['loremflickr.com', 'localhost'],
+    domains: ['loremflickr.com', 'localhost', 'shopping-phinf.pstatic.net'],
   },
   rewrites: async () => ({
     beforeFiles: [
@@ -19,7 +19,6 @@ const nextConfig = {
       },
     ],
   }),
-  webpack5: true,
   webpack: (config) => {
     config.resolve.fallback = { fs: false };
 

@@ -46,10 +46,7 @@ const AnalyzeReceipt = () => {
           analyzedReceiptData.images[0]?.receipt?.result?.subResults[0]?.items.map(
             (item: AnalyzedReceiptAllType) => {
               return {
-                food_name: item.name.formatted.value.replace(
-                  reg_exceptgiho,
-                  '',
-                ),
+                name: item.name.formatted.value.replace(reg_exceptgiho, ''),
                 purchase_price: item.price.price.formatted.value.replace(
                   '.',
                   '',
@@ -64,7 +61,7 @@ const AnalyzeReceipt = () => {
       setSearchLists(
         analyzedReceiptData_2?.receipt_items.reduce(
           (acc: string[], cur: ModifiedAnalyzeReceiptType) => {
-            acc.push(cur.food_name);
+            acc.push(cur.name);
             return acc;
           },
           [],
@@ -95,8 +92,8 @@ const AnalyzeReceipt = () => {
           if (result?.data?.items[0]?.category1 === '식품')
             return {
               index: index,
-              food_category: result.data.items[0].category3,
-              food_image: result.data.items[0].image,
+              category: result.data.items[0].category3,
+              image_url: result.data.items[0].image,
             };
         }),
         searchSuccess: results.every((result) => result.isSuccess),

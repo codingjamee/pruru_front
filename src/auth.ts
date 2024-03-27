@@ -1,6 +1,6 @@
 import NextAuth from 'next-auth';
 import CredentialsProvider from 'next-auth/providers/credentials';
-import { api, authApi } from './_utils/createCustomFetch';
+import { authApi } from './_utils/createCustomFetch';
 
 export const {
   handlers: { GET, POST },

@@ -7,8 +7,8 @@ import { useRouter } from 'next/navigation';
 import React from 'react';
 
 const SSmallFoodCard = ({ food, className }: FoodCardType) => {
-  const { id, image_url, food_name, expiry_date } = food;
-  // const { id, foodImageUrl, food_name, purchase_date, foodAmount, expiryDate } = food;
+  const { id, image_url, name, expiry_date } = food;
+  // const { id, foodImageUrl, name, purchase_date, foodAmount, expiryDate } = food;
   const remainingDay = expiry_date && remainedTime(expiry_date);
   const router = useRouter();
 
@@ -35,7 +35,7 @@ const SSmallFoodCard = ({ food, className }: FoodCardType) => {
         )}
       </div>
       <div className="h-full w-full flex-col justify-evenly px-3 pt-2 text-center tablet:hidden desktop:hidden">
-        {food_name}
+        {name}
       </div>
     </div>
   );

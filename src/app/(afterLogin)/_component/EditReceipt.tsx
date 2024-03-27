@@ -31,6 +31,7 @@ const EditReceipt = () => {
     queryKey: ['posted', 'receipt', 'data'],
     queryFn: () => postReceiptData(receiptData),
     enabled: submitTrigger,
+    staleTime: 6 * 60 * 1000,
   });
 
   const {
@@ -52,13 +53,13 @@ const EditReceipt = () => {
       receipt_items: foundReceiptData
         ? foundReceiptData.receipt_items.map((data) => {
             return {
-              food_category: data?.food_category || '',
-              food_name: data?.food_name || '',
+              category: data?.category || '',
+              name: data?.name || '',
               purchase_price: data?.purchase_price || 0,
-              food_weight: '',
+              amount: '',
               food_id: Math.random() * 4,
               quantity: data?.quantity,
-              food_image: data.food_image,
+              image_url: data?.image_url,
               registered: false,
             };
           })
@@ -159,7 +160,7 @@ const EditReceipt = () => {
                         minLength: min ? undefined : 1,
                         min: 1,
                       })}
-                      className={`${maxWidth ? `max-w-[${maxWidth}]` : ''} basis-${basis} ${field === 'food_name' ? 'truncate' : ''}`}
+                      className={`${maxWidth ? `max-w-[${maxWidth}]` : ''} basis-${basis} ${field === 'name' ? 'truncate' : ''}`}
                     />
                   </>
                 ))}

@@ -17,7 +17,7 @@ import RecentlyFood from '../_component/RecentlyFood';
 export const foodCardDummyArr = [
   {
     id: 1,
-    food_name: '당근',
+    name: '당근',
     foodImageUrl: '',
     purchase_date: '24.2.17',
     foodAmount: '400',
@@ -25,7 +25,7 @@ export const foodCardDummyArr = [
   },
   {
     id: 2,
-    food_name: '토마토',
+    name: '토마토',
     foodImageUrl: '',
     purchase_date: '24.2.19',
     foodAmount: '40g',
@@ -33,7 +33,7 @@ export const foodCardDummyArr = [
   },
   {
     id: 3,
-    food_name: '아보카도',
+    name: '아보카도',
     foodImageUrl: '',
     purchase_date: '24.2.12',
     foodAmount: '3개',
@@ -41,7 +41,7 @@ export const foodCardDummyArr = [
   },
   {
     id: 4,
-    food_name: '바나나',
+    name: '바나나',
     foodImageUrl: '',
     purchase_date: '24.2.12',
     foodAmount: '1송이',
@@ -50,7 +50,7 @@ export const foodCardDummyArr = [
   {
     id: 5,
     foodImageUrl: '',
-    food_name: '완두콩',
+    name: '완두콩',
     purchase_date: '24.2.12',
     foodAmount: '1개',
     expiryDate: '2024-03-30T15:00:00Z',

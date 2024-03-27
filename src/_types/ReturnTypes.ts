@@ -7,7 +7,7 @@ export type ReturnItemTypes = {
 };
 
 export interface ModifiedAnalyzeReceiptType {
-  food_name: string;
+  name: string;
   purchase_price: string;
   quantity: string;
 }

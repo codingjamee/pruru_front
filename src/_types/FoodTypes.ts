@@ -5,7 +5,7 @@ export type FoodPropType = {
   category?: string;
   storage_id?: number;
   receipt_id?: number;
-  food_name?: string;
+  name?: string;
   method?: 'refrigerated' | 'frozen' | 'room_temp';
   amount?: string;
   quantity?: number;

@@ -1,0 +1,1073 @@
+{
+  "version": "V2",
+  "requestId": "700955fc-46de-4857-a961-bc7081c47ddb",
+  "timestamp": 1710994764987,
+  "images": [
+    {
+      "receipt": {
+        "meta": {
+          "estimatedLanguage": "ko"
+        },
+        "result": {
+          "paymentInfo": {
+            "cardInfo": {
+              "company": {
+                "text": "KEB 하나",
+                "formatted": {
+                  "value": "KEB하나"
+                },
+                "keyText": "",
+                "confidenceScore": 0.86395,
+                "boundingPolys": [
+                  {
+                    "vertices": [
+                      {
+                        "x": 45.0,
+                        "y": 334.0
+                      },
+                      {
+                        "x": 59.0,
+                        "y": 334.0
+                      },
+                      {
+                        "x": 59.0,
+                        "y": 342.0
+                      },
+                      {
+                        "x": 45.0,
+                        "y": 342.0
+                      }
+                    ]
+                  },
+                  {
+                    "vertices": [
+                      {
+                        "x": 60.0,
+                        "y": 333.0
+                      },
+                      {
+                        "x": 78.0,
+                        "y": 333.0
+                      },
+                      {
+                        "x": 78.0,
+                        "y": 344.0
+                      },
+                      {
+                        "x": 60.0,
+                        "y": 344.0
+                      }
+                    ]
+                  }
+                ],
+                "maskingPolys": []
+              },
+              "number": {
+                "text": "54175700**233g",
+                "formatted": {
+                  "value": "54175700**233g"
+                },
+                "keyText": "",
+                "confidenceScore": 0.95264,
+                "boundingPolys": [
+                  {
+                    "vertices": [
+                      {
+                        "x": 114.0,
+                        "y": 335.0
+                      },
+                      {
+                        "x": 168.0,
+                        "y": 336.0
+                      },
+                      {
+                        "x": 168.0,
+                        "y": 341.0
+                      },
+                      {
+                        "x": 114.0,
+                        "y": 341.0
+                      }
+                    ]
+                  }
+                ],
+                "maskingPolys": []
+              }
+            }
+          },
+          "subResults": [
+            {
+              "items": [
+                {
+                  "name": {
+                    "text": "진주향 천하장사 오리",
+                    "formatted": {
+                      "value": "진주향 천하장사 오리"
+                    },
+                    "keyText": "",
+                    "confidenceScore": 0.91594,
+                    "boundingPolys": [
+                      {
+                        "vertices": [
+                          {
+                            "x": 38.0,
+                            "y": 50.0
+                          },
+                          {
+                            "x": 62.0,
+                            "y": 50.0
+                          },
+                          {
+                            "x": 62.0,
+                            "y": 58.0
+                          },
+                          {
+                            "x": 38.0,
+                            "y": 58.0
+                          }
+                        ]
+                      },
+                      {
+                        "vertices": [
+                          {
+                            "x": 65.0,
+                            "y": 50.0
+                          },
+                          {
+                            "x": 98.0,
+                            "y": 50.0
+                          },
+                          {
+                            "x": 98.0,
+                            "y": 59.0
+                          },
+                          {
+                            "x": 65.0,
+                            "y": 59.0
+                          }
+                        ]
+                      },
+                      {
+                        "vertices": [
+                          {
+                            "x": 99.0,
+                            "y": 50.0
+                          },
+                          {
+                            "x": 117.0,
+                            "y": 50.0
+                          },
+                          {
+                            "x": 117.0,
+                            "y": 59.0
+                          },
+                          {
+                            "x": 99.0,
+                            "y": 59.0
+                          }
+                        ]
+                      }
+                    ],
+                    "maskingPolys": []
+                  },
+                  "count": {
+                    "text": "1",
+                    "formatted": {
+                      "value": "1"
+                    },
+                    "keyText": "",
+                    "confidenceScore": 0.94582,
+                    "boundingPolys": [
+                      {
+                        "vertices": [
+                          {
+                            "x": 161.0,
+                            "y": 51.0
+                          },
+                          {
+                            "x": 167.0,
+                            "y": 51.0
+                          },
+                          {
+                            "x": 167.0,
+                            "y": 58.0
+                          },
+                          {
+                            "x": 161.0,
+                            "y": 58.0
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  "price": {
+                    "price": {
+                      "text": "5,988",
+                      "formatted": {
+                        "value": "5988"
+                      },
+                      "keyText": "",
+                      "confidenceScore": 0.94581,
+                      "boundingPolys": [
+                        {
+                          "vertices": [
+                            {
+                              "x": 184.0,
+                              "y": 51.0
+                            },
+                            {
+                              "x": 203.0,
+                              "y": 51.0
+                            },
+                            {
+                              "x": 203.0,
+                              "y": 58.0
+                            },
+                            {
+                              "x": 184.0,
+                              "y": 58.0
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    "unitPrice": {
+                      "text": "5g",
+                      "formatted": {
+                        "value": "5"
+                      },
+                      "keyText": "",
+                      "confidenceScore": 0.38747,
+                      "boundingPolys": [
+                        {
+                          "vertices": [
+                            {
+                              "x": 131.0,
+                              "y": 51.0
+                            },
+                            {
+                              "x": 151.0,
+                              "y": 51.0
+                            },
+                            {
+                              "x": 151.0,
+                              "y": 57.0
+                            },
+                            {
+                              "x": 131.0,
+                              "y": 57.0
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  }
+                },
+                {
+                  "name": {
+                    "text": "더 건강하닭 할리피뇨",
+                    "formatted": {
+                      "value": "더 건강하닭 할리피뇨"
+                    },
+                    "keyText": "",
+                    "confidenceScore": 0.75206,
+                    "boundingPolys": [
+                      {
+                        "vertices": [
+                          {
+                            "x": 38.0,
+                            "y": 76.0
+                          },
+                          {
+                            "x": 47.0,
+                            "y": 76.0
+                          },
+                          {
+                            "x": 47.0,
+                            "y": 86.0
+                          },
+                          {
+                            "x": 38.0,
+                            "y": 86.0
+                          }
+                        ]
+                      },
+                      {
+                        "vertices": [
+                          {
+                            "x": 50.0,
+                            "y": 77.0
+                          },
+                          {
+                            "x": 82.0,
+                            "y": 77.0
+                          },
+                          {
+                            "x": 82.0,
+                            "y": 86.0
+                          },
+                          {
+                            "x": 50.0,
+                            "y": 86.0
+                          }
+                        ]
+                      },
+                      {
+                        "vertices": [
+                          {
+                            "x": 85.0,
+                            "y": 77.0
+                          },
+                          {
+                            "x": 116.0,
+                            "y": 77.0
+                          },
+                          {
+                            "x": 116.0,
+                            "y": 85.0
+                          },
+                          {
+                            "x": 85.0,
+                            "y": 85.0
+                          }
+                        ]
+                      }
+                    ],
+                    "maskingPolys": []
+                  },
+                  "count": {
+                    "text": "1",
+                    "formatted": {
+                      "value": "1"
+                    },
+                    "keyText": "",
+                    "confidenceScore": 0.94743,
+                    "boundingPolys": [
+                      {
+                        "vertices": [
+                          {
+                            "x": 160.0,
+                            "y": 78.0
+                          },
+                          {
+                            "x": 167.0,
+                            "y": 78.0
+                          },
+                          {
+                            "x": 167.0,
+                            "y": 86.0
+                          },
+                          {
+                            "x": 160.0,
+                            "y": 86.0
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  "price": {
+                    "price": {
+                      "text": "13.988",
+                      "formatted": {
+                        "value": "13.988"
+                      },
+                      "keyText": "",
+                      "confidenceScore": 0.94689,
+                      "boundingPolys": [
+                        {
+                          "vertices": [
+                            {
+                              "x": 180.0,
+                              "y": 78.0
+                            },
+                            {
+                              "x": 203.0,
+                              "y": 78.0
+                            },
+                            {
+                              "x": 203.0,
+                              "y": 85.0
+                            },
+                            {
+                              "x": 180.0,
+                              "y": 85.0
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    "unitPrice": {
+                      "text": "13.9FB",
+                      "formatted": {
+                        "value": "13.9"
+                      },
+                      "keyText": "",
+                      "confidenceScore": 0.20322,
+                      "boundingPolys": [
+                        {
+                          "vertices": [
+                            {
+                              "x": 128.0,
+                              "y": 78.0
+                            },
+                            {
+                              "x": 151.0,
+                              "y": 79.0
+                            },
+                            {
+                              "x": 150.0,
+                              "y": 84.0
+                            },
+                            {
+                              "x": 128.0,
+                              "y": 84.0
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  }
+                },
+                {
+                  "name": {
+                    "text": "풍원이호박고구이 1kg",
+                    "formatted": {
+                      "value": "풍원이호박고구이 1kg"
+                    },
+                    "keyText": "",
+                    "confidenceScore": 0.75122,
+                    "boundingPolys": [
+                      {
+                        "vertices": [
+                          {
+                            "x": 38.0,
+                            "y": 104.0
+                          },
+                          {
+                            "x": 100.0,
+                            "y": 104.0
+                          },
+                          {
+                            "x": 100.0,
+                            "y": 112.0
+                          },
+                          {
+                            "x": 38.0,
+                            "y": 112.0
+                          }
+                        ]
+                      },
+                      {
+                        "vertices": [
+                          {
+                            "x": 104.0,
+                            "y": 105.0
+                          },
+                          {
+                            "x": 116.0,
+                            "y": 105.0
+                          },
+                          {
+                            "x": 116.0,
+                            "y": 112.0
+                          },
+                          {
+                            "x": 104.0,
+                            "y": 112.0
+                          }
+                        ]
+                      }
+                    ],
+                    "maskingPolys": []
+                  },
+                  "count": {
+                    "text": "1",
+                    "formatted": {
+                      "value": "1"
+                    },
+                    "keyText": "",
+                    "confidenceScore": 0.94353,
+                    "boundingPolys": [
+                      {
+                        "vertices": [
+                          {
+                            "x": 161.0,
+                            "y": 105.0
+                          },
+                          {
+                            "x": 166.0,
+                            "y": 105.0
+                          },
+                          {
+                            "x": 166.0,
+                            "y": 112.0
+                          },
+                          {
+                            "x": 161.0,
+                            "y": 112.0
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  "price": {
+                    "price": {
+                      "text": "7.988",
+                      "formatted": {
+                        "value": "7.988"
+                      },
+                      "keyText": "",
+                      "confidenceScore": 0.93956,
+                      "boundingPolys": [
+                        {
+                          "vertices": [
+                            {
+                              "x": 184.0,
+                              "y": 105.0
+                            },
+                            {
+                              "x": 203.0,
+                              "y": 105.0
+                            },
+                            {
+                              "x": 203.0,
+                              "y": 111.0
+                            },
+                            {
+                              "x": 184.0,
+                              "y": 111.0
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    "unitPrice": {
+                      "text": "7,960",
+                      "formatted": {
+                        "value": "7960"
+                      },
+                      "keyText": "",
+                      "confidenceScore": 0.84726,
+                      "boundingPolys": [
+                        {
+                          "vertices": [
+                            {
+                              "x": 131.0,
+                              "y": 105.0
+                            },
+                            {
+                              "x": 150.0,
+                              "y": 105.0
+                            },
+                            {
+                              "x": 150.0,
+                              "y": 111.0
+                            },
+                            {
+                              "x": 131.0,
+                              "y": 111.0
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  }
+                },
+                {
+                  "name": {
+                    "text": "단호박(뉴질랜드산/동",
+                    "formatted": {
+                      "value": "단호박(뉴질랜드산/동"
+                    },
+                    "keyText": "",
+                    "confidenceScore": 0.76452,
+                    "boundingPolys": [
+                      {
+                        "vertices": [
+                          {
+                            "x": 38.0,
+                            "y": 132.0
+                          },
+                          {
+                            "x": 115.0,
+                            "y": 132.0
+                          },
+                          {
+                            "x": 115.0,
+                            "y": 139.0
+                          },
+                          {
+                            "x": 38.0,
+                            "y": 139.0
+                          }
+                        ]
+                      }
+                    ],
+                    "maskingPolys": []
+                  },
+                  "count": {
+                    "text": "2",
+                    "formatted": {
+                      "value": "2"
+                    },
+                    "keyText": "",
+                    "confidenceScore": 0.95038,
+                    "boundingPolys": [
+                      {
+                        "vertices": [
+                          {
+                            "x": 160.0,
+                            "y": 132.0
+                          },
+                          {
+                            "x": 167.0,
+                            "y": 132.0
+                          },
+                          {
+                            "x": 167.0,
+                            "y": 140.0
+                          },
+                          {
+                            "x": 160.0,
+                            "y": 140.0
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  "price": {
+                    "price": {
+                      "text": "5.968",
+                      "formatted": {
+                        "value": "5.968"
+                      },
+                      "keyText": "",
+                      "confidenceScore": 0.91853,
+                      "boundingPolys": [
+                        {
+                          "vertices": [
+                            {
+                              "x": 184.0,
+                              "y": 133.0
+                            },
+                            {
+                              "x": 203.0,
+                              "y": 133.0
+                            },
+                            {
+                              "x": 203.0,
+                              "y": 138.0
+                            },
+                            {
+                              "x": 184.0,
+                              "y": 138.0
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    "unitPrice": {
+                      "text": "2,980",
+                      "formatted": {
+                        "value": "2980"
+                      },
+                      "keyText": "",
+                      "confidenceScore": 0.86427,
+                      "boundingPolys": [
+                        {
+                          "vertices": [
+                            {
+                              "x": 130.0,
+                              "y": 132.0
+                            },
+                            {
+                              "x": 151.0,
+                              "y": 132.0
+                            },
+                            {
+                              "x": 151.0,
+                              "y": 139.0
+                            },
+                            {
+                              "x": 130.0,
+                              "y": 139.0
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  }
+                },
+                {
+                  "name": {
+                    "text": "스윗츠코롤케이크",
+                    "formatted": {
+                      "value": "스윗츠코롤케이크"
+                    },
+                    "keyText": "",
+                    "confidenceScore": 0.94942,
+                    "boundingPolys": [
+                      {
+                        "vertices": [
+                          {
+                            "x": 38.0,
+                            "y": 158.0
+                          },
+                          {
+                            "x": 100.0,
+                            "y": 158.0
+                          },
+                          {
+                            "x": 100.0,
+                            "y": 166.0
+                          },
+                          {
+                            "x": 38.0,
+                            "y": 166.0
+                          }
+                        ]
+                      }
+                    ],
+                    "maskingPolys": []
+                  },
+                  "count": {
+                    "text": "1",
+                    "formatted": {
+                      "value": "1"
+                    },
+                    "keyText": "",
+                    "confidenceScore": 0.94892,
+                    "boundingPolys": [
+                      {
+                        "vertices": [
+                          {
+                            "x": 160.0,
+                            "y": 159.0
+                          },
+                          {
+                            "x": 167.0,
+                            "y": 159.0
+                          },
+                          {
+                            "x": 167.0,
+                            "y": 167.0
+                          },
+                          {
+                            "x": 160.0,
+                            "y": 167.0
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  "price": {
+                    "price": {
+                      "text": "3,588",
+                      "formatted": {
+                        "value": "3588"
+                      },
+                      "keyText": "",
+                      "confidenceScore": 0.94318,
+                      "boundingPolys": [
+                        {
+                          "vertices": [
+                            {
+                              "x": 183.0,
+                              "y": 159.0
+                            },
+                            {
+                              "x": 204.0,
+                              "y": 159.0
+                            },
+                            {
+                              "x": 204.0,
+                              "y": 166.0
+                            },
+                            {
+                              "x": 183.0,
+                              "y": 166.0
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    "unitPrice": {
+                      "text": "3500",
+                      "formatted": {
+                        "value": "3500"
+                      },
+                      "keyText": "",
+                      "confidenceScore": 0.5171,
+                      "boundingPolys": [
+                        {
+                          "vertices": [
+                            {
+                              "x": 131.0,
+                              "y": 159.0
+                            },
+                            {
+                              "x": 150.0,
+                              "y": 159.0
+                            },
+                            {
+                              "x": 150.0,
+                              "y": 165.0
+                            },
+                            {
+                              "x": 131.0,
+                              "y": 165.0
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  }
+                },
+                {
+                  "name": {
+                    "text": "토마주르토마토750c",
+                    "formatted": {
+                      "value": "토마주르토마토750c"
+                    },
+                    "keyText": "",
+                    "confidenceScore": 0.73993,
+                    "boundingPolys": [
+                      {
+                        "vertices": [
+                          {
+                            "x": 38.0,
+                            "y": 199.0
+                          },
+                          {
+                            "x": 108.0,
+                            "y": 199.0
+                          },
+                          {
+                            "x": 108.0,
+                            "y": 207.0
+                          },
+                          {
+                            "x": 38.0,
+                            "y": 207.0
+                          }
+                        ]
+                      }
+                    ],
+                    "maskingPolys": []
+                  },
+                  "count": {
+                    "text": "1",
+                    "formatted": {
+                      "value": "1"
+                    },
+                    "keyText": "",
+                    "confidenceScore": 0.94525,
+                    "boundingPolys": [
+                      {
+                        "vertices": [
+                          {
+                            "x": 160.0,
+                            "y": 200.0
+                          },
+                          {
+                            "x": 166.0,
+                            "y": 200.0
+                          },
+                          {
+                            "x": 166.0,
+                            "y": 207.0
+                          },
+                          {
+                            "x": 160.0,
+                            "y": 207.0
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  "price": {
+                    "price": {
+                      "text": "7,988",
+                      "formatted": {
+                        "value": "7988"
+                      },
+                      "keyText": "",
+                      "confidenceScore": 0.93842,
+                      "boundingPolys": [
+                        {
+                          "vertices": [
+                            {
+                              "x": 183.0,
+                              "y": 200.0
+                            },
+                            {
+                              "x": 204.0,
+                              "y": 200.0
+                            },
+                            {
+                              "x": 204.0,
+                              "y": 206.0
+                            },
+                            {
+                              "x": 183.0,
+                              "y": 206.0
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    "unitPrice": {
+                      "text": "7,989",
+                      "formatted": {
+                        "value": "7989"
+                      },
+                      "keyText": "",
+                      "confidenceScore": 0.90005,
+                      "boundingPolys": [
+                        {
+                          "vertices": [
+                            {
+                              "x": 129.0,
+                              "y": 199.0
+                            },
+                            {
+                              "x": 151.0,
+                              "y": 199.0
+                            },
+                            {
+                              "x": 151.0,
+                              "y": 206.0
+                            },
+                            {
+                              "x": 129.0,
+                              "y": 206.0
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  }
+                }
+              ]
+            }
+          ],
+          "totalPrice": {
+            "price": {
+              "text": "89 260",
+              "formatted": {
+                "value": "89260"
+              },
+              "keyText": "결제대상금액",
+              "confidenceScore": 0.88816,
+              "boundingPolys": [
+                {
+                  "vertices": [
+                    {
+                      "x": 179.0,
+                      "y": 308.0
+                    },
+                    {
+                      "x": 187.0,
+                      "y": 308.0
+                    },
+                    {
+                      "x": 187.0,
+                      "y": 314.0
+                    },
+                    {
+                      "x": 179.0,
+                      "y": 314.0
+                    }
+                  ]
+                },
+                {
+                  "vertices": [
+                    {
+                      "x": 191.0,
+                      "y": 308.0
+                    },
+                    {
+                      "x": 203.0,
+                      "y": 308.0
+                    },
+                    {
+                      "x": 203.0,
+                      "y": 314.0
+                    },
+                    {
+                      "x": 191.0,
+                      "y": 314.0
+                    }
+                  ]
+                }
+              ]
+            }
+          },
+          "subTotal": [
+            {
+              "taxPrice": [
+                {
+                  "text": "6 122",
+                  "formatted": {
+                    "value": "6122"
+                  },
+                  "keyText": "부 가 H",
+                  "confidenceScore": 0.82032,
+                  "boundingPolys": [
+                    {
+                      "vertices": [
+                        {
+                          "x": 183.0,
+                          "y": 282.0
+                        },
+                        {
+                          "x": 187.0,
+                          "y": 282.0
+                        },
+                        {
+                          "x": 187.0,
+                          "y": 288.0
+                        },
+                        {
+                          "x": 183.0,
+                          "y": 288.0
+                        }
+                      ]
+                    },
+                    {
+                      "vertices": [
+                        {
+                          "x": 191.0,
+                          "y": 282.0
+                        },
+                        {
+                          "x": 202.0,
+                          "y": 282.0
+                        },
+                        {
+                          "x": 202.0,
+                          "y": 288.0
+                        },
+                        {
+                          "x": 191.0,
+                          "y": 288.0
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      },
+      "uid": "bb41c5cfcc37467fa5b9640f26caa588",
+      "name": "8022c69b-3e3e-4165-8e81-88fe98d6a8bb",
+      "inferResult": "SUCCESS",
+      "message": "SUCCESS",
+      "validationResult": {
+        "result": "NO_REQUESTED"
+      }
+    }
+  ]
+}

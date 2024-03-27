@@ -22,6 +22,8 @@ const ReceiptDetailCard = ({ receipt_id }: { receipt_id: string }) => {
   console.log(purchaseReceiptInfo);
 
   const onClickAddFood = (index: number, foodId?: string) => {
+    //굳이 요청을 보내는 것이 아니라,
+    //foodId query key를 가지고 있는데이터 caching하면 될듯
     if (foodId) {
       queryClient
         .fetchQuery({
@@ -69,11 +71,11 @@ const ReceiptDetailCard = ({ receipt_id }: { receipt_id: string }) => {
                 <div
                   className="flex w-full justify-between truncate"
                   key={receipt.food_id}>
-                  <div className="basis-2/12">{receipt.food_category}</div>
+                  <div className="basis-2/12">{receipt.category}</div>
                   <div className="max-w-[127px] basis-5/12 truncate">
-                    {receipt.food_name}
+                    {receipt.name}
                   </div>
-                  <div className="basis-2/12">{receipt.food_weight}</div>
+                  <div className="basis-2/12">{receipt.amount}</div>
                   <div className="basis-2/12">
                     {receipt.purchase_price?.toLocaleString()}
                   </div>

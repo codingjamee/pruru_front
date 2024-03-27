@@ -40,7 +40,7 @@ const AddFood = () => {
       ? {
           category: foodData.category,
           method: foodData.method,
-          food_name: foodData.food_name,
+          name: foodData.name,
           remain_amount: foodData.amount,
           purchase_date: foodData.purchase_date || dayjs().format('YY.MM.DD'),
           expiry_date: foodData.expiry_date,
@@ -52,7 +52,7 @@ const AddFood = () => {
       : AddFoodInit,
   });
 
-  const searchFoodName = watch('food_name');
+  const searchFoodName = watch('name');
   const searchName = watch('search_name');
   const searchIamgeUrl = watch('image_url');
 
@@ -72,7 +72,7 @@ const AddFood = () => {
     setModalIsOpen(true);
     setValue('image_url', '');
     setValue('search_name', searchFoodName || '');
-    setValue('food_name', '');
+    setValue('name', '');
   };
 
   const onAddFood = (data: FoodPropType) => {
@@ -119,7 +119,7 @@ const AddFood = () => {
                 <div
                   className="cursor-pointer"
                   onClick={() => {
-                    setValue('food_name', result.title.replace(/<\/?b>/g, ''));
+                    setValue('name', result.title.replace(/<\/?b>/g, ''));
                     setValue('image_url', result.image);
                     setValue('category', result.category3);
                     setSearchTrigger(false);
@@ -148,8 +148,8 @@ const AddFood = () => {
             <div className="flex flex-grow mobile:w-full">
               <Search
                 onClickSearch={onClickSearch}
-                {...register('food_name')}
-                name="food_name"
+                {...register('name')}
+                name="name"
                 truncate={true}
               />
             </div>
