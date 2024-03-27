@@ -10,9 +10,9 @@ import {
   QueryClient,
   dehydrate,
 } from '@tanstack/react-query';
-import ExpiryFood from '../_component/ExpiryFood';
-import { foodsByPurchase, getFoodsByExpiry } from '@/_utils/getQuery';
 import RecentlyFood from '../_component/RecentlyFood';
+import { getFoods } from '@/_utils/getQuery';
+import Foods from '../_component/Foods';
 
 export const foodCardDummyArr = [
   {
@@ -21,7 +21,7 @@ export const foodCardDummyArr = [
     foodImageUrl: '',
     purchase_date: '24.2.17',
     foodAmount: '400',
-    expiryDate: '2024-03-30T15:00:00Z',
+    expiry_date: '2024-03-30T15:00:00Z',
   },
   {
     id: 2,
@@ -29,7 +29,7 @@ export const foodCardDummyArr = [
     foodImageUrl: '',
     purchase_date: '24.2.19',
     foodAmount: '40g',
-    expiryDate: '2024-03-30T15:00:00Z',
+    expiry_date: '2024-03-30T15:00:00Z',
   },
   {
     id: 3,
@@ -37,7 +37,7 @@ export const foodCardDummyArr = [
     foodImageUrl: '',
     purchase_date: '24.2.12',
     foodAmount: '3개',
-    expiryDate: '2024-03-30T15:00:00Z',
+    expiry_date: '2024-03-30T15:00:00Z',
   },
   {
     id: 4,
@@ -45,7 +45,7 @@ export const foodCardDummyArr = [
     foodImageUrl: '',
     purchase_date: '24.2.12',
     foodAmount: '1송이',
-    expiryDate: '2024-03-30T15:00:00Z',
+    expiry_date: '2024-03-30T15:00:00Z',
   },
   {
     id: 5,
@@ -53,19 +53,15 @@ export const foodCardDummyArr = [
     name: '완두콩',
     purchase_date: '24.2.12',
     foodAmount: '1개',
-    expiryDate: '2024-03-30T15:00:00Z',
+    expiry_date: '2024-03-30T15:00:00Z',
   },
 ];
 
 const page = async () => {
   const queryClient = new QueryClient();
   await queryClient.prefetchQuery({
-    queryKey: ['foods', 'expiryDate'],
-    queryFn: getFoodsByExpiry,
-  });
-  await queryClient.prefetchQuery({
-    queryKey: ['foods', 'purchase_date'],
-    queryFn: foodsByPurchase,
+    queryKey: ['foods'],
+    queryFn: getFoods,
   });
 
   const dehydratedState = dehydrate(queryClient);
@@ -104,11 +100,11 @@ const page = async () => {
           <Link href="/food?storage=total&sort=expiryDate">더보기</Link>
         </div>
         <CardSliderWrapper>
-          <ExpiryFood />
+          <Foods />
         </CardSliderWrapper>
         <div className="my-10 flex justify-between text-size-font-card-title">
           <div>최근 산 재료</div>
-          <Link href="/food?storage=total&sort=purchase_date">더보기</Link>
+          <Link href="/food?storage=total&sort=purchaseDate">더보기</Link>
         </div>
         <CardSliderWrapper>
           <RecentlyFood />
