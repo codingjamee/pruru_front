@@ -83,3 +83,15 @@ export interface FormType {
   pwd: string;
   email: string;
 }
+
+export interface QueryTypes {
+  storage: 'refrigerated' | 'frozen' | 'room_temp' | 'total';
+  sort: 'price' | 'expiryDate' | 'purchaseDate';
+  direction: 'up' | 'down';
+}
+
+export interface QueryTextMap {
+  [key: string]: string;
+}
+
+export type QueryKeyType = 'storage' | 'sort' | 'direction';
