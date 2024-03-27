@@ -9,23 +9,25 @@ export interface ArrayType {
 
 const useSortByQuery = (
   { sort, direction, storage }: QueryTypes,
+  isSuccess?: boolean,
   data?: FoodPropType[],
 ) => {
   const [filteredData, setFilteredData] = useState(data);
   const [sortedData, setSortedData] = useState<FoodPropType[] | undefined>([]);
 
   useEffect(() => {
+    if (!isSuccess) return;
     setFilteredData(
       data &&
         data.filter((data) => data.method === storage || storage === 'total'),
     );
-  }, [storage]);
+    console.log('filetered data is set');
+  }, [storage, isSuccess]);
 
   useEffect(() => {
-    if (!data) return;
     const sorted =
-      filteredData &&
-      [...filteredData].sort((a, b) => {
+      data &&
+      [...data].sort((a, b) => {
         if (sort === 'expiryDate' || sort === 'purchaseDate') {
           let diff;
           if (sort === 'expiryDate') {
@@ -42,9 +44,9 @@ const useSortByQuery = (
         }
         return 0;
       });
-
+    console.log(filteredData);
     setSortedData(sorted);
-  }, [sort, direction, filteredData]);
+  }, [sort, direction, filteredData, isSuccess]);
 
   return sortedData;
 };
