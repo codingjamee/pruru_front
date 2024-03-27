@@ -5,7 +5,6 @@ import Button from '@/_components/Button';
 import Card from '@/_components/Card';
 import { ReceiptDetailType } from '@/_types/ReceiptTypes';
 import { getreceipt_items } from '@/_utils/getQuery';
-import { postFoodDataById } from '@/_utils/postQuery';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { useRouter } from 'next/navigation';
 
@@ -22,22 +21,12 @@ const ReceiptDetailCard = ({ receipt_id }: { receipt_id: string }) => {
   console.log(purchaseReceiptInfo);
 
   const onClickAddFood = (index: number, foodId?: string) => {
-    //굳이 요청을 보내는 것이 아니라,
-    //foodId query key를 가지고 있는데이터 caching하면 될듯
     if (foodId) {
-      queryClient
-        .fetchQuery({
-          queryKey: ['addFood', foodId],
-          queryFn: () =>
-            postFoodDataById(purchaseReceiptInfo[0][index], foodId),
-        })
-        .then(() => {
-          console.log('성공 적으로 식재료를 추가하였다!');
-          router.push(`/add/food?foodId=${foodId}`);
-        })
-        .catch((err) => {
-          console.error('an error occurred! when adding Food', err);
-        });
+      queryClient.setQueryData(
+        ['addFood', foodId],
+        purchaseReceiptInfo[0][index],
+      );
+      router.push(`/add/food?foodId=${foodId}`);
     }
   };
 
