@@ -41,6 +41,15 @@ export const handlers = [
   http.get('/api/food', () => {
     return HttpResponse.json(foodCardDummyArr);
   }),
+
+  http.get('/api/food/:foodId', ({ params }) => {
+    const { foodId } = params;
+    const filteredArr = foodCardDummyArr.filter(
+      (arr) => arr.id.toString() === foodId,
+    );
+    return HttpResponse.json(filteredArr);
+  }),
+
   http.get('/api/receipt', ({ request }) => {
     const url = new URL(request.url);
     const year_month = url.searchParams.get('month');
