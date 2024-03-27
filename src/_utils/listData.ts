@@ -1,3 +1,4 @@
+import { QueryTextMap } from '@/_types/CommonTypes';
 import { FoodPropType } from '@/_types/FoodTypes';
 import dayjs from 'dayjs';
 
@@ -47,4 +48,22 @@ export const AddFoodInit: FoodPropType & { search_name: string } = {
   purchase_price: 0,
   image_url: '',
   search_name: '',
+};
+
+export const storageText: QueryTextMap = {
+  refrigerated: '냉장',
+  frozen: '냉동',
+  room_temp: '상온',
+  total: '전체',
+};
+
+export const sortText: QueryTextMap = {
+  price: '가격순',
+  expiryDate: '유통기한',
+  purchaseDate: '구매일자',
+};
+
+export const directionText: QueryTextMap = {
+  up: '오름차순',
+  down: '내림차순',
 };
