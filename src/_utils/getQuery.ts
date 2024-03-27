@@ -18,6 +18,17 @@ export const getFoods = async () => {
   return res.json();
 };
 
+export const getFoodById = async (id: string) => {
+  const res = await api(`/food/${id}`, {
+    next: {
+      tags: ['getFoodById', id],
+    },
+  });
+  if (!res.ok) throw new Error('Failed to Fetch Food by id');
+
+  return res.json();
+};
+
 export const getReceiptsByMonth = async (YM?: string) => {
   if (!YM) {
     YM = dayjs().format('YY.MM');
