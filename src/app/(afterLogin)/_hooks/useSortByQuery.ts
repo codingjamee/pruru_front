@@ -21,7 +21,6 @@ const useSortByQuery = (
       data &&
         data.filter((data) => data.method === storage || storage === 'total'),
     );
-    console.log('filetered data is set');
   }, [storage, isSuccess]);
 
   useEffect(() => {
@@ -44,7 +43,6 @@ const useSortByQuery = (
         }
         return 0;
       });
-    console.log(filteredData);
     setSortedData(sorted);
   }, [sort, direction, filteredData, isSuccess]);
 
