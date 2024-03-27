@@ -1,26 +1,18 @@
 'use client';
 import dayjs from 'dayjs';
 import { api, searchApi } from './createCustomFetch';
+import { QueryTypes } from '@/_types/CommonTypes';
 // import { receiptApi } from './createCustomFetch';
 
-export const getFoodsByExpiry = async () => {
-  const res = await api(`/food?storage=total&sort=expiry_date`, {
-    next: {
-      tags: ['foods', 'expiryDate'],
+export const getFoods = async ({ storage, sort, direction }: QueryTypes) => {
+  const res = await api(
+    `/food?storage=${storage}&sort=${sort}&direction=${direction}`,
+    {
+      next: {
+        tags: ['foods', storage, sort, direction],
+      },
     },
-  });
-  if (!res.ok) {
-    throw new Error('Failed to fetch data');
-  }
-  return res.json();
-};
-
-export const foodsByPurchase = async () => {
-  const res = await api(`/food?storage=total&sort=purchase_date`, {
-    next: {
-      tags: ['foods', 'purchase_date'],
-    },
-  });
+  );
   if (!res.ok) {
     throw new Error('Failed to fetch data');
   }
