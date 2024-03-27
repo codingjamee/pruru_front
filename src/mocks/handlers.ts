@@ -38,35 +38,8 @@ export const handlers = [
     //   },
     // });
   }),
-  http.get('/api/food', ({ request }) => {
-    const url = new URL(request.url);
-    const storage = url.searchParams.get('storage');
-    const sort = url.searchParams.get('sort');
-    const direction = url.searchParams.get('direction');
-    const filteredFoods =
-      storage === 'total'
-        ? foodCardDummyArr
-        : foodCardDummyArr.filter((food) => food.method === storage);
-
-    if (sort) {
-      filteredFoods.sort((a, b) => {
-        if (sort === 'purchase_date' || sort === 'expiry_date') {
-          const dateA = dayjs(a[sort]);
-          const dateB = dayjs(b[sort]);
-          return direction === 'up'
-            ? dateA.get('second') - dateB.get('second')
-            : dateB.get('second') - dateA.get('second');
-        } else if (sort === 'purchase_price') {
-          const priceA = a.purchase_price ?? 0;
-          const priceB = b.purchase_price ?? 0;
-          return direction === 'up' ? priceA - priceB : priceB - priceA;
-        }
-        return 0;
-      });
-    }
-
-    console.log({ storage, sort });
-    return HttpResponse.json(filteredFoods);
+  http.get('/api/food', () => {
+    return HttpResponse.json(foodCardDummyArr);
   }),
   http.get('/api/receipt', ({ request }) => {
     const url = new URL(request.url);
