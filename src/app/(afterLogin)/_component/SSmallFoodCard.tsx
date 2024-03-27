@@ -8,7 +8,7 @@ import React from 'react';
 
 const SSmallFoodCard = ({ food, className }: FoodCardType) => {
   const { id, image_url, name, expiry_date } = food;
-  // const { id, foodImageUrl, name, purchase_date, foodAmount, expiryDate } = food;
+  // const { id, foodImageUrl, name, purchase_date, foodAmount, expiry_date } = food;
   const remainingDay = expiry_date && remainedTime(expiry_date);
   const router = useRouter();
 

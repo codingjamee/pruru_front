@@ -26,9 +26,14 @@ const useSortByQuery = (
     const sorted =
       filteredData &&
       [...filteredData].sort((a, b) => {
-        if (sort === 'expiry_date' || sort === 'purchase_date') {
-          let diff = dayjs(a[sort]).diff(dayjs(b[sort]));
-          return direction === 'up' ? diff : -diff;
+        if (sort === 'expiryDate' || sort === 'purchaseDate') {
+          let diff;
+          if (sort === 'expiryDate') {
+            diff = dayjs(a['expiry_date']).diff(dayjs(b['expiry_date']));
+          } else {
+            diff = dayjs(a['purchase_date']).diff(dayjs(b['purchase_date']));
+          }
+          return direction === 'up' ? -diff : diff;
         } else if (sort === 'price') {
           if (a.purchase_price && b.purchase_price)
             return direction === 'up'

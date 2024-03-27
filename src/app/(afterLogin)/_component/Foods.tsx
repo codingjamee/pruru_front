@@ -13,7 +13,7 @@ const Foods = () => {
   const storage: QueryTypes['storage'] =
     (params.get('storage') as QueryTypes['storage']) || 'total';
   const sort: QueryTypes['sort'] =
-    (params.get('sort') as QueryTypes['sort']) || 'expiry_date';
+    (params.get('sort') as QueryTypes['sort']) || 'expiryDate';
   const direction: QueryTypes['direction'] =
     (params.get('direction') as QueryTypes['direction']) || 'down';
   const { data: expiryFood } = useQuery<FoodPropType[]>({

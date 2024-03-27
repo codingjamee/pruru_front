@@ -9,7 +9,7 @@ function generate_purchase_date() {
   });
 }
 
-function generate_expiryDate() {
+function generate_expiry_date() {
   const today = new Date();
   const nextWeek = new Date();
   nextWeek.setDate(nextWeek.getDate() + 7);
@@ -26,7 +26,7 @@ export const foodCardDummyArr = [
     purchase_price: 5950,
     amount: 400,
     unit: 'g',
-    expiry_date: generate_expiryDate(),
+    expiry_date: generate_expiry_date(),
   },
   {
     id: 2,
@@ -37,7 +37,7 @@ export const foodCardDummyArr = [
     purchase_price: 10000,
     amount: 40,
     unit: 'g',
-    expiry_date: generate_expiryDate(),
+    expiry_date: generate_expiry_date(),
   },
   {
     id: 3,
@@ -47,17 +47,17 @@ export const foodCardDummyArr = [
     purchase_date: generate_purchase_date(),
     amount: '3개',
     unit: 'g',
-    expiry_date: generate_expiryDate(),
+    expiry_date: generate_expiry_date(),
   },
   {
     id: 4,
-    method: 'room_temp',
+    method: 'roomTemp',
     name: '바나나',
     image_url: faker.image.urlLoremFlickr({ category: 'food' }),
     purchase_date: generate_purchase_date(),
     amount: 1,
     unit: '송이',
-    expiry_date: generate_expiryDate(),
+    expiry_date: generate_expiry_date(),
   },
   {
     id: 5,
@@ -67,7 +67,7 @@ export const foodCardDummyArr = [
     purchase_date: generate_purchase_date(),
     amount: 1,
     unit: '개',
-    expiry_date: generate_expiryDate(),
+    expiry_date: generate_expiry_date(),
   },
 ];
 export const receiptDummyArr = [

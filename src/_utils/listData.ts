@@ -29,10 +29,10 @@ export const receiptItemsInit = [
 ];
 
 export const selectLists: {
-  value: 'refrigerated' | 'frozen' | 'room_temp';
+  value: 'refrigerated' | 'frozen' | 'roomTemp';
   label: string;
 }[] = [
-  { value: 'room_temp', label: '상온' },
+  { value: 'roomTemp', label: '상온' },
   { value: 'refrigerated', label: '냉장' },
   { value: 'frozen', label: '냉동' },
 ];
@@ -51,19 +51,19 @@ export const AddFoodInit: FoodPropType & { search_name: string } = {
 };
 
 export const storageText: QueryTextMap = {
+  total: '전체',
   refrigerated: '냉장',
   frozen: '냉동',
-  room_temp: '상온',
-  total: '전체',
+  roomTemp: '상온',
 };
 
 export const sortText: QueryTextMap = {
-  price: '가격순',
   expiryDate: '유통기한',
+  price: '가격순',
   purchaseDate: '구매일자',
 };
 
 export const directionText: QueryTextMap = {
-  up: '오름차순',
   down: '내림차순',
+  up: '오름차순',
 };

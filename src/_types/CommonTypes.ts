@@ -85,7 +85,7 @@ export interface FormType {
 }
 
 export interface QueryTypes {
-  storage: 'refrigerated' | 'frozen' | 'room_temp' | 'total';
+  storage: 'refrigerated' | 'frozen' | 'roomTemp' | 'total';
   sort: 'price' | 'expiryDate' | 'purchaseDate';
   direction: 'up' | 'down';
 }
