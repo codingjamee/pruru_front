@@ -16,7 +16,7 @@ const Foods = () => {
     (params.get('sort') as QueryTypes['sort']) || 'expiryDate';
   const direction: QueryTypes['direction'] =
     (params.get('direction') as QueryTypes['direction']) || 'down';
-  const { data: expiryFood } = useQuery<FoodPropType[]>({
+  const { data: foodData, isSuccess } = useQuery({
     queryKey: ['foods'],
     queryFn: () => getFoods(),
     staleTime: 10 * 60 * 1000,
@@ -28,8 +28,10 @@ const Foods = () => {
       direction,
       storage,
     },
-    expiryFood,
+    isSuccess,
+    foodData,
   );
+
   return (
     <>
       {sortedData &&
