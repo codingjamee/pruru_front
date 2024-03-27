@@ -14,54 +14,12 @@ import RecentlyFood from '../_component/RecentlyFood';
 import { getFoods } from '@/_utils/getQuery';
 import Foods from '../_component/Foods';
 
-export const foodCardDummyArr = [
-  {
-    id: 1,
-    name: '당근',
-    foodImageUrl: '',
-    purchase_date: '24.2.17',
-    foodAmount: '400',
-    expiry_date: '2024-03-30T15:00:00Z',
-  },
-  {
-    id: 2,
-    name: '토마토',
-    foodImageUrl: '',
-    purchase_date: '24.2.19',
-    foodAmount: '40g',
-    expiry_date: '2024-03-30T15:00:00Z',
-  },
-  {
-    id: 3,
-    name: '아보카도',
-    foodImageUrl: '',
-    purchase_date: '24.2.12',
-    foodAmount: '3개',
-    expiry_date: '2024-03-30T15:00:00Z',
-  },
-  {
-    id: 4,
-    name: '바나나',
-    foodImageUrl: '',
-    purchase_date: '24.2.12',
-    foodAmount: '1송이',
-    expiry_date: '2024-03-30T15:00:00Z',
-  },
-  {
-    id: 5,
-    foodImageUrl: '',
-    name: '완두콩',
-    purchase_date: '24.2.12',
-    foodAmount: '1개',
-    expiry_date: '2024-03-30T15:00:00Z',
-  },
-];
-
 const page = async () => {
   const queryClient = new QueryClient();
   await queryClient.prefetchQuery({
     queryKey: ['foods'],
     queryFn: getFoods,
+    staleTime: 10 * 60 * 1000,
   });
 
   const dehydratedState = dehydrate(queryClient);
