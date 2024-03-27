@@ -84,7 +84,9 @@ const AddFood = () => {
           queryKey: ['editExistFood'],
           queryFn: () => postFoodDataById(data, existFoodId),
         })
-        .then(() => router.push(`/food?storage=total&sort=${requestYM}`))
+        .then(() =>
+          router.push(`/food?storage=total&sort=${requestYM}&direction=down`),
+        )
         .catch((err) => console.log(err));
     } else {
       queryClient
@@ -92,11 +94,12 @@ const AddFood = () => {
           queryKey: ['addFirstFood'],
           queryFn: () => postFoodData(data),
         })
-        .then(() => router.push(`/food?storage=total&sort=${requestYM}`))
+        .then(() =>
+          router.push(`/food?storage=total&sort=${requestYM}&direction=down`),
+        )
         .catch((err) => console.log(err));
     }
-
-    //성공하면 /food?storage=total&sort=date&direction=up으로 이동
+    //성공하면 /food/:foodId로 이동..
   };
 
   const onClickSearchTrigger = () => {
