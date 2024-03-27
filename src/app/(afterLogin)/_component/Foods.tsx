@@ -8,7 +8,7 @@ import { useSearchParams } from 'next/navigation';
 import { QueryTypes } from '@/_types/CommonTypes';
 import useSortByQuery from '../_hooks/useSortByQuery';
 
-const ExpiryFood = () => {
+const Foods = () => {
   const params = useSearchParams();
   const storage: QueryTypes['storage'] =
     (params.get('storage') as QueryTypes['storage']) || 'total';
@@ -46,4 +46,4 @@ const ExpiryFood = () => {
   );
 };
 
-export default ExpiryFood;
+export default Foods;
