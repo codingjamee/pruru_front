@@ -25,7 +25,7 @@ const navList = [
   },
   {
     name: '식재료',
-    path: '/food',
+    path: '/food?storage=total&sort=expiryDate&direction=down',
     focusKey: 'food',
     style: 'link-three',
     subStyle: 'link-hidden-three',
