@@ -8,10 +8,11 @@ const page = () => {
       <div className="flex w-full flex-row justify-between gap-[40px] pt-[20px]">
         <div className="flex gap-[20px]">
           <div>식재료 관리</div>
-          <QueryComponent value="storage" />
+          <QueryComponent query="storage" />
         </div>
         <div className="flex">
-          <QueryComponent value="sort" />
+          <QueryComponent query="sort" />
+          <QueryComponent query="direction" />
         </div>
       </div>
       <div className="flex flex-row flex-wrap items-center gap-[10px]">
