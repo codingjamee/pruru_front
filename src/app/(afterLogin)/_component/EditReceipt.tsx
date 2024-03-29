@@ -5,7 +5,7 @@ import PlusSvg from '@/_assets/PlusSvg';
 import { Fragment, useEffect, useState } from 'react';
 import MinusSvg from '@/_assets/MinusSvg';
 import Input from '@/_components/Input';
-import { useFieldArray, useForm } from 'react-hook-form';
+import { Controller, useFieldArray, useForm } from 'react-hook-form';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { PurchaseReceiptInfoType } from '@/_types/ReceiptTypes';
 import dayjs from 'dayjs';
@@ -13,6 +13,8 @@ import { postReceiptData } from '@/_utils/postQuery';
 import { useRouter } from 'next/navigation';
 import customParseFormat from 'dayjs/plugin/customParseFormat';
 import { editReceiptForm, receiptItemsInit } from '@/_utils/listData';
+import DatePicker from 'react-datepicker';
+import 'react-datepicker/dist/react-datepicker.css';
 dayjs.extend(customParseFormat);
 
 const EditReceipt = () => {
@@ -21,6 +23,9 @@ const EditReceipt = () => {
     queryClient.getQueryData(['allSearchResults']);
   const [length, setLength] = useState<number | undefined>(0);
   const [totalPrice, setTotalPrice] = useState<number | undefined>(0);
+  const [purchaseDate, setPurchaseDate] = useState<Date | null>(
+    dayjs().toDate(),
+  );
   const [receiptData, setReceiptData] = useState<
     PurchaseReceiptInfoType | undefined
   >();
@@ -43,12 +48,11 @@ const EditReceipt = () => {
   } = useForm<PurchaseReceiptInfoType>({
     defaultValues: {
       purchase_location:
-        (foundReceiptData && foundReceiptData.purchase_location) ||
-        '구매처 입력란',
+        (foundReceiptData && foundReceiptData.purchase_location) || '',
       purchase_date:
         dayjs(foundReceiptData && foundReceiptData.purchase_date).format(
           'YY.MM.DD',
-        ) + ' 구매',
+        ) || dayjs().format('YY.MM.DD'),
       total_price: totalPrice,
       receipt_items: foundReceiptData
         ? foundReceiptData.receipt_items.map((data) => {
@@ -63,7 +67,7 @@ const EditReceipt = () => {
               registered: false,
             };
           })
-        : receiptItemsInit,
+        : [receiptItemsInit],
     },
   });
 
@@ -114,23 +118,41 @@ const EditReceipt = () => {
         <form
           onSubmit={handleSubmit(onSubmit)}
           className="flex flex-col gap-[30px]">
-          <div className="flex w-full justify-between gap-[10px] mobile:flex-col">
-            <Input
-              variant={errors.purchase_date ? 'danger' : 'outlined'}
-              className="w-[213px] rounded-lg border border-solid border-color-default-text px-[30px] py-[7px] text-center mobile:w-full"
-              {...register('purchase_date', {
-                required: '빈 칸이 없게 작성해주세요',
-                minLength: 1,
-              })}
-            />
-            <Input
-              variant="primary"
-              className="w-[213px] rounded-lg text-center mobile:w-full"
-              {...register('purchase_location', {
-                required: '빈 칸이 없게 작성해주세요',
-                minLength: 1,
-              })}
-            />
+          <div className="flex w-full flex-col justify-between gap-[10px]">
+            <div className="flex flex-row gap-4">
+              <div className="basis-3/12">구매일자</div>
+              <Controller
+                name="purchase_date"
+                control={control}
+                render={({
+                  field: { onChange: onChangeForm, onBlur, name },
+                }) => (
+                  <DatePicker
+                    name={name}
+                    onChange={(datestring) => {
+                      setPurchaseDate(dayjs(datestring).toDate());
+                      return onChangeForm(dayjs(datestring).format('YY.MM.DD'));
+                    }}
+                    wrapperClassName="w-[100%] h-[40px] "
+                    dateFormat="yy.MM.dd"
+                    onBlur={onBlur}
+                    selected={purchaseDate}
+                    className="h-[40px] w-[100%] rounded-lg border border-solid border-color-default-text bg-transparent text-center mobile:w-full"
+                  />
+                )}
+              />
+            </div>
+            <div className="flex flex-row gap-4">
+              <div className="basis-3/12">구매처</div>
+              <Input
+                variant="primary"
+                className="flex-grow rounded-lg text-center "
+                {...register('purchase_location', {
+                  required: '빈 칸이 없게 작성해주세요',
+                  minLength: 1,
+                })}
+              />
+            </div>
           </div>
           <div className="flex flex-1 flex-col gap-[10px] mobile:gap-[15px]">
             <div className="flex w-full justify-between text-[14px]">
@@ -145,8 +167,8 @@ const EditReceipt = () => {
                 className="flex w-full items-center justify-between gap-[5px] truncate"
                 key={`receipt-${index}`}>
                 {editReceiptForm.map(
-                  ({ field, basis, maxWidth, min }, index) => (
-                    <Fragment key={`edit-${index}`}>
+                  ({ field, basis, maxWidth, min }, inputIndex) => (
+                    <Fragment key={`edit-${inputIndex}`}>
                       <Input
                         variant={
                           errors?.receipt_items?.[index]?.[field]
@@ -180,7 +202,7 @@ const EditReceipt = () => {
               <div className="basis-11/12"></div>
               <PlusSvg
                 className="flex basis-1/12 cursor-pointer"
-                onClick={() => append(receiptItemsInit[0])}
+                onClick={() => append(receiptItemsInit)}
               />
             </div>
           </div>
