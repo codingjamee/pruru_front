@@ -2,7 +2,7 @@
 import Button from '@/_components/Button';
 import Card from '@/_components/Card';
 import PlusSvg from '@/_assets/PlusSvg';
-import { useEffect, useState } from 'react';
+import { Fragment, useEffect, useState } from 'react';
 import MinusSvg from '@/_assets/MinusSvg';
 import Input from '@/_components/Input';
 import { useFieldArray, useForm } from 'react-hook-form';
@@ -144,26 +144,28 @@ const EditReceipt = () => {
               <div
                 className="flex w-full items-center justify-between gap-[5px] truncate"
                 key={`receipt-${index}`}>
-                {editReceiptForm.map(({ field, basis, maxWidth, min }) => (
-                  <>
-                    <Input
-                      variant={
-                        errors?.receipt_items?.[index]?.[field]
-                          ? 'danger'
-                          : 'underline'
-                      }
-                      {...register(`receipt_items.${index}.${field}`, {
-                        required: {
-                          value: true,
-                          message: '빈 칸이 없게 작성해주세요',
-                        },
-                        minLength: min ? undefined : 1,
-                        min: 1,
-                      })}
-                      className={`${maxWidth ? `max-w-[${maxWidth}]` : ''} basis-${basis} ${field === 'name' ? 'truncate' : ''}`}
-                    />
-                  </>
-                ))}
+                {editReceiptForm.map(
+                  ({ field, basis, maxWidth, min }, index) => (
+                    <Fragment key={`edit-${index}`}>
+                      <Input
+                        variant={
+                          errors?.receipt_items?.[index]?.[field]
+                            ? 'danger'
+                            : 'underline'
+                        }
+                        {...register(`receipt_items.${index}.${field}`, {
+                          required: {
+                            value: true,
+                            message: '빈 칸이 없게 작성해주세요',
+                          },
+                          minLength: min ? undefined : 1,
+                          min: 1,
+                        })}
+                        className={`${maxWidth ? `max-w-[${maxWidth}]` : ''} basis-${basis} ${field === 'name' ? 'truncate' : ''}`}
+                      />
+                    </Fragment>
+                  ),
+                )}
                 <div className="basis-1/12 cursor-pointer">
                   {index !== 0 && (
                     <MinusSvg
