@@ -1,17 +1,18 @@
 export interface PurchaseReceiptInfoType {
-  receipt_id: number;
+  id: number;
   purchase_location: string;
-  purchase_date: string;
+  purchase_date: Date;
   total_price: number;
+  quantity: number;
   receipt_items: ReceiptDetailType[];
 }
 
 export interface ReceiptDetailType {
-  food_id?: number;
+  id?: number;
   image_url?: string;
   category?: string;
   name?: string;
-  amount?: string;
+  amount?: number;
   purchase_price?: number;
   price_per_amount?: number;
   quantity?: number;
@@ -19,9 +20,14 @@ export interface ReceiptDetailType {
 }
 
 export interface ReceiptArrType {
-  receipt_id: number;
-  quantity: number;
+  id: number;
   purchase_location: string;
   purchase_date: string;
   total_price: number;
+  quantity: number;
+}
+
+export interface ReceiptsReturnType {
+  receipts: ReceiptArrType[];
+  nextCursor: string;
 }
