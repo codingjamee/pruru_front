@@ -42,7 +42,7 @@ const createCustomFetch = ({ baseURL, headers }: CustomFetchType) => {
 
     if (options && options?.method?.toUpperCase() !== 'GET' && baseBody) {
       options.body = JSON.stringify(baseBody);
-    } else {
+    } else if (options?.method?.toUpperCase() === 'GET') {
       options && delete options.body;
     }
 
