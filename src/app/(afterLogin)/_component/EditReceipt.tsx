@@ -6,7 +6,7 @@ import { Fragment, useEffect, useState } from 'react';
 import MinusSvg from '@/_assets/MinusSvg';
 import Input from '@/_components/Input';
 import { Controller, useFieldArray, useForm } from 'react-hook-form';
-import { useQuery, useQueryClient } from '@tanstack/react-query';
+import { useQueryClient } from '@tanstack/react-query';
 import { PurchaseReceiptInfoType } from '@/_types/ReceiptTypes';
 import dayjs from 'dayjs';
 import { postReceiptData } from '@/_utils/postQuery';
@@ -26,18 +26,7 @@ const EditReceipt = () => {
   const [purchaseDate, setPurchaseDate] = useState<Date | null>(
     dayjs().toDate(),
   );
-  const [receiptData, setReceiptData] = useState<
-    PurchaseReceiptInfoType | undefined
-  >();
-  const [submitTrigger, setSubmitTrigger] = useState(false);
   const router = useRouter();
-
-  const { status } = useQuery({
-    queryKey: ['posted', 'receipt', 'data'],
-    queryFn: () => postReceiptData(receiptData),
-    enabled: submitTrigger,
-    staleTime: 6 * 60 * 1000,
-  });
 
   const {
     control,
@@ -50,9 +39,8 @@ const EditReceipt = () => {
       purchase_location:
         (foundReceiptData && foundReceiptData.purchase_location) || '',
       purchase_date:
-        dayjs(foundReceiptData && foundReceiptData.purchase_date).format(
-          'YY.MM.DD',
-        ) || dayjs().format('YY.MM.DD'),
+        dayjs(foundReceiptData && foundReceiptData.purchase_date).toDate() ||
+        dayjs().format('YY.MM.DD'),
       total_price: totalPrice,
       receipt_items: foundReceiptData
         ? foundReceiptData.receipt_items.map((data) => {
@@ -60,7 +48,7 @@ const EditReceipt = () => {
               category: data?.category || '',
               name: data?.name || '',
               purchase_price: data?.purchase_price || 0,
-              amount: '',
+              amount: data?.amount,
               food_id: Math.random() * 4,
               quantity: data?.quantity,
               image_url: data?.image_url,
@@ -90,20 +78,18 @@ const EditReceipt = () => {
     return () => unsubscribe();
   }, [watch]);
 
-  useEffect(() => {
-    if (status === 'success') {
-      const editMonth = dayjs(
-        foundReceiptData?.purchase_date.split(' ')[0],
-        'YY.MM',
-      );
-      router.push(`receipt?month=${editMonth}`);
-    }
-  }, [status]);
-
   const onSubmit = (data: PurchaseReceiptInfoType) => {
-    setReceiptData(data);
-    setSubmitTrigger(true);
-    console.log(data);
+    queryClient
+      .fetchQuery({
+        queryKey: ['posted', 'receipt', 'data'],
+        queryFn: () => postReceiptData(data),
+      })
+      .then(() => {
+        const editMonth = dayjs(foundReceiptData?.purchase_date).format(
+          'YY.MM',
+        );
+        router.push(`/receipt?month=${editMonth}`);
+      });
   };
 
   return (
@@ -131,12 +117,12 @@ const EditReceipt = () => {
                     name={name}
                     onChange={(datestring) => {
                       setPurchaseDate(dayjs(datestring).toDate());
-                      return onChangeForm(dayjs(datestring).format('YY.MM.DD'));
+                      return onChangeForm(dayjs(datestring));
                     }}
                     wrapperClassName="w-[100%] h-[40px] "
                     dateFormat="yy.MM.dd"
                     onBlur={onBlur}
-                    selected={purchaseDate}
+                    selected={dayjs(purchaseDate).toDate()}
                     className="h-[40px] w-[100%] rounded-lg border border-solid border-color-default-text bg-transparent text-center mobile:w-full"
                   />
                 )}
@@ -155,19 +141,20 @@ const EditReceipt = () => {
             </div>
           </div>
           <div className="flex flex-1 flex-col gap-[10px] mobile:gap-[15px]">
-            <div className="flex w-full justify-between text-[14px]">
+            <div className="flex w-full justify-between gap-[5px] text-center text-[14px] mobile:text-[12px]">
               <div className="basis-2/12">카테고리</div>
-              <div className="max-w-[127px] basis-5/12">품명</div>
+              <div className="max-w-[127px] basis-4/12">품명</div>
               <div className="basis-2/12">중량</div>
-              <div className="basis-2/12">금액</div>
-              <div className="basis-1/12">등록</div>
+              <div className="basis-1/12">갯수</div>
+              <div className="basis-3/12">금액</div>
+              <div className="basis-1/12"></div>
             </div>
             {fields.map((_, index) => (
               <div
                 className="flex w-full items-center justify-between gap-[5px] truncate"
                 key={`receipt-${index}`}>
                 {editReceiptForm.map(
-                  ({ field, basis, maxWidth, min }, inputIndex) => (
+                  ({ field, basis, maxWidth, min, required }, inputIndex) => (
                     <Fragment key={`edit-${inputIndex}`}>
                       <Input
                         variant={
@@ -176,14 +163,16 @@ const EditReceipt = () => {
                             : 'underline'
                         }
                         {...register(`receipt_items.${index}.${field}`, {
-                          required: {
-                            value: true,
-                            message: '빈 칸이 없게 작성해주세요',
-                          },
+                          required: required
+                            ? {
+                                value: true,
+                                message: '빈 칸이 없게 작성해주세요',
+                              }
+                            : undefined,
                           minLength: min ? undefined : 1,
                           min: 1,
                         })}
-                        className={`${maxWidth ? `max-w-[${maxWidth}]` : ''} basis-${basis} ${field === 'name' ? 'truncate' : ''}`}
+                        className={`${maxWidth ? `max-w-[${maxWidth}]` : ''} basis-${basis} ${field === 'name' ? 'truncate' : ''} text-center`}
                       />
                     </Fragment>
                   ),
