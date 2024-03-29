@@ -3,30 +3,42 @@ import { FoodPropType } from '@/_types/FoodTypes';
 import dayjs from 'dayjs';
 
 export const editReceiptForm: {
-  field: 'category' | 'name' | 'amount' | 'purchase_price';
+  field: 'category' | 'name' | 'amount' | 'purchase_price' | 'quantity';
   label: string;
   basis: string;
   maxWidth?: string;
   min?: number;
+  required: boolean;
 }[] = [
-  { field: 'category', label: 'Food Category', basis: '2/12' },
-  { field: 'name', label: 'Food Name', basis: '5/12', maxWidth: '127px' },
-  { field: 'amount', label: 'Food Weight', basis: '2/12' },
-  { field: 'purchase_price', label: 'Purchase Price', basis: '2/12', min: 1 },
-];
-
-export const receiptItemsInit = [
+  { field: 'category', label: 'Food Category', basis: '2/12', required: true },
   {
-    food_id: Math.random() * 4,
-    category: undefined,
-    name: undefined,
-    amount: undefined,
-    purchase_price: undefined,
-    quantity: undefined,
-    image_url: '',
-    registered: false,
+    field: 'name',
+    label: 'Food Name',
+    basis: '4/12',
+    maxWidth: '127px',
+    required: true,
+  },
+  { field: 'amount', label: 'Food Weight', basis: '2/12', required: false },
+  { field: 'quantity', label: 'Food Quantity', basis: '1/12', required: true },
+  {
+    field: 'purchase_price',
+    label: 'Purchase Price',
+    basis: '3/12',
+    min: 1,
+    required: true,
   },
 ];
+
+export const receiptItemsInit = {
+  food_id: Math.random() * 4,
+  category: undefined,
+  name: undefined,
+  amount: 1,
+  purchase_price: undefined,
+  quantity: 1,
+  image_url: '',
+  registered: false,
+};
 
 export const selectLists: {
   value: 'refrigerated' | 'frozen' | 'roomTemp';
