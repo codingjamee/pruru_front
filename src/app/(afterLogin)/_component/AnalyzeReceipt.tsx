@@ -35,13 +35,13 @@ const AnalyzeReceipt = () => {
     if (analyzeStatus === 'success') {
       analyzedReceiptData_2 = {
         purchase_location:
-          (analyzedReceiptData.images[0].receipt.result.storeInfo.name.formatted
-            .value || '') +
+          (analyzedReceiptData.images[0].receipt.result?.storeInfo?.name
+            .formatted.value || '') +
           ' ' +
-          (analyzedReceiptData.images[0].receipt.result.storeInfo.subName
-            .text || ''),
+          (analyzedReceiptData.images[0].receipt.result?.storeInfo?.subName
+            ?.text || ''),
         purchase_date:
-          analyzedReceiptData.images[0].receipt.result.paymentInfo.date.text,
+          analyzedReceiptData.images[0].receipt.result?.paymentInfo?.date?.text,
         receipt_items:
           analyzedReceiptData.images[0]?.receipt?.result?.subResults[0]?.items.map(
             (item: AnalyzedReceiptAllType) => {
@@ -92,8 +92,8 @@ const AnalyzeReceipt = () => {
           if (result?.data?.items[0]?.category1 === '식품')
             return {
               index: index,
-              category: result.data.items[0].category3,
-              image_url: result.data.items[0].image,
+              category: result?.data?.items[0].category3,
+              image_url: result?.data?.items[0].image,
             };
         }),
         searchSuccess: results.every((result) => result.isSuccess),
