@@ -21,21 +21,23 @@ const ReceiptCard = () => {
     unknown
   >({
     queryKey: ['receipt', 'monthly', yearMonth],
-    queryFn: () =>
+    queryFn: ({ pageParam }) =>
       getReceiptsByMonth({
+        pageParam,
         YM: yearMonth || dayjs().format('YY.MM'),
       }),
     initialPageParam: 1,
     getNextPageParam: (data) => {
-      data.nextCursor;
+      return data.nextCursor;
     },
+    staleTime: 10 * 60 * 1000,
   });
 
   const onIntersect: IntersectionObserverCallback = async ([
     { isIntersecting },
   ]) => {
+    if (!isIntersecting) return;
     await fetchNextPage();
-    console.log('인터섹션이 감지됨', isIntersecting);
   };
 
   useIntersectionObserver({
