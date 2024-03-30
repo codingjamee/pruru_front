@@ -10,7 +10,7 @@ import Modal from '@/_components/Modal';
 import { FoodPropType } from '@/_types/FoodTypes';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { SearchReturnType } from '@/_types/ReturnTypes';
-import { getFoodDataById, getSearchCategory } from '@/_utils/getQuery';
+import { getSearchCategory } from '@/_utils/getQuery';
 import Image from 'next/image';
 import { AddFoodInit, selectLists } from '@/_utils/listData';
 import DatePicker from 'react-datepicker';
@@ -20,19 +20,25 @@ import { postFoodData, postFoodDataById } from '@/_utils/postQuery';
 import customParseFormat from 'dayjs/plugin/customParseFormat';
 dayjs.extend(customParseFormat);
 
+// interface FoodResponse {
+//   foodId: number;
+// }
+
 const AddFood = () => {
   const existFoodId = useSearchParams().get('foodId') || '';
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const [searchTrigger, setSearchTrigger] = useState(false);
   const [expiryDate, setExpiryDate] = useState<Date | null>(null);
   const [purchaseDate, setPurchaseDate] = useState<Date | null>(null);
-  const { data: foodData } = useQuery<FoodPropType, any, FoodPropType>({
-    queryKey: ['addFood', existFoodId],
-    queryFn: () => getFoodDataById(existFoodId),
-    enabled: !!existFoodId,
-  });
-  const router = useRouter();
   const queryClient = useQueryClient();
+  const router = useRouter();
+  const foodData: FoodPropType | undefined = queryClient.getQueryData([
+    'addFood',
+    existFoodId,
+  ]);
+
+  console.log(foodData);
+
   const { register, handleSubmit, watch, setValue, control } = useForm<
     FoodPropType & { search_name: string }
   >({
@@ -77,16 +83,13 @@ const AddFood = () => {
 
   const onAddFood = (data: FoodPropType) => {
     console.log(data);
-    const requestYM = dayjs(purchaseDate, ['YY.MM.DD']).format('YY.MM');
     if (existFoodId) {
       queryClient
         .fetchQuery({
           queryKey: ['editExistFood'],
           queryFn: () => postFoodDataById(data, existFoodId),
         })
-        .then(() =>
-          router.push(`/food?storage=total&sort=${requestYM}&direction=down`),
-        )
+        .then(() => router.push(`/food/${existFoodId}`))
         .catch((err) => console.log(err));
     } else {
       queryClient
@@ -94,12 +97,12 @@ const AddFood = () => {
           queryKey: ['addFirstFood'],
           queryFn: () => postFoodData(data),
         })
-        .then(() =>
-          router.push(`/food?storage=total&sort=${requestYM}&direction=down`),
-        )
+        .then((response: any) => {
+          const { foodId } = response;
+          return router.push(`/food/${foodId}`);
+        })
         .catch((err) => console.log(err));
     }
-    //성공하면 /food/:foodId로 이동..
   };
 
   const onClickSearchTrigger = () => {
