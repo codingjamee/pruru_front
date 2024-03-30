@@ -1,6 +1,7 @@
 'use client';
 import dayjs from 'dayjs';
 import { api, searchApi } from './createCustomFetch';
+import { ScriptProps } from 'next/script';
 
 // import { receiptApi } from './createCustomFetch';
 
@@ -29,11 +30,17 @@ export const getFoodById = async (id: string) => {
   return res.json();
 };
 
-export const getReceiptsByMonth = async (YM?: string) => {
+export const getReceiptsByMonth = async ({
+  pageParam,
+  YM,
+}: {
+  pageParam?: ScriptProps;
+  YM?: string | any;
+}) => {
   if (!YM) {
     YM = dayjs().format('YY.MM');
   }
-  const res = await api(`/receipt?month=${YM}`, {
+  const res = await api(`/receipt?month=${YM}&cursor=${pageParam}`, {
     next: {
       tags: ['receipt', 'monthly'],
     },
@@ -44,7 +51,7 @@ export const getReceiptsByMonth = async (YM?: string) => {
   return res.json();
 };
 
-export const getreceipt_items = async (receipt_id: string) => {
+export const getReceiptDetail = async (receipt_id: string) => {
   const res = await api(`/receipt/${receipt_id}`, {
     next: {
       tags: ['receipt', 'items', receipt_id],
