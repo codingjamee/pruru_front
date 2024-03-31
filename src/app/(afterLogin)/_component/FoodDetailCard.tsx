@@ -8,6 +8,7 @@ import { useQuery } from '@tanstack/react-query';
 import Image from 'next/image';
 import logo from '@/_assets/pruru_logo.png';
 import dayjs from 'dayjs';
+import { useRouter } from 'next/navigation';
 
 const FoodDetailCard = ({ foodId }: { foodId: string }) => {
   const { data: foodData } = useQuery<FoodPropType, any, FoodPropType, any>({
@@ -15,6 +16,7 @@ const FoodDetailCard = ({ foodId }: { foodId: string }) => {
     queryFn: () => getFoodById(foodId),
     staleTime: 10 * 60 * 1000,
   });
+  const router = useRouter();
   const foodDetailList = [
     {
       title: '남은 중량',
@@ -86,6 +88,7 @@ const FoodDetailCard = ({ foodId }: { foodId: string }) => {
           <div className="flex flex-grow flex-col gap-[17px] "></div>
           <div className="flex gap-[20px]">
             <Button
+              onClick={() => router.push(`${foodId}/edit`)}
               variant="primary"
               className="flex-1 rounded-lg mobile:w-full">
               수정하기
