@@ -32,7 +32,12 @@ const EditFood = () => {
   if (typeof params.foodId === 'string') {
     foodId = params.foodId;
   }
-  const { data: foodData } = useQuery<FoodPropType, any, FoodPropType, any>({
+  const { data: foodData, status } = useQuery<
+    FoodPropType,
+    any,
+    FoodPropType,
+    any
+  >({
     queryKey: ['getFoodById', foodId],
     queryFn: () => getFoodById(foodId!),
     staleTime: 10 * 60 * 1000,
@@ -41,20 +46,21 @@ const EditFood = () => {
   const { register, handleSubmit, watch, setValue, control } = useForm<
     FoodPropType & { search_name: string }
   >({
-    defaultValues: foodData
-      ? {
-          category: foodData.category,
-          method: foodData.method,
-          name: foodData.name,
-          remain_amount: foodData.amount,
-          purchase_date: foodData.purchase_date || dayjs().format('YY.MM.DD'),
-          expiry_date: foodData.expiry_date,
-          purchase_location: foodData.purchase_location,
-          purchase_price: foodData.purchase_price,
-          image_url: foodData.image_url,
-          registered: true,
-        }
-      : AddFoodInit,
+    defaultValues:
+      foodData && status === 'success'
+        ? {
+            category: foodData.category,
+            method: foodData.method,
+            name: foodData.name,
+            remain_amount: foodData.amount,
+            purchase_date: foodData.purchase_date || dayjs().format('YY.MM.DD'),
+            expiry_date: foodData.expiry_date,
+            purchase_location: foodData.purchase_location,
+            purchase_price: foodData.purchase_price,
+            image_url: foodData.image_url,
+            registered: true,
+          }
+        : AddFoodInit,
   });
 
   const searchFoodName = watch('name');
