@@ -10,31 +10,38 @@ import logo from '@/_assets/pruru_logo.png';
 import dayjs from 'dayjs';
 
 const FoodDetailCard = ({ foodId }: { foodId: string }) => {
-  const { data: foodData, status } = useQuery<
-    FoodPropType[],
-    any,
-    FoodPropType[],
-    any
-  >({
+  const { data: foodData } = useQuery<FoodPropType, any, FoodPropType, any>({
     queryKey: ['getFoodById', foodId],
     queryFn: () => getFoodById(foodId),
     staleTime: 10 * 60 * 1000,
   });
   const foodDetailList = [
     {
-      title: '중량',
-      text: foodData && foodData[0]?.amount + ' ' + foodData[0]?.unit,
+      title: '남은 중량',
+      text:
+        foodData && foodData?.amount
+          ? foodData?.amount + ' ' + (foodData?.unit || '')
+          : '중량을 설정해주세요',
     },
     {
       title: '유통기한',
-      text: foodData && dayjs(foodData[0]?.expiry_date).format('YY.MM.DD'),
+      text: foodData?.expiry_date
+        ? foodData && dayjs(foodData?.expiry_date).format('YY.MM.DD')
+        : '유통기한을 설정해주세요',
     },
     {
       title: '구매일자',
-      text: foodData && dayjs(foodData[0]?.purchase_date).format('YY.MM.DD'),
+      text:
+        (foodData && dayjs(foodData?.purchase_date).format('YY.MM.DD')) ||
+        '구매장소를 설정해주세요',
     },
-    { title: '구매장소', text: foodData && foodData[0]?.purchase_location },
-    { title: '구매금액', text: foodData && foodData[0]?.purchase_price },
+    {
+      title: '구매장소',
+      text:
+        (foodData && foodData?.purchase_location) || '구매장소를 설정해주세요',
+    },
+    { title: '구매금액', text: foodData && foodData?.purchase_price } ||
+      '구매금액을 설정해주세요',
   ];
 
   return (
@@ -45,20 +52,20 @@ const FoodDetailCard = ({ foodId }: { foodId: string }) => {
         <>
           <div className="flex w-full justify-between">
             <div className="w-[213px] rounded-lg border border-solid border-color-default-text px-[30px] py-[7px] text-center mobile:w-full">
-              {(foodData && foodData[0]?.category) || '카테고리'}
+              {(foodData && foodData?.category) || '카테고리'}
             </div>
             <Button variant="primary" className="rounded-lg mobile:w-full">
-              {foodData && foodData[0]?.method}
+              {(foodData && foodData?.method) || '저장방식'}
             </Button>
           </div>
           <div>식재료명</div>
-          <div>{foodData && foodData[0]?.name}</div>
+          <div>{foodData && foodData?.name}</div>
 
           <div className="flex flex-row gap-[20px] mobile:flex-col">
-            <div className="mobile:h- flex w-[200px] items-center justify-center rounded-lg border border-solid border-color-default-text mobile:h-[150px] mobile:w-full">
+            <div className="flex w-[200px] items-center justify-center rounded-lg border border-solid border-color-default-text">
               <Image
-                src={(foodData && foodData[0]?.image_url) || logo}
-                alt={(foodData && foodData[0]?.name) || '재료사진'}
+                src={(foodData && foodData?.image_url) || logo}
+                alt={(foodData && foodData?.name) || '재료사진'}
                 width="100"
                 height="100"
               />
