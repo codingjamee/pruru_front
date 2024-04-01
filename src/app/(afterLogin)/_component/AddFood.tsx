@@ -8,7 +8,7 @@ import { Controller, useForm } from 'react-hook-form';
 import { useState } from 'react';
 import Modal from '@/_components/Modal';
 import { FoodPropType } from '@/_types/FoodTypes';
-import { useQuery, useQueryClient } from '@tanstack/react-query';
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { SearchReturnType } from '@/_types/ReturnTypes';
 import { getSearchCategory } from '@/_utils/getQuery';
 import Image from 'next/image';
@@ -19,10 +19,6 @@ import 'react-datepicker/dist/react-datepicker.css';
 import { postFoodData, postFoodDataById } from '@/_utils/postQuery';
 import customParseFormat from 'dayjs/plugin/customParseFormat';
 dayjs.extend(customParseFormat);
-
-// interface FoodResponse {
-//   foodId: number;
-// }
 
 const AddFood = () => {
   const existFoodId = useSearchParams().get('foodId') || '';
@@ -36,8 +32,24 @@ const AddFood = () => {
     'addFood',
     existFoodId,
   ]);
-
-  console.log(foodData);
+  const { mutate } = useMutation({
+    mutationFn: (data: FoodPropType) => {
+      if (existFoodId) {
+        console.log(data);
+        return postFoodDataById(data, existFoodId);
+      } else {
+        console.log(data);
+        return postFoodData(data);
+      }
+    },
+    onSuccess: () => {
+      router.push(`/food/${existFoodId}`);
+    },
+    onError: () => {
+      //토스트
+      console.log('식재료 업로드 실패...!!');
+    },
+  });
 
   const { register, handleSubmit, watch, setValue, control } = useForm<
     FoodPropType & { search_name: string }
@@ -45,7 +57,7 @@ const AddFood = () => {
     defaultValues: foodData
       ? {
           category: foodData.category,
-          method: foodData.method,
+          method: foodData.method || 'roomTemp',
           name: foodData.name,
           remain_amount: foodData.amount,
           purchase_date: foodData.purchase_date || dayjs().format('YY.MM.DD'),
@@ -82,27 +94,7 @@ const AddFood = () => {
   };
 
   const onAddFood = (data: FoodPropType) => {
-    console.log(data);
-    if (existFoodId) {
-      queryClient
-        .fetchQuery({
-          queryKey: ['editExistFood'],
-          queryFn: () => postFoodDataById(data, existFoodId),
-        })
-        .then(() => router.push(`/food/${existFoodId}`))
-        .catch((err) => console.log(err));
-    } else {
-      queryClient
-        .fetchQuery({
-          queryKey: ['addFirstFood'],
-          queryFn: () => postFoodData(data),
-        })
-        .then((response: any) => {
-          const { foodId } = response;
-          return router.push(`/food/${foodId}`);
-        })
-        .catch((err) => console.log(err));
-    }
+    mutate(data);
   };
 
   const onClickSearchTrigger = () => {
