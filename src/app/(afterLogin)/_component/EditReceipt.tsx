@@ -6,7 +6,7 @@ import { Fragment, useEffect, useState } from 'react';
 import MinusSvg from '@/_assets/MinusSvg';
 import Input from '@/_components/Input';
 import { Controller, useFieldArray, useForm } from 'react-hook-form';
-import { useQueryClient } from '@tanstack/react-query';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { PurchaseReceiptInfoType } from '@/_types/ReceiptTypes';
 import dayjs from 'dayjs';
 import { postReceiptData } from '@/_utils/postQuery';
@@ -26,6 +26,22 @@ const EditReceipt = () => {
   const [purchaseDate, setPurchaseDate] = useState<Date | null>(
     dayjs().toDate(),
   );
+  const { mutate } = useMutation({
+    mutationFn: (data: PurchaseReceiptInfoType | undefined) =>
+      postReceiptData(data),
+    mutationKey: ['posted', 'receipt', 'data'],
+    onSuccess: () => {
+      const editMonth = dayjs(purchaseDate).format('YY.MM');
+      queryClient.invalidateQueries({
+        queryKey: ['receipt', 'monthly', editMonth],
+      });
+      router.push(`/receipt?month=${editMonth}`);
+    },
+    onError: () => {
+      //토스트
+      console.log('영수증 업로드 실패...!!');
+    },
+  });
   const router = useRouter();
 
   const {
@@ -48,7 +64,7 @@ const EditReceipt = () => {
               category: data?.category || '',
               name: data?.name || '',
               purchase_price: data?.purchase_price || 0,
-              amount: data?.amount,
+              amount: data?.amount || 0,
               food_id: Math.random() * 4,
               quantity: data?.quantity,
               image_url: data?.image_url,
@@ -79,17 +95,7 @@ const EditReceipt = () => {
   }, [watch]);
 
   const onSubmit = (data: PurchaseReceiptInfoType) => {
-    queryClient
-      .fetchQuery({
-        queryKey: ['posted', 'receipt', 'data'],
-        queryFn: () => postReceiptData(data),
-      })
-      .then(() => {
-        const editMonth = dayjs(foundReceiptData?.purchase_date).format(
-          'YY.MM',
-        );
-        router.push(`/receipt?month=${editMonth}`);
-      });
+    mutate(data);
   };
 
   return (
