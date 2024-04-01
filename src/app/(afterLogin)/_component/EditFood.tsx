@@ -16,7 +16,7 @@ import { AddFoodInit, selectLists } from '@/_utils/listData';
 import DatePicker from 'react-datepicker';
 import dayjs from 'dayjs';
 import 'react-datepicker/dist/react-datepicker.css';
-import { postFoodDataById } from '@/_utils/postQuery';
+import { putFoodDataById } from '@/_utils/postQuery';
 import customParseFormat from 'dayjs/plugin/customParseFormat';
 dayjs.extend(customParseFormat);
 
@@ -33,7 +33,7 @@ const EditFood = () => {
     foodId = params.foodId;
   }
   const { mutate } = useMutation({
-    mutationFn: (data: FoodPropType) => postFoodDataById(data, foodId),
+    mutationFn: (data: FoodPropType) => putFoodDataById(data, foodId),
     onSuccess: () => {
       //food 쿼리로 여러개 가져오면 그것도 invalidate 필요
       queryClient.invalidateQueries({ queryKey: ['getFoodById', foodId] });
@@ -54,7 +54,6 @@ const EditFood = () => {
     queryFn: () => getFoodById(foodId!),
     staleTime: 10 * 60 * 1000,
   });
-  console.log(foodData);
   const { register, handleSubmit, watch, setValue, control } = useForm<
     FoodPropType & { search_name: string }
   >({
@@ -103,7 +102,6 @@ const EditFood = () => {
 
   const onClickSearchTrigger = () => {
     setSearchTrigger(true);
-    console.log('search is Triggered', 'value is : ', searchFoodName);
   };
 
   return (
@@ -214,9 +212,7 @@ const EditFood = () => {
                       name={name}
                       onChange={(datestring) => {
                         setPurchaseDate(dayjs(datestring).toDate());
-                        return onChangeForm(
-                          dayjs(datestring).format('YY.MM.DD'),
-                        );
+                        return onChangeForm(datestring);
                       }}
                       dateFormat="yy.MM.dd"
                       onBlur={onBlur}
@@ -238,9 +234,7 @@ const EditFood = () => {
                       name={name}
                       onChange={(datestring) => {
                         setExpiryDate(dayjs(datestring).toDate());
-                        return onChangeForm(
-                          dayjs(datestring).format('YY.MM.DD'),
-                        );
+                        return onChangeForm(datestring);
                       }}
                       dateFormat="yy.MM.dd"
                       onBlur={onBlur}
