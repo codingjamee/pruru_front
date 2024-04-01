@@ -19,12 +19,32 @@ export const postReceiptData = async (
   return res.json();
 };
 
-export const postFoodDataById = async (data: FoodPropType, foodId: string) => {
+export const postFoodDataById = async (
+  data: FoodPropType,
+  foodId: string | undefined,
+) => {
   const res = await api(`/food/${foodId}`, {
     next: {
-      tags: ['addFood', foodId],
+      tags: ['addFood', foodId || ''],
     },
     method: 'POST',
+    body: JSON.stringify(data),
+  });
+  if (!res.ok) {
+    throw new Error('Failed to post food data!');
+  }
+  return res.json();
+};
+
+export const putFoodDataById = async (
+  data: FoodPropType,
+  foodId: string | undefined,
+) => {
+  const res = await api(`/food/${foodId}`, {
+    next: {
+      tags: ['addFood', foodId || ''],
+    },
+    method: 'PUT',
     body: JSON.stringify(data),
   });
   if (!res.ok) {
