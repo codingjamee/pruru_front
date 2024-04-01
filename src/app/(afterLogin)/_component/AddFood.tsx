@@ -43,6 +43,7 @@ const AddFood = () => {
       }
     },
     onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['getFoodById', existFoodId] });
       router.push(`/food/${existFoodId}`);
     },
     onError: () => {
@@ -59,8 +60,8 @@ const AddFood = () => {
           category: foodData.category,
           method: foodData.method || 'roomTemp',
           name: foodData.name,
-          remain_amount: foodData.amount,
-          purchase_date: foodData.purchase_date || dayjs().format('YY.MM.DD'),
+          remain_amount: foodData.remaining_amount,
+          purchase_date: foodData.purchase_date || dayjs().toDate(),
           expiry_date: foodData.expiry_date,
           purchase_location: foodData.purchase_location,
           purchase_price: foodData.purchase_price,
@@ -215,10 +216,8 @@ const AddFood = () => {
                     <DatePicker
                       name={name}
                       onChange={(datestring) => {
-                        setPurchaseDate(dayjs(datestring).toDate());
-                        return onChangeForm(
-                          dayjs(datestring).format('YY.MM.DD'),
-                        );
+                        setPurchaseDate(datestring);
+                        return onChangeForm(datestring);
                       }}
                       dateFormat="yy.MM.dd"
                       onBlur={onBlur}
@@ -239,10 +238,8 @@ const AddFood = () => {
                     <DatePicker
                       name={name}
                       onChange={(datestring) => {
-                        setExpiryDate(dayjs(datestring).toDate());
-                        return onChangeForm(
-                          dayjs(datestring).format('YY.MM.DD'),
-                        );
+                        setExpiryDate(datestring);
+                        return onChangeForm(datestring);
                       }}
                       dateFormat="yy.MM.dd"
                       onBlur={onBlur}
