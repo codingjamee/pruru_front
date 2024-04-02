@@ -63,3 +63,16 @@ export const postFoodData = async (data: FoodPropType) => {
   });
   return res;
 };
+
+export const deleteFoodById = async (foodId: string | undefined) => {
+  const res = await api(`/food/${foodId}`, {
+    next: {
+      tags: ['addFood', foodId || ''],
+    },
+    method: 'DELETE',
+  });
+  if (!res.ok) {
+    throw new Error('Failed to post food data!');
+  }
+  return res.json();
+};
