@@ -4,19 +4,26 @@ import Button from '@/_components/Button';
 import Card from '@/_components/Card';
 import { FoodPropType } from '@/_types/FoodTypes';
 import { getFoodById } from '@/_utils/getQuery';
-import { useQuery } from '@tanstack/react-query';
+import { useMutation, useQuery } from '@tanstack/react-query';
 import Image from 'next/image';
 import logo from '@/_assets/pruru_logo.png';
 import dayjs from 'dayjs';
 import { useRouter } from 'next/navigation';
+import { deleteFoodById } from '@/_utils/mutateQuery';
 
 const FoodDetailCard = ({ foodId }: { foodId: string }) => {
+  const router = useRouter();
   const { data: foodData } = useQuery<FoodPropType, any, FoodPropType, any>({
     queryKey: ['getFoodById', foodId],
     queryFn: () => getFoodById(foodId),
     staleTime: 10 * 60 * 1000,
   });
-  const router = useRouter();
+  const { mutate } = useMutation({
+    mutationKey: ['deleteFoodById', foodId],
+    mutationFn: (foodId: string) => deleteFoodById(foodId),
+    onSuccess: () => router.push('/food'),
+  });
+
   const foodDetailList = [
     {
       title: '남은 중량',
@@ -94,6 +101,7 @@ const FoodDetailCard = ({ foodId }: { foodId: string }) => {
               수정하기
             </Button>
             <Button
+              onClick={() => mutate(foodId)}
               variant="primary"
               className="flex-1 rounded-lg mobile:w-full">
               삭제하기
