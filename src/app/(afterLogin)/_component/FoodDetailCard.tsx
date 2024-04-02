@@ -10,6 +10,7 @@ import logo from '@/_assets/pruru_logo.png';
 import dayjs from 'dayjs';
 import { useRouter } from 'next/navigation';
 import { deleteFoodById } from '@/_utils/mutateQuery';
+import { storageText } from '@/_utils/listData';
 
 const FoodDetailCard = ({ foodId }: { foodId: string }) => {
   const router = useRouter();
@@ -28,29 +29,31 @@ const FoodDetailCard = ({ foodId }: { foodId: string }) => {
     {
       title: '남은 중량',
       text:
-        foodData && foodData?.amount
-          ? foodData?.amount + ' ' + (foodData?.unit || '')
+        foodData && foodData?.remaining_amount
+          ? foodData?.remaining_amount + ' ' + (foodData?.unit || '')
           : '중량을 설정해주세요',
     },
     {
       title: '유통기한',
       text: foodData?.expiry_date
-        ? foodData && dayjs(foodData?.expiry_date).format('YY.MM.DD')
+        ? foodData && dayjs(foodData?.expiry_date).format('YY.MM.DD').toString()
         : '유통기한을 설정해주세요',
     },
     {
       title: '구매일자',
       text:
-        (foodData && dayjs(foodData?.purchase_date).format('YY.MM.DD')) ||
-        '구매장소를 설정해주세요',
+        foodData &&
+        dayjs(foodData?.purchase_date).format('YY.MM.DD').toString(),
     },
     {
       title: '구매장소',
       text:
         (foodData && foodData?.purchase_location) || '구매장소를 설정해주세요',
     },
-    { title: '구매금액', text: foodData && foodData?.purchase_price } ||
-      '구매금액을 설정해주세요',
+    {
+      title: '구매금액',
+      text: foodData && foodData?.purchase_price?.toLocaleString() + ' 원',
+    } || '구매금액을 설정해주세요',
   ];
 
   return (
@@ -63,11 +66,13 @@ const FoodDetailCard = ({ foodId }: { foodId: string }) => {
             <div className="w-[213px] rounded-lg border border-solid border-color-default-text px-[30px] py-[7px] text-center mobile:w-full">
               {(foodData && foodData?.category) || '카테고리'}
             </div>
-            <Button variant="primary" className="rounded-lg mobile:w-full">
-              {(foodData && foodData?.method) || '저장방식'}
-            </Button>
+            <div className="flex h-[40px] w-[110px] items-center justify-center rounded-lg bg-color-primary mobile:w-full">
+              {(foodData &&
+                foodData?.method !== undefined &&
+                storageText[foodData?.method]) ||
+                '저장방식'}
+            </div>
           </div>
-          <div>식재료명</div>
           <div>{foodData && foodData?.name}</div>
 
           <div className="flex flex-row gap-[20px] mobile:flex-col">
