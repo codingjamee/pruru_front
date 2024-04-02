@@ -24,3 +24,8 @@ export type FoodCardType = {
   food: FoodPropType;
   className?: string;
 };
+
+export type FoodReturnType = {
+  foods: FoodPropType[];
+  nextCursor: string;
+};
