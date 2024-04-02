@@ -51,10 +51,10 @@ export const selectLists: {
 
 export const AddFoodInit: FoodPropType & { search_name: string } = {
   category: '카테고리',
-  method: 'refrigerated',
+  method: 'roomTemp',
   name: '',
-  remain_amount: '',
-  purchase_date: dayjs().format('YY.MM.DD'),
+  remaining_amount: '',
+  purchase_date: dayjs().toDate(),
   expiry_date: '',
   purchase_location: '',
   purchase_price: 0,
