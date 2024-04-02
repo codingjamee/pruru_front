@@ -41,7 +41,20 @@ const AnalyzeReceipt = () => {
           (analyzedReceiptData.images[0].receipt.result?.storeInfo?.subName
             ?.text || ''),
         purchase_date:
-          analyzedReceiptData.images[0].receipt.result?.paymentInfo?.date?.text,
+          new Date(
+            Number(
+              analyzedReceiptData.images[0].receipt.result?.paymentInfo?.date
+                ?.formatted.year,
+            ),
+            Number(
+              analyzedReceiptData.images[0].receipt.result?.paymentInfo?.date
+                ?.formatted.month,
+            ),
+            Number(
+              analyzedReceiptData.images[0].receipt.result?.paymentInfo?.date
+                ?.formatted.day,
+            ),
+          ) || new Date(),
         receipt_items:
           analyzedReceiptData.images[0]?.receipt?.result?.subResults[0]?.items.map(
             (item: AnalyzedReceiptAllType) => {
@@ -89,12 +102,19 @@ const AnalyzeReceipt = () => {
     combine: (results) => {
       return {
         data: results?.map((result, index) => {
-          if (result?.data?.items[0]?.category1 === '식품')
+          if (result?.data?.items[0]?.category1 === '식품') {
             return {
               index: index,
+              title: searchLists[index],
               category: result?.data?.items[0].category3,
               image_url: result?.data?.items[0].image,
             };
+          } else if (result?.data?.total === 0) {
+            return {
+              index: index,
+              title: searchLists[index],
+            };
+          }
         }),
         searchSuccess: results.every((result) => result.isSuccess),
       };
