@@ -21,10 +21,19 @@ const EditReceipt = () => {
   const queryClient = useQueryClient();
   const foundReceiptData: PurchaseReceiptInfoType | undefined =
     queryClient.getQueryData(['allSearchResults']);
-  const [length, setLength] = useState<number | undefined>(0);
-  const [totalPrice, setTotalPrice] = useState<number | undefined>(0);
+  const [length, setLength] = useState<number | undefined>(
+    (foundReceiptData && foundReceiptData.receipt_items.length) || 1,
+  );
+  const [totalPrice, setTotalPrice] = useState<number | undefined>(
+    foundReceiptData &&
+      foundReceiptData.receipt_items &&
+      foundReceiptData.receipt_items?.reduce(
+        (acc: number, cur) => acc + (Number(cur?.purchase_price) || 0),
+        0,
+      ),
+  );
   const [purchaseDate, setPurchaseDate] = useState<Date | null>(
-    dayjs().toDate(),
+    (foundReceiptData && foundReceiptData.purchase_date) || dayjs().toDate(),
   );
   const { mutate } = useMutation({
     mutationFn: (data: PurchaseReceiptInfoType | undefined) =>
@@ -55,16 +64,16 @@ const EditReceipt = () => {
       purchase_location:
         (foundReceiptData && foundReceiptData.purchase_location) || '',
       purchase_date:
-        dayjs(foundReceiptData && foundReceiptData.purchase_date).toDate() ||
-        dayjs().format('YY.MM.DD'),
+        (foundReceiptData && foundReceiptData.purchase_date) ||
+        dayjs().toDate(),
       total_price: totalPrice,
       receipt_items: foundReceiptData
         ? foundReceiptData.receipt_items.map((data) => {
             return {
               category: data?.category || '',
-              name: data?.name || '',
+              name: data?.name || data?.title || '',
               purchase_price: data?.purchase_price || 0,
-              amount: data?.amount || 0,
+              amount: data?.amount || 1,
               food_id: Math.random() * 4,
               quantity: data?.quantity,
               image_url: data?.image_url,
