@@ -1,3 +1,5 @@
+import dayjs from 'dayjs';
+
 const parseDateString = (dateString: string): Date => {
   const date = new Date(dateString);
   if (isNaN(date.getTime())) {
@@ -8,7 +10,7 @@ const parseDateString = (dateString: string): Date => {
 
 //"2024-03-30T15:00:00Z"
 export const remainedTime = (untilDate: string): number => {
-  const nowDate = new Date();
+  const nowDate = dayjs().toDate();
   const until = parseDateString(untilDate);
 
   const remaningTime = until.getTime() - nowDate.getTime();
