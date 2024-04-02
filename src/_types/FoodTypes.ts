@@ -8,12 +8,12 @@ export type FoodPropType = {
   name?: string;
   method?: 'refrigerated' | 'frozen' | 'roomTemp';
   amount?: string;
+  remaining_amount?: string;
   quantity?: number;
   unit?: string;
-  remain_amount?: string;
   image_url?: string;
   purchase_price?: number;
-  purchase_date?: string;
+  purchase_date?: Date;
   expiry_date?: string;
   registered?: boolean;
   purchase_location?: string;
