@@ -25,7 +25,7 @@ const SSmallFoodCard = ({ food, className }: FoodCardType) => {
           D-{remainingDay}
         </div>
         {image_url ? (
-          <Image src={image_url} alt={image_url} />
+          <Image src={image_url} alt={image_url} className="h-full" />
         ) : (
           <div className="flex h-full w-full items-center justify-center">
             <div className="w-[40%] pt-[10px]">
