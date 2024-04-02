@@ -10,12 +10,7 @@ export const getFoods = async ({
   sort,
   direction,
   pageParam,
-}: {
-  storage: QueryTypes['storage'];
-  sort: 'price' | 'expiry_date' | 'purchase_date';
-  direction: QueryTypes['direction'];
-  pageParam?: unknown;
-}) => {
+}: QueryTypes) => {
   const params = new URLSearchParams('/food?');
 
   if (storage) params.append('storage', storage);

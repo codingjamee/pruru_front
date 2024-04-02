@@ -8,16 +8,13 @@ import { useSearchParams } from 'next/navigation';
 import { QueryTypes } from '@/_types/CommonTypes';
 import useIntersectionObserver from '../_hooks/useIntersectionObserver';
 import { useRef } from 'react';
-import { camelToSnakeCase } from '@/_utils/regExp';
-import dayjs from 'dayjs';
 
 const Foods = () => {
   const params = useSearchParams();
   const storage: QueryTypes['storage'] =
     (params.get('storage') as QueryTypes['storage']) || 'total';
-  const sort: QueryTypes['requestSortType'] = camelToSnakeCase(
-    params.get('sort') || 'expiryDate',
-  ) as QueryTypes['requestSortType'];
+  const sort: QueryTypes['sort'] = (params.get('sort') ||
+    'expiryDate') as QueryTypes['sort'];
 
   const direction: QueryTypes['direction'] =
     (params.get('direction') as QueryTypes['direction']) || 'down';
@@ -38,7 +35,7 @@ const Foods = () => {
         direction,
         pageParam,
       }),
-    initialPageParam: dayjs().toISOString(),
+    initialPageParam: 1,
     getNextPageParam: (data) => {
       return data.nextCursor;
     },
