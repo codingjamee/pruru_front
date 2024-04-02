@@ -9,7 +9,7 @@ import { Controller, useFieldArray, useForm } from 'react-hook-form';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { PurchaseReceiptInfoType } from '@/_types/ReceiptTypes';
 import dayjs from 'dayjs';
-import { postReceiptData } from '@/_utils/postQuery';
+import { postReceiptData } from '@/_utils/mutateQuery';
 import { useRouter } from 'next/navigation';
 import customParseFormat from 'dayjs/plugin/customParseFormat';
 import { editReceiptForm, receiptItemsInit } from '@/_utils/listData';

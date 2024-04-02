@@ -16,7 +16,7 @@ import { AddFoodInit, selectLists } from '@/_utils/listData';
 import DatePicker from 'react-datepicker';
 import dayjs from 'dayjs';
 import 'react-datepicker/dist/react-datepicker.css';
-import { putFoodDataById } from '@/_utils/postQuery';
+import { putFoodDataById } from '@/_utils/mutateQuery';
 import customParseFormat from 'dayjs/plugin/customParseFormat';
 dayjs.extend(customParseFormat);
 
@@ -63,8 +63,8 @@ const EditFood = () => {
             category: foodData.category,
             method: foodData.method,
             name: foodData.name,
-            remain_amount: foodData.amount,
-            purchase_date: foodData.purchase_date || dayjs().format('YY.MM.DD'),
+            remaining_amount: foodData.amount,
+            purchase_date: foodData.purchase_date || dayjs().toDate(),
             expiry_date: foodData.expiry_date,
             purchase_location: foodData.purchase_location,
             purchase_price: foodData.purchase_price,
@@ -192,7 +192,7 @@ const EditFood = () => {
               <div className="flex flex-row justify-between mobile:flex-col">
                 <div>중량</div>
                 <Input
-                  {...register('remain_amount', {
+                  {...register('remaining_amount', {
                     required: '빈 칸이 없게 작성해주세요',
                     minLength: 1,
                   })}
