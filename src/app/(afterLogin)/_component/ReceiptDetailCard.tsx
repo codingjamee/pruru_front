@@ -8,9 +8,10 @@ import {
   ReceiptDetailType,
 } from '@/_types/ReceiptTypes';
 import { getReceiptDetail } from '@/_utils/getQuery';
-import { useQuery, useQueryClient } from '@tanstack/react-query';
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { useRouter } from 'next/navigation';
 import dayjs from 'dayjs';
+import { deleteReceiptById } from '@/_utils/mutateQuery';
 
 const ReceiptDetailCard = ({ receipt_id }: { receipt_id: string }) => {
   const router = useRouter();
@@ -25,10 +26,12 @@ const ReceiptDetailCard = ({ receipt_id }: { receipt_id: string }) => {
     queryFn: () => getReceiptDetail(receipt_id),
     staleTime: 10 * 60 * 1000,
   });
+  const { mutate } = useMutation({
+    mutationKey: ['deleteReceipt', receipt_id],
+    mutationFn: (receipt_id: string) => deleteReceiptById(receipt_id),
+    onSuccess: () => router.push('/receipt'),
+  });
   const queryClient = useQueryClient();
-
-  console.log(receipt_id);
-  console.log(purchaseReceiptInfo);
 
   const onClickAddFood = (index: number, foodId?: string) => {
     if (foodId && purchaseReceiptInfo) {
@@ -53,9 +56,9 @@ const ReceiptDetailCard = ({ receipt_id }: { receipt_id: string }) => {
             <div className="w-[213px] rounded-lg border border-solid border-color-default-text px-[30px] py-[7px] text-center mobile:w-full">
               {dayjs(purchaseReceiptInfo.purchase_date).format('YY.MM.DD')} 구매
             </div>
-            <Button variant="primary" className="rounded-lg mobile:w-full">
+            <div className="flex h-[40px] w-[110px] items-center justify-center rounded-lg bg-color-primary mobile:w-full">
               {purchaseReceiptInfo.purchase_location}
-            </Button>
+            </div>
           </div>
           <div className="flex flex-col gap-[10px] mobile:gap-[15px]">
             <div className="flex w-full justify-between text-[14px]">
@@ -78,13 +81,14 @@ const ReceiptDetailCard = ({ receipt_id }: { receipt_id: string }) => {
                   <div className="basis-2/12">
                     {receipt.purchase_price?.toLocaleString()}
                   </div>
-                  <div className="basis-1/12 cursor-pointer">
+                  <div className="basis-1/12">
                     {receipt.registered ? (
                       <div className="w-[22px] rounded-full bg-color-primary">
                         <RefrigerIcon />
                       </div>
                     ) : (
                       <PlusSvg
+                        className="cursor-pointer"
                         onClick={() =>
                           onClickAddFood(index, receipt.id?.toString())
                         }
@@ -100,6 +104,12 @@ const ReceiptDetailCard = ({ receipt_id }: { receipt_id: string }) => {
             <div>품목 {purchaseReceiptInfo.receipt_items.length}개</div>
             <div>총{purchaseReceiptInfo.total_price?.toLocaleString()}원</div>
           </div>
+          <Button
+            variant="primary"
+            className="rounded-lg "
+            onClick={() => mutate(receipt_id)}>
+            삭제하기
+          </Button>
         </Card>
       )}
     </div>

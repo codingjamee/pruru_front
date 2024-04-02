@@ -67,12 +67,25 @@ export const postFoodData = async (data: FoodPropType) => {
 export const deleteFoodById = async (foodId: string | undefined) => {
   const res = await api(`/food/${foodId}`, {
     next: {
-      tags: ['addFood', foodId || ''],
+      tags: ['deleteFood', foodId || ''],
     },
     method: 'DELETE',
   });
   if (!res.ok) {
-    throw new Error('Failed to post food data!');
+    throw new Error('Failed to delete food data!');
+  }
+  return res.json();
+};
+
+export const deleteReceiptById = async (receiptId: string | undefined) => {
+  const res = await api(`/receipt/${receiptId}`, {
+    next: {
+      tags: ['deleteReceipt', receiptId || ''],
+    },
+    method: 'DELETE',
+  });
+  if (!res.ok) {
+    throw new Error('Failed to delete receipt data!');
   }
   return res.json();
 };
