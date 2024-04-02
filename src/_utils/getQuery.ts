@@ -1,12 +1,29 @@
 'use client';
 import dayjs from 'dayjs';
 import { api, searchApi } from './createCustomFetch';
-import { ScriptProps } from 'next/script';
 
-// import { receiptApi } from './createCustomFetch';
+import { receiptApi } from './createCustomFetch';
+import { QueryTypes } from '@/_types/CommonTypes';
 
-export const getFoods = async () => {
-  const res = await api(`/food`, {
+export const getFoods = async ({
+  storage,
+  sort,
+  direction,
+  pageParam,
+}: {
+  storage: QueryTypes['storage'];
+  sort: 'price' | 'expiry_date' | 'purchase_date';
+  direction: QueryTypes['direction'];
+  pageParam?: unknown;
+}) => {
+  const params = new URLSearchParams('/food?');
+
+  if (storage) params.append('storage', storage);
+  if (sort) params.append('sort', sort);
+  if (direction) params.append('direction', direction);
+  if (pageParam) params.append('cursor', pageParam.toString());
+
+  const res = await api(`/food?${params.toString()}`, {
     next: {
       tags: ['foods'],
     },
@@ -34,7 +51,7 @@ export const getReceiptsByMonth = async ({
   pageParam,
   YM,
 }: {
-  pageParam?: ScriptProps;
+  pageParam?: unknown;
   YM?: string | any;
 }) => {
   if (!YM) {
@@ -64,27 +81,19 @@ export const getReceiptDetail = async (receipt_id: string) => {
 };
 
 export const getAnalyzeReceipt = async (file: string, type: string) => {
-  console.log(file, type);
-  const res = await api(`/analyze/receipt`, {
-    method: 'POST',
-    next: {
-      tags: ['receipt', 'anaylze'],
+  const res = await receiptApi(
+    `/custom/${process.env.NEXT_PUBLIC_CLOVA_REQUEST_PATH}`,
+    {
+      method: 'POST',
+      next: {
+        tags: ['receipt', 'anaylze'],
+      },
+      dynamicValues: {
+        format: type,
+        data: file.split(',')[1],
+      },
     },
-  });
-  // ==================실제 요청 api (지우면안됨)==================
-  // const res = await receiptApi(
-  //   `/custom/${process.env.NEXT_PUBLIC_CLOVA_REQUEST_PATH}`,
-  //   {
-  //     method: 'POST',
-  //     next: {
-  //       tags: ['receipt', 'anaylze'],
-  //     },
-  //     dynamicValues: {
-  //       format: type,
-  //       data: file.split(',')[1],
-  //     },
-  //   },
-  // );
+  );
   if (!res.ok) {
     throw new Error('Failed to fetch data');
   }
