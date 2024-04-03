@@ -2,9 +2,9 @@ import Button from '@/_components/Button';
 import logo from '@/_assets/pruru_logo.png';
 
 import Image from 'next/image';
-import { montserrat } from '@/app/layout';
 import { auth } from '@/auth';
 import { redirect } from 'next/navigation';
+import { montserrat } from '@/_styles/fonts';
 
 export default async function Home() {
   const session = await auth();

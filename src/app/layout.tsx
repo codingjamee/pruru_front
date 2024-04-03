@@ -1,12 +1,9 @@
 import type { Metadata } from 'next';
-import { Inter, Montserrat } from 'next/font/google';
 
 import './globals.css';
 import MSWComponent from '@/_components/MSWComponent';
 import { SessionProvider } from 'next-auth/react';
-
-export const inter = Inter({ subsets: ['latin'] });
-export const montserrat = Montserrat({ subsets: ['latin'] });
+import { montserrat } from '@/_styles/fonts';
 
 export const metadata: Metadata = {
   title: 'Create Next App',
@@ -20,7 +17,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={inter.className}>
+      <body className={`${montserrat.className}`}>
         <MSWComponent />
         <div id="modal-root" />
         <SessionProvider>{children}</SessionProvider>

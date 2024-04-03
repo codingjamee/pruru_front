@@ -1,6 +1,5 @@
 import Image from 'next/image';
 import logo from '@/_assets/pruru_logo.png';
-import { montserrat } from '@/app/layout';
 import NavTop from './_component/NavTop';
 import Link from 'next/link';
 import RefrigerIcon from '@/_assets/RefrigerIcon';
@@ -13,6 +12,7 @@ import { redirect } from 'next/navigation';
 import { RQProvider } from './_component/RQProvider';
 import { YearMonthProvider } from '@/_contexts/DateContext';
 import { Suspense } from 'react';
+import { montserrat } from '@/_styles/fonts';
 
 export default async function layout({
   children,
@@ -56,7 +56,7 @@ export default async function layout({
                   width={30}
                   height={30}
                   color="black"
-                  path="/search"
+                  path="/searches"
                 />
                 <UserIcon width={30} height={30} path="/user" />
                 <AddList width={30} height={30} path="/add/receipt" />
