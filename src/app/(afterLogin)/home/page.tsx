@@ -15,10 +15,13 @@ import { getFoods } from '@/_utils/getQuery';
 import Foods from '../_component/Foods';
 
 const page = async () => {
+  const storage = 'total';
+  const sort = 'expiryDate';
+  const direction = 'up';
   const queryClient = new QueryClient();
   await queryClient.prefetchQuery({
     queryKey: ['foods'],
-    queryFn: getFoods,
+    queryFn: () => getFoods({ storage, sort, direction }),
     staleTime: 10 * 60 * 1000,
   });
 
