@@ -1,3 +1,5 @@
+import { LinkProps } from 'next/link';
+
 export type ButtonType = 'button' | 'reset' | 'submit';
 
 interface AnchorOptions {
@@ -24,7 +26,10 @@ export function useButtonProps({
   type,
   tagName,
   onClick,
-}: UseButtonPropsOptions): [UseButtonPropsOptions, UseButtonPropsMetadata] {
+}: UseButtonPropsOptions): [
+  UseButtonPropsOptions | LinkProps,
+  UseButtonPropsMetadata,
+] {
   if (!tagName) {
     if (target != null || rel != null) {
       tagName = 'a';
