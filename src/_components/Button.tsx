@@ -2,16 +2,13 @@
 
 import { useButtonProps } from '@/_hooks/useButtonProps';
 import { ButtonPropsType } from '@/_types/CommonTypes';
-import Link from 'next/link';
 import { FC, PropsWithChildren } from 'react';
 
 const Button: FC<PropsWithChildren<ButtonPropsType>> = ({
-  href,
   disabled,
   children,
   onClick,
   // as: tagName,
-  customClassName,
   variant,
   className,
   cyAttribute,
@@ -40,29 +37,14 @@ const Button: FC<PropsWithChildren<ButtonPropsType>> = ({
 
   return (
     <>
-      {href ? (
-        <Link href={href} className={className}>
-          {/* @ts-expect-error Server Component */}
-          <Component
-            data-cy={cyAttribute}
-            className={`button ${variant && getClassName()} ${customClassName} ${className}`}
-            {...buttonProps}
-            {...props}>
-            {children}
-          </Component>
-        </Link>
-      ) : (
-        <>
-          {/* @ts-expect-error Server Component */}
-          <Component
-            data-cy={cyAttribute}
-            className={`button ${variant && getClassName()} ${className}`}
-            {...buttonProps}
-            {...props}>
-            {children}
-          </Component>
-        </>
-      )}
+      {/* @ts-expect-error Server Component */}
+      <Component
+        data-cy={cyAttribute}
+        className={`button ${variant && getClassName()} ${className}`}
+        {...buttonProps}
+        {...props}>
+        {children}
+      </Component>
     </>
   );
 };
