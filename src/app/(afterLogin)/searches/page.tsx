@@ -2,10 +2,53 @@ import React from 'react';
 import Search from '../_component/Search';
 import Card from '@/_components/Card';
 import SmallFoodCard from '../_component/SmallFoodCard';
-import { foodCardDummyArr } from '../home/page';
 import SSmallFoodCard from '../_component/SSmallFoodCard';
+import dayjs from 'dayjs';
 
-function page() {
+const foodCardDummyArr = [
+  {
+    id: 1,
+    name: '당근',
+    image_url: '',
+    purchase_date: dayjs('2024-03-20T15:00:00Z').toDate(),
+    amount: '400',
+    expiry_date: dayjs('2024-03-30T15:00:00Z').toDate(),
+  },
+  {
+    id: 2,
+    name: '토마토',
+    image_url: '',
+    purchase_date: dayjs('2024-03-20T15:00:00Z').toDate(),
+    amount: '40g',
+    expiry_date: dayjs('2024-03-30T15:00:00Z').toDate(),
+  },
+  {
+    id: 3,
+    name: '아보카도',
+    image_url: '',
+    purchase_date: dayjs('2024-03-24T15:00:00Z').toDate(),
+    amount: '3개',
+    expiry_date: dayjs('2024-03-30T15:00:00Z').toDate(),
+  },
+  {
+    id: 4,
+    name: '바나나',
+    image_url: '',
+    purchase_date: dayjs('2024-03-28T15:00:00Z').toDate(),
+    amount: '1송이',
+    expiry_date: dayjs('2024-03-30T15:00:00Z').toDate(),
+  },
+  {
+    id: 5,
+    image_url: '',
+    name: '완두콩',
+    purchase_date: dayjs('2024-03-30T15:00:00Z').toDate(),
+    amount: '1개',
+    expiry_date: dayjs('2024-03-30T15:00:00Z').toDate(),
+  },
+];
+
+const page = () => {
   return (
     <>
       <div className="py-[20px] mobile:py-[10px]">
@@ -33,6 +76,6 @@ function page() {
       </div>
     </>
   );
-}
+};
 
 export default page;
