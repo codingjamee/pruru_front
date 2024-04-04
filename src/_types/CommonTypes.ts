@@ -1,9 +1,14 @@
-import { ComponentPropsWithoutRef, ReactElement } from 'react';
+import {
+  ComponentPropsWithRef,
+  ReactElement,
+  ReactNode,
+  ReactPortal,
+} from 'react';
 
 export type ButtonVariant = 'disabled' | 'primary' | 'outlined' | undefined;
 export type CardVariant = 'primary' | 'outlined' | undefined;
 
-export interface ButtonPropsType extends ComponentPropsWithoutRef<'button'> {
+export interface ButtonPropsType extends ComponentPropsWithRef<'button'> {
   disabled?: boolean;
   as?: React.ElementType;
   to?: string;
@@ -14,6 +19,7 @@ export interface ButtonPropsType extends ComponentPropsWithoutRef<'button'> {
   ) => void | undefined | any;
   variant?: ButtonVariant;
   cyAttribute?: string;
+  children?: ReactNode | ReactPortal;
 }
 
 export interface CarouselProps {
@@ -88,6 +94,7 @@ export interface QueryTypes {
   storage: 'refrigerated' | 'frozen' | 'roomTemp' | 'total';
   sort: 'price' | 'expiryDate' | 'purchaseDate';
   direction: 'up' | 'down';
+  pageParam?: unknown;
 }
 
 export interface QueryTextMap {

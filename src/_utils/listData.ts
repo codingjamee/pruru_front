@@ -55,7 +55,7 @@ export const AddFoodInit: FoodPropType & { search_name: string } = {
   name: '',
   remaining_amount: '',
   purchase_date: dayjs().toDate(),
-  expiry_date: '',
+  expiry_date: dayjs().toDate(),
   purchase_location: '',
   purchase_price: 0,
   image_url: '',

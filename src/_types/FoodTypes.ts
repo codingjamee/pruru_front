@@ -14,7 +14,7 @@ export type FoodPropType = {
   image_url?: string;
   purchase_price?: number;
   purchase_date?: Date;
-  expiry_date?: string;
+  expiry_date?: Date;
   registered?: boolean;
   purchase_location?: string;
 };

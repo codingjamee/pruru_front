@@ -1,7 +1,7 @@
 import Image from 'next/image';
 import logo from '../../public/pruru_logo.png';
 import styles from './HeaderLogo.module.css';
-import { montserrat } from '@/app/layout';
+import { montserrat } from '@/_styles/fonts';
 
 const HeaderLogo = () => {
   return (
