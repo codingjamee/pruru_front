@@ -1,5 +1,4 @@
 'use client';
-
 import Button from '@/_components/Button';
 import Link from 'next/link';
 import { useSelectedLayoutSegment } from 'next/navigation';
@@ -18,8 +17,8 @@ const navList = [
   },
   {
     name: '검색',
-    path: '/search',
-    focusKey: 'search',
+    path: '/searches',
+    focusKey: 'searches',
     style: 'link-two',
     subList: [],
   },
@@ -56,7 +55,7 @@ const NavTop = () => {
         <div key={nav.path} className={`${nav.style} relative`}>
           <Button
             href={nav.path}
-            className={`${isFocused(nav.focusKey)}  nav-button hover:nav-hover`}>
+            className={`${isFocused(nav.focusKey)} nav-button hover:nav-hover`}>
             <li>{nav.name}</li>
           </Button>
           <div className={`${nav.subStyle} sub-nav`}>
