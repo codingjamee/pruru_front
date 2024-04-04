@@ -8,16 +8,20 @@ RUN \
   if [ -f yarn.lock ]; then yarn --frozen-lockfile; \
   else echo "Lockfile not found." && exit 1; \
   fi 
+RUN rm -rf ./.next/cache
+
 
 FROM base AS builder
 WORKDIR /usr/src/app
+ENV NODE_ENV=production
+
 COPY --from=deps /usr/src/app/node_modules ./node_modules
 COPY . .
-RUN yarn build
 RUN \
   if [ -f yarn.lock ]; then yarn run build; \
   else echo "Lockfile not found." && exit 1; \
   fi
+RUN yarn cache clean
 
 FROM base AS runner
 WORKDIR /usr/src/app
@@ -41,4 +45,4 @@ EXPOSE 80
 
 ENV PORT 80
 
-CMD ["yarn", "start"]
+CMD ["yarn", "run", "dev"]
