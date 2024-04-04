@@ -3,9 +3,9 @@
   "version": "0.1.0",
   "private": "true",
   "scripts": {
-    "dev": "next dev -p 80",
+    "dev": "yarn dev -p 80",
     "build": "next build",
-    "start": "next start -p 80",
+    "start": "yarn start -p 80",
     "lint": "next lint --fix",
     "prepare": "husky",
     "mock": "npx tsx watch ./src/mocks/http.ts"
@@ -20,6 +20,7 @@
     "@tanstack/react-query": "^5.28.2",
     "@types/react": "18.2.25",
     "@types/react-dom": "^18.2.24",
+    "@types/react-transition-group": "^4.4.10",
     "@types/uuid4": "^2.0.3",
     "dayjs": "^1.11.10",
     "init": "^0.1.2",
