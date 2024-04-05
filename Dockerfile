@@ -45,4 +45,4 @@ EXPOSE 80
 
 ENV PORT 80
 
-CMD ["yarn", "run", "dev"]
+CMD ["node", "server.js"]
