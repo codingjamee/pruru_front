@@ -21,6 +21,7 @@ export const {
             password: credentials.password,
           }),
         });
+        console.log(authResponse);
         if (!authResponse.ok) {
           return null;
         }
