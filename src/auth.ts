@@ -7,6 +7,8 @@ export const {
   auth,
   signIn,
 } = NextAuth({
+  trustHost: true,
+  secret: process.env.AUTH_SECRET,
   pages: {
     signIn: '/welcome/login',
     newUser: '/welcome/join',
@@ -14,7 +16,7 @@ export const {
   providers: [
     CredentialsProvider({
       async authorize(credentials) {
-        const authResponse = await authApi(`/login`, {
+        const authResponse = await authApi(`/signin`, {
           method: 'POST',
           body: JSON.stringify({
             email: credentials.username,
