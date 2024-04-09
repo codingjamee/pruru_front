@@ -25,6 +25,12 @@ const nextConfig = {
     return config;
   },
   output: 'standalone',
+  headers: [
+    {
+      key: 'Access-Control-Allow-Origin',
+      value: process.env.NEXT_PUBLIC_BASE_URL,
+    },
+  ],
 };
 
 export default nextConfig;
