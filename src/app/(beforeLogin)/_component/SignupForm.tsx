@@ -60,28 +60,28 @@ const SignupForm = () => {
   const router = useRouter();
 
   useEffect(() => {
-    if (session.data) {
+    if (session.status === 'authenticated') {
       router.replace('/home');
     }
-  }, []);
+  }, [session.status]);
 
   const onSubmit: SubmitHandler<SignupType> = async (data) => {
     console.log(data);
-    let showRedirect = false;
+    // let showRedirect = false;
     try {
       await signIn('credentials', {
         username: data.email,
         password: data.password,
         redirect: false,
       });
-      showRedirect = true;
+      // showRedirect = true;
     } catch (err) {
       //추후 toast로 설정
       console.error(err);
       return null;
     }
     reset();
-    if (showRedirect) router.replace('/home');
+    // if (showRedirect) router.replace('/home');
   };
 
   return (
