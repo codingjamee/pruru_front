@@ -82,7 +82,7 @@ const AddFood = () => {
       getSearchCategory(
         10,
         ['search', 'foodname'],
-        searchFoodName || searchName,
+        searchName || searchFoodName,
       ),
     enabled: searchTrigger,
   });
@@ -113,7 +113,7 @@ const AddFood = () => {
             name="search_name"
           />
           <div>
-            {searchedData &&
+            {searchedData && searchedData.items.length >= 1 ? (
               searchedData.items.map((result) => (
                 <div
                   className="cursor-pointer"
@@ -127,7 +127,10 @@ const AddFood = () => {
                   key={result.productId}>
                   {result.title.replace(/<\/?b>/g, '')}
                 </div>
-              ))}
+              ))
+            ) : (
+              <div>검색 결과가 없습니다</div>
+            )}
           </div>
         </Modal>
       )}
