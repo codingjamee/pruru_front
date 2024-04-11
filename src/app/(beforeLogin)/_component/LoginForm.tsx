@@ -53,18 +53,15 @@ const LoginForm = () => {
             email: data.email,
             password: data.password,
           }),
-          credentials: 'include',
         });
-      const resData = await response.json();
 
       if (response.ok) {
         await signIn('credentials', {
-          name: resData.username,
-          ...(resData.image && { image: resData.image }),
+          name: response.username,
+          ...(response.image && { image: response.image }),
           redirect: false,
         });
       }
-      console.log({ resData });
       showRedirect = true;
     } catch (err) {
       //추후 toast로 설정
