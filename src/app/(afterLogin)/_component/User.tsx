@@ -1,6 +1,7 @@
 'use client';
 import Button from '@/_components/Button';
 import Card from '@/_components/Card';
+import { api } from '@/_utils/createCustomFetch';
 import { signOut, useSession } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
 import { useEffect } from 'react';
@@ -8,8 +9,9 @@ import { useEffect } from 'react';
 const User = () => {
   const router = useRouter();
   const { data: me } = useSession();
-  const onClickLogout = () => {
-    signOut({ redirect: false }).then(() => {
+  const onClickLogout = async () => {
+    await api('/user/logout');
+    await signOut({ redirect: false }).then(() => {
       router.replace('/welcome/login');
     });
   };
