@@ -1,6 +1,5 @@
 import NextAuth from 'next-auth';
 import CredentialsProvider from 'next-auth/providers/credentials';
-import { authApi } from './_utils/createCustomFetch';
 
 export const {
   handlers: { GET, POST },
@@ -16,18 +15,10 @@ export const {
   providers: [
     CredentialsProvider({
       async authorize(credentials) {
-        const authResponse = await authApi(`/signin`, {
-          method: 'POST',
-          body: JSON.stringify({
-            email: credentials.username,
-            password: credentials.password,
-          }),
-        });
-        console.log(authResponse);
-        if (!authResponse.ok) {
+        if (!credentials) {
           return null;
         }
-        const user = await authResponse.json();
+        const user = { ...credentials };
         return user;
       },
     }),

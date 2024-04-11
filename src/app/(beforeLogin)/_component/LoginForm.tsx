@@ -8,6 +8,7 @@ import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { signIn, useSession } from 'next-auth/react';
 import { useEffect } from 'react';
+import { api } from '@/_utils/createCustomFetch';
 
 const LoginSchema = z.object({
   email: z
@@ -45,11 +46,22 @@ const LoginForm = () => {
   const onSubmit: SubmitHandler<LoginType> = async (data) => {
     let showRedirect = false;
     try {
-      await signIn('credentials', {
-        username: data.email,
-        password: data.password,
-        redirect: false,
-      });
+      const response: Response & { username?: string; image?: string } =
+        await api('/user/signin', {
+          method: 'POST',
+          body: JSON.stringify({
+            email: data.email,
+            password: data.password,
+          }),
+        });
+      if (response.ok) {
+        await signIn('credentials', {
+          name: response.username,
+          ...(response.image && { image: response.image }),
+          redirect: false,
+        });
+      }
+      console.log({ response });
       showRedirect = true;
     } catch (err) {
       //추후 toast로 설정

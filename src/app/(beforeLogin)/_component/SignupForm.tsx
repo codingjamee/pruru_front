@@ -8,6 +8,7 @@ import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { signIn, useSession } from 'next-auth/react';
 import { useEffect } from 'react';
+import { api } from '@/_utils/createCustomFetch';
 
 const pwdRegex = new RegExp(/(?=.*\d)(?=.*[a-z]).{8,}/);
 
@@ -60,6 +61,10 @@ const SignupForm = () => {
   const router = useRouter();
 
   useEffect(() => {
+    console.log(
+      '지금 세션 정보는?????____________ㅇㄹㅇㄹㅉㄸㄹㅉㄸㄹㅉㄹㄸㄹㄸㄹㄷㄹㅈㄹㅈㄹㄷㄹㅈㄷㅈ',
+      session.status,
+    );
     if (session.status === 'authenticated') {
       router.replace('/home');
     }
@@ -67,21 +72,36 @@ const SignupForm = () => {
 
   const onSubmit: SubmitHandler<SignupType> = async (data) => {
     console.log(data);
-    // let showRedirect = false;
+    let showRedirect = false;
     try {
-      await signIn('credentials', {
-        username: data.email,
-        password: data.password,
-        redirect: false,
+      //회원가입
+      const response: Response & {
+        email?: string;
+        username?: string;
+        image?: string;
+      } = await api('/user/signup', {
+        method: 'POST',
+        body: JSON.stringify({
+          email: data.email,
+          password: data.password,
+          name: data.name,
+        }),
       });
-      // showRedirect = true;
+      if (response.ok) {
+        await signIn('credentials', {
+          name: response.username,
+          ...(response.image && { image: response.image }),
+          redirect: false,
+        });
+      }
+      showRedirect = true;
     } catch (err) {
       //추후 toast로 설정
       console.error(err);
       return null;
     }
     reset();
-    // if (showRedirect) router.replace('/home');
+    if (showRedirect) router.replace('/home');
   };
 
   return (
