@@ -10,13 +10,14 @@ export const postReceiptData = async (
       tags: ['posted', 'receipt', 'data'],
     },
     method: 'POST',
+    credentials: 'include',
     body: JSON.stringify(data),
   });
   if (!res.ok) {
     throw new Error('Failed to post data');
   }
 
-  return res.json();
+  return await res.json();
 };
 
 export const postFoodDataById = async (
@@ -28,12 +29,13 @@ export const postFoodDataById = async (
       tags: ['addFood', foodId || ''],
     },
     method: 'POST',
+    credentials: 'include',
     body: JSON.stringify(data),
   });
   if (!res.ok) {
     throw new Error('Failed to post food data!');
   }
-  return res.json();
+  return await res.json();
 };
 
 export const putFoodDataById = async (
@@ -45,12 +47,13 @@ export const putFoodDataById = async (
       tags: ['addFood', foodId || ''],
     },
     method: 'PUT',
+    credentials: 'include',
     body: JSON.stringify(data),
   });
   if (!res.ok) {
     throw new Error('Failed to post food data!');
   }
-  return res.json();
+  return await res.json();
 };
 
 export const postFoodData = async (data: FoodPropType) => {
@@ -59,6 +62,7 @@ export const postFoodData = async (data: FoodPropType) => {
       tags: ['addFirstFood'],
     },
     method: 'POST',
+    credentials: 'include',
     body: JSON.stringify(data),
   });
   return res;
@@ -69,12 +73,13 @@ export const deleteFoodById = async (foodId: string | undefined) => {
     next: {
       tags: ['deleteFood', foodId || ''],
     },
+    credentials: 'include',
     method: 'DELETE',
   });
   if (!res.ok) {
     throw new Error('Failed to delete food data!');
   }
-  return res.json();
+  return await res.json();
 };
 
 export const deleteReceiptById = async (receiptId: string | undefined) => {
@@ -82,10 +87,11 @@ export const deleteReceiptById = async (receiptId: string | undefined) => {
     next: {
       tags: ['deleteReceipt', receiptId || ''],
     },
+    credentials: 'include',
     method: 'DELETE',
   });
   if (!res.ok) {
     throw new Error('Failed to delete receipt data!');
   }
-  return res.json();
+  return await res.json();
 };
