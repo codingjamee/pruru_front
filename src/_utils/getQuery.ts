@@ -22,13 +22,14 @@ export const getFoods = async ({
     next: {
       tags: ['foods'],
     },
+    credentials: 'include',
   });
 
   if (!res.ok) {
     throw new Error('Failed to fetch data');
   }
 
-  return res.json();
+  return await res.json();
 };
 
 export const getFoodById = async (id: string) => {
@@ -36,10 +37,11 @@ export const getFoodById = async (id: string) => {
     next: {
       tags: ['getFoodById', id],
     },
+    credentials: 'include',
   });
   if (!res.ok) throw new Error('Failed to Fetch Food by id');
 
-  return res.json();
+  return await res.json();
 };
 
 export const getReceiptsByMonth = async ({
@@ -56,11 +58,12 @@ export const getReceiptsByMonth = async ({
     next: {
       tags: ['receipt', 'monthly'],
     },
+    credentials: 'include',
   });
   if (!res.ok) {
     throw new Error('Failed to fetch data');
   }
-  return res.json();
+  return await res.json();
 };
 
 export const getReceiptDetail = async (receipt_id: string) => {
@@ -68,11 +71,12 @@ export const getReceiptDetail = async (receipt_id: string) => {
     next: {
       tags: ['receipt', 'items', receipt_id],
     },
+    credentials: 'include',
   });
   if (!res.ok) {
     throw new Error('Failed to fetch data');
   }
-  return res.json();
+  return await res.json();
 };
 
 export const getAnalyzeReceipt = async (file: string, type: string) => {
@@ -87,12 +91,13 @@ export const getAnalyzeReceipt = async (file: string, type: string) => {
         format: type,
         data: file.split(',')[1],
       },
+      credentials: 'include',
     },
   );
   if (!res.ok) {
     throw new Error('Failed to fetch data');
   }
-  return res.json();
+  return await res.json();
 };
 
 export const getSearchCategory = async (
@@ -107,12 +112,13 @@ export const getSearchCategory = async (
       next: {
         tags: tags,
       },
+      credentials: 'include',
     },
   );
   if (!res.ok) {
     throw new Error('Failed to fetch data');
   }
-  return res.json();
+  return await res.json();
 };
 
 export const getFoodDataById = async (foodId: string) => {
@@ -121,10 +127,11 @@ export const getFoodDataById = async (foodId: string) => {
     next: {
       tags: ['addFood', foodId],
     },
+    credentials: 'include',
   });
   if (!res.ok) {
     throw new Error('Failed to fetch food Data');
   }
 
-  return res.json();
+  return await res.json();
 };
