@@ -20,7 +20,7 @@ export default function RootLayout({
     <html lang="en">
       <body className={`${montserrat.className}`}>
         <MSWComponent />
-        <div id="modal-rooXt" />
+        <div id="modal-root" />
         <RQProvider>
           <SessionProvider>{children}</SessionProvider>
         </RQProvider>
