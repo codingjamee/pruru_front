@@ -1,7 +1,6 @@
 'use client';
 import dayjs from 'dayjs';
 import { api, searchApi } from './createCustomFetch';
-
 import { receiptApi } from './createCustomFetch';
 import { QueryTypes } from '@/_types/CommonTypes';
 
