@@ -22,13 +22,15 @@ const User = () => {
     router.replace('/welcome/login');
   };
 
+  const user = queryClient.getQueryData(['user']);
+
   return (
     <Card
       variant="outlined"
       className="m-0 flex min-h-[390px] w-[636px] flex-col p-[30px] mobile:w-[370px]">
       <h1 className="text-size-font-card-title">유저페이지</h1>
       <div className="flex flex-col gap-9 rounded-md">
-        <div>{''}님의 마이페이지</div>
+        <div>{user as string}님의 마이페이지</div>
         <Button
           onClick={onClickLogout}
           variant="primary"
