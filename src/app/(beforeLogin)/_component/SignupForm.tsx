@@ -87,10 +87,11 @@ const SignupForm = () => {
           name: data.name,
         }),
       });
+      const responseData = await response.json();
       if (response.ok) {
         await signIn('credentials', {
-          name: response.username,
-          ...(response.image && { image: response.image }),
+          name: responseData.username,
+          ...(responseData.image && { image: responseData.image }),
           redirect: false,
         });
       }
