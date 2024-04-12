@@ -20,7 +20,7 @@ export const getFoods = async ({
 
   const res = await api(`/food?${params.toString()}`, {
     next: {
-      tags: ['foods'],
+      tags: ['foods', storage, sort, direction],
     },
     credentials: 'include',
   });
