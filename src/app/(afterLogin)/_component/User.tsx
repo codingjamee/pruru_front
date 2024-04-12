@@ -2,14 +2,25 @@
 import Button from '@/_components/Button';
 import Card from '@/_components/Card';
 import { api } from '@/_utils/createCustomFetch';
+import { useQueryClient } from '@tanstack/react-query';
 import { signOut, useSession } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
 import { useEffect } from 'react';
 
 const User = () => {
   const router = useRouter();
+  const queryClient = useQueryClient();
   const { data: me } = useSession();
   const onClickLogout = async () => {
+    queryClient.invalidateQueries({
+      queryKey: ['receipt'],
+    });
+    queryClient.invalidateQueries({
+      queryKey: ['foods'],
+    });
+    queryClient.invalidateQueries({
+      queryKey: ['search'],
+    });
     await api('/user/logout');
     await signOut({ redirect: false }).then(() => {
       router.replace('/welcome/login');
