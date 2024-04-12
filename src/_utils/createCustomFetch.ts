@@ -56,7 +56,7 @@ const createCustomFetch = ({ baseURL, headers }: CustomFetchType) => {
         console.log('요청 성공');
       }
 
-      return await response.json();
+      return response;
     } catch (err) {
       console.error(err);
       throw new Error('error occurred!');
