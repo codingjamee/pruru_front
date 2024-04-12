@@ -4,6 +4,7 @@ import './globals.css';
 import MSWComponent from '@/_components/MSWComponent';
 import { SessionProvider } from 'next-auth/react';
 import { montserrat } from '@/_styles/fonts';
+import { RQProvider } from './(afterLogin)/_component/RQProvider';
 
 export const metadata: Metadata = {
   title: 'Create Next App',
@@ -19,8 +20,10 @@ export default function RootLayout({
     <html lang="en">
       <body className={`${montserrat.className}`}>
         <MSWComponent />
-        <div id="modal-root" />
-        <SessionProvider>{children}</SessionProvider>
+        <div id="modal-rooXt" />
+        <RQProvider>
+          <SessionProvider>{children}</SessionProvider>
+        </RQProvider>
       </body>
     </html>
   );
