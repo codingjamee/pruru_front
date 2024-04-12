@@ -7,8 +7,6 @@ import SearchGlass from '@/_assets/SearchGlass';
 import ReceiptIcon from '@/_assets/ReceiptIcon';
 import UserIcon from '@/_assets/UserIcon';
 import AddList from '@/_assets/AddList';
-import { auth } from '@/auth';
-import { redirect } from 'next/navigation';
 import { YearMonthProvider } from '@/_contexts/DateContext';
 import { Suspense } from 'react';
 import { montserrat } from '@/_styles/fonts';
@@ -18,8 +16,6 @@ export default async function layout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const session = await auth();
-  if (!session?.user) redirect('/welcome/login');
   return (
     <YearMonthProvider>
       <Suspense fallback={<div>...loading 중...</div>}>

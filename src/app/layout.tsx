@@ -1,8 +1,6 @@
 import type { Metadata } from 'next';
-
 import './globals.css';
 import MSWComponent from '@/_components/MSWComponent';
-import { SessionProvider } from 'next-auth/react';
 import { montserrat } from '@/_styles/fonts';
 import { RQProvider } from './(afterLogin)/_component/RQProvider';
 
@@ -21,9 +19,7 @@ export default function RootLayout({
       <body className={`${montserrat.className}`}>
         <MSWComponent />
         <div id="modal-root" />
-        <RQProvider>
-          <SessionProvider>{children}</SessionProvider>
-        </RQProvider>
+        <RQProvider>{children}</RQProvider>
       </body>
     </html>
   );

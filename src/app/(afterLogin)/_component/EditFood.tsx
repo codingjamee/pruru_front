@@ -21,17 +21,32 @@ import customParseFormat from 'dayjs/plugin/customParseFormat';
 dayjs.extend(customParseFormat);
 
 const EditFood = () => {
-  const [modalIsOpen, setModalIsOpen] = useState(false);
-  const [searchTrigger, setSearchTrigger] = useState(false);
-  const [expiryDate, setExpiryDate] = useState<Date | null>(null);
-  const [purchaseDate, setPurchaseDate] = useState<Date | null>(null);
-  const queryClient = useQueryClient();
-  const router = useRouter();
   const params = useParams();
   let foodId: string | undefined;
   if (typeof params.foodId === 'string') {
     foodId = params.foodId;
   }
+  const { data: foodData, status } = useQuery<
+    FoodPropType,
+    any,
+    FoodPropType,
+    any
+  >({
+    queryKey: ['foods', foodId],
+    queryFn: () => getFoodById(foodId!),
+    staleTime: 10 * 60 * 1000,
+  });
+  const [modalIsOpen, setModalIsOpen] = useState(false);
+  const [searchTrigger, setSearchTrigger] = useState(false);
+  const [expiryDate, setExpiryDate] = useState<Date | null>(
+    (foodData && foodData?.expiry_date) || null,
+  );
+  const [purchaseDate, setPurchaseDate] = useState<Date | null>(
+    (foodData && foodData?.purchase_date) || null,
+  );
+  const queryClient = useQueryClient();
+  const router = useRouter();
+
   const { mutate } = useMutation({
     mutationFn: (data: FoodPropType) => putFoodDataById(data, foodId),
     onSuccess: () => {
@@ -44,16 +59,7 @@ const EditFood = () => {
       console.log('식재료 업로드 실패...!!');
     },
   });
-  const { data: foodData, status } = useQuery<
-    FoodPropType,
-    any,
-    FoodPropType,
-    any
-  >({
-    queryKey: ['foods', foodId],
-    queryFn: () => getFoodById(foodId!),
-    staleTime: 10 * 60 * 1000,
-  });
+
   const { register, handleSubmit, watch, setValue, control } = useForm<
     FoodPropType & { search_name: string }
   >({
@@ -63,8 +69,8 @@ const EditFood = () => {
             category: foodData.category,
             method: foodData.method,
             name: foodData.name,
-            remaining_amount: foodData.amount,
-            purchase_date: foodData.purchase_date || dayjs().toDate(),
+            remaining_amount: foodData.remaining_amount,
+            purchase_date: foodData.purchase_date,
             expiry_date: foodData.expiry_date,
             purchase_location: foodData.purchase_location,
             purchase_price: foodData.purchase_price,

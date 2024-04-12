@@ -6,8 +6,6 @@ import { useForm, SubmitHandler } from 'react-hook-form';
 import { useRouter } from 'next/navigation';
 import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { signIn, useSession } from 'next-auth/react';
-import { useEffect } from 'react';
 import { api } from '@/_utils/createCustomFetch';
 import { useQueryClient } from '@tanstack/react-query';
 
@@ -35,15 +33,8 @@ const LoginForm = () => {
       password: '',
     },
   });
-  const { data: session } = useSession();
   const router = useRouter();
   const queryClient = useQueryClient();
-
-  useEffect(() => {
-    if (session?.user) {
-      router.replace('/home');
-    }
-  }, [session, router]);
 
   queryClient.invalidateQueries({
     queryKey: ['receipt'],
@@ -67,15 +58,16 @@ const LoginForm = () => {
           }),
         });
 
-      const responseData = await response.json();
+      // const responseData = await response.json();
+      await response.json();
 
-      if (response.ok) {
-        await signIn('credentials', {
-          name: responseData.username,
-          ...(responseData.image && { image: responseData.image }),
-          redirect: false,
-        });
-      }
+      // if (response.ok) {
+      //   await signIn('credentials', {
+      //     name: responseData.username,
+      //     ...(responseData.image && { image: responseData.image }),
+      //     redirect: false,
+      //   });
+      // }
       showRedirect = true;
     } catch (err) {
       //추후 toast로 설정

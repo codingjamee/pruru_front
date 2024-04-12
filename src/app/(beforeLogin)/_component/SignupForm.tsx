@@ -6,8 +6,6 @@ import { useForm, SubmitHandler } from 'react-hook-form';
 import { useRouter } from 'next/navigation';
 import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { signIn, useSession } from 'next-auth/react';
-import { useEffect } from 'react';
 import { api } from '@/_utils/createCustomFetch';
 
 const pwdRegex = new RegExp(/(?=.*\d)(?=.*[a-z]).{8,}/);
@@ -57,18 +55,7 @@ const SignupForm = () => {
       checkPwd: '',
     },
   });
-  const session = useSession();
   const router = useRouter();
-
-  useEffect(() => {
-    console.log(
-      '지금 세션 정보는?????____________ㅇㄹㅇㄹㅉㄸㄹㅉㄸㄹㅉㄹㄸㄹㄸㄹㄷㄹㅈㄹㅈㄹㄷㄹㅈㄷㅈ',
-      session.status,
-    );
-    if (session.status === 'authenticated') {
-      router.replace('/home');
-    }
-  }, [session.status]);
 
   const onSubmit: SubmitHandler<SignupType> = async (data) => {
     console.log(data);
@@ -88,13 +75,7 @@ const SignupForm = () => {
         }),
       });
       const responseData = await response.json();
-      if (response.ok) {
-        await signIn('credentials', {
-          name: responseData.username,
-          ...(responseData.image && { image: responseData.image }),
-          redirect: false,
-        });
-      }
+      console.log(responseData);
       showRedirect = true;
     } catch (err) {
       //추후 toast로 설정
