@@ -13,7 +13,7 @@ const RecentlyFood = () => {
   const direction = 'up';
 
   const { data: recentFood, isSuccess } = useQuery({
-    queryKey: ['foods'],
+    queryKey: ['foods', storage, sort, direction],
     queryFn: ({ pageParam }) =>
       getFoods({
         storage,
@@ -22,7 +22,7 @@ const RecentlyFood = () => {
         pageParam,
       }),
     staleTime: 10 * 60 * 1000,
-    initialData: queryClient.getQueryData(['foods']),
+    initialData: queryClient.getQueryData(['foods', storage, sort, direction]),
   });
 
   return (

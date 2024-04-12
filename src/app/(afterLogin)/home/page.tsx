@@ -20,7 +20,7 @@ const page = async () => {
   const direction = 'up';
   const queryClient = new QueryClient();
   await queryClient.prefetchQuery({
-    queryKey: ['foods'],
+    queryKey: ['foods', storage, sort, direction],
     queryFn: () => getFoods({ storage, sort, direction }),
     staleTime: 10 * 60 * 1000,
   });
