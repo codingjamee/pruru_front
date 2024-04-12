@@ -9,6 +9,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { signIn, useSession } from 'next-auth/react';
 import { useEffect } from 'react';
 import { api } from '@/_utils/createCustomFetch';
+import { useQueryClient } from '@tanstack/react-query';
 
 const LoginSchema = z.object({
   email: z
@@ -36,12 +37,23 @@ const LoginForm = () => {
   });
   const { data: session } = useSession();
   const router = useRouter();
+  const queryClient = useQueryClient();
 
   useEffect(() => {
     if (session?.user) {
       router.replace('/home');
     }
   }, [session, router]);
+
+  queryClient.invalidateQueries({
+    queryKey: ['receipt'],
+  });
+  queryClient.invalidateQueries({
+    queryKey: ['foods'],
+  });
+  queryClient.invalidateQueries({
+    queryKey: ['search'],
+  });
 
   const onSubmit: SubmitHandler<LoginType> = async (data) => {
     let showRedirect = false;
