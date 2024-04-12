@@ -3,13 +3,10 @@ import {
   ExtendedRequestInit,
 } from '@/_types/CustomFetchTypes';
 import dayjs from 'dayjs';
-import { signOut } from 'next-auth/react';
-import { useRouter } from 'next/router';
 import uuid4 from 'uuid4';
 
 const createCustomFetch = ({ baseURL, headers }: CustomFetchType) => {
   return async (url = '', options?: ExtendedRequestInit): Promise<Response> => {
-    const router = useRouter();
     const baseFullUrl = `${baseURL}${url}`;
     const customHeaders = Object.entries(headers).reduce(
       (acc, [key, value]) => {
@@ -59,14 +56,7 @@ const createCustomFetch = ({ baseURL, headers }: CustomFetchType) => {
         console.log('요청 성공');
       }
 
-      console.log(response.status);
-      const responseData = await response.json();
-      if (response.status === 401 && responseData.message === 'Access Denied') {
-        await signOut({ redirect: false }).then(() => {
-          router.replace('/welcome/login');
-        });
-      }
-      return responseData;
+      return await response.json();
     } catch (err) {
       console.error(err);
       throw new Error('error occurred!');

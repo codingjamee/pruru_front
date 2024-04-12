@@ -35,7 +35,7 @@ export const getFoods = async ({
 export const getFoodById = async (id: string) => {
   const res = await api(`/food/${id}`, {
     next: {
-      tags: ['getFoodById', id],
+      tags: ['foods', id],
     },
     credentials: 'include',
   });

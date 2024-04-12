@@ -9,7 +9,7 @@ import { getFoodById } from '@/_utils/getQuery';
 const page = async ({ params }: { params: { foodId: string } }) => {
   const queryClient = new QueryClient();
   await queryClient.prefetchQuery({
-    queryKey: ['getFoodById', params.foodId],
+    queryKey: ['foods', params.foodId],
     queryFn: () => getFoodById(params.foodId),
     staleTime: 10 * 60 * 1000,
   });

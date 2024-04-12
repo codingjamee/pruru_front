@@ -15,7 +15,7 @@ import { storageText } from '@/_utils/listData';
 const FoodDetailCard = ({ foodId }: { foodId: string }) => {
   const router = useRouter();
   const { data: foodData } = useQuery<FoodPropType, any, FoodPropType, any>({
-    queryKey: ['getFoodById', foodId],
+    queryKey: ['foods', foodId],
     queryFn: () => getFoodById(foodId),
     staleTime: 10 * 60 * 1000,
   });

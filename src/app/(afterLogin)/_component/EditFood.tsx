@@ -36,7 +36,7 @@ const EditFood = () => {
     mutationFn: (data: FoodPropType) => putFoodDataById(data, foodId),
     onSuccess: () => {
       //food 쿼리로 여러개 가져오면 그것도 invalidate 필요
-      queryClient.invalidateQueries({ queryKey: ['getFoodById', foodId] });
+      queryClient.invalidateQueries({ queryKey: ['foods', foodId] });
       router.push(`/food/${foodId}`);
     },
     onError: () => {
@@ -50,7 +50,7 @@ const EditFood = () => {
     FoodPropType,
     any
   >({
-    queryKey: ['getFoodById', foodId],
+    queryKey: ['foods', foodId],
     queryFn: () => getFoodById(foodId!),
     staleTime: 10 * 60 * 1000,
   });
