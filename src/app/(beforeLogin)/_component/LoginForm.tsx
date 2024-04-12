@@ -58,16 +58,10 @@ const LoginForm = () => {
           }),
         });
 
-      // const responseData = await response.json();
-      await response.json();
+      const responseData = await response.json();
+      responseData.ok &&
+        queryClient.setQueryData(['user'], responseData.username);
 
-      // if (response.ok) {
-      //   await signIn('credentials', {
-      //     name: responseData.username,
-      //     ...(responseData.image && { image: responseData.image }),
-      //     redirect: false,
-      //   });
-      // }
       showRedirect = true;
     } catch (err) {
       //추후 toast로 설정

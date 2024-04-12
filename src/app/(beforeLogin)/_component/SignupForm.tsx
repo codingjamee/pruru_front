@@ -7,6 +7,7 @@ import { useRouter } from 'next/navigation';
 import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { api } from '@/_utils/createCustomFetch';
+import { useQueryClient } from '@tanstack/react-query';
 
 const pwdRegex = new RegExp(/(?=.*\d)(?=.*[a-z]).{8,}/);
 
@@ -56,6 +57,7 @@ const SignupForm = () => {
     },
   });
   const router = useRouter();
+  const queryClient = useQueryClient();
 
   const onSubmit: SubmitHandler<SignupType> = async (data) => {
     console.log(data);
@@ -87,6 +89,9 @@ const SignupForm = () => {
         });
       }
       const responseData = await result?.json();
+      responseData.ok &&
+        queryClient.setQueryData(['user'], responseData.username);
+
       console.log(responseData);
       showRedirect = true;
     } catch (err) {
