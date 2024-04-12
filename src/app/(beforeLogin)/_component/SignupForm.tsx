@@ -74,7 +74,19 @@ const SignupForm = () => {
           name: data.name,
         }),
       });
-      const responseData = await response.json();
+
+      let result;
+      if (response.status === 201) {
+        result = await api('/user/signin', {
+          method: 'POST',
+          body: JSON.stringify({
+            email: data.email,
+            password: data.password,
+            name: data.name,
+          }),
+        });
+      }
+      const responseData = await result?.json();
       console.log(responseData);
       showRedirect = true;
     } catch (err) {
