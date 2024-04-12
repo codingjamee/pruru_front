@@ -16,22 +16,34 @@ interface SearchProps {
   name?: string;
   setSearchVal?: (value: SetStateAction<string | undefined>) => void;
   truncate?: boolean;
+  disabled?: boolean;
+  placeholder?: string;
 }
 
 type CombinedInputProps = SearchProps & InputProps;
 
 const Search = forwardRef<HTMLInputElement, CombinedInputProps>(
-  ({ onClickSearch, onChange, onBlur, name, truncate }: SearchProps, ref) => {
+  (
+    {
+      onClickSearch,
+      onBlur,
+      name,
+      truncate,
+      disabled,
+      placeholder,
+    }: SearchProps,
+    ref,
+  ) => {
     return (
       <div className="flex w-full items-center justify-center">
         <Input
           ref={ref}
           name={name}
           variant="underline"
-          placeholder="재료명"
-          onChange={onChange}
+          placeholder={placeholder || '재료명'}
           onBlur={onBlur}
           truncate={truncate}
+          disabled={disabled}
         />
         <div
           onClick={onClickSearch}

@@ -85,7 +85,7 @@ const EditFood = () => {
       getSearchCategory(
         10,
         ['search', 'foodname'],
-        searchFoodName || searchName,
+        searchName || searchFoodName,
       ),
     enabled: searchTrigger,
   });

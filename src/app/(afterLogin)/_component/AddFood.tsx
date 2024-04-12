@@ -77,7 +77,7 @@ const AddFood = () => {
 
   //검색결과
   const { data: searchedData } = useQuery<SearchReturnType>({
-    queryKey: ['search', 'foodname'],
+    queryKey: ['search', searchName],
     queryFn: () =>
       getSearchCategory(
         10,
@@ -91,7 +91,7 @@ const AddFood = () => {
     setModalIsOpen(true);
     setValue('image_url', '');
     setValue('search_name', searchFoodName || '');
-    setValue('name', '');
+    setSearchTrigger(false);
   };
 
   const onAddFood = (data: FoodPropType) => {
@@ -100,7 +100,7 @@ const AddFood = () => {
 
   const onClickSearchTrigger = () => {
     setSearchTrigger(true);
-    console.log('search is Triggered', 'value is : ', searchFoodName);
+    console.log('search is Triggered', 'value is : ', searchName);
   };
 
   return (
@@ -153,6 +153,8 @@ const AddFood = () => {
                 {...register('name')}
                 name="name"
                 truncate={true}
+                placeholder="재료명 검색하기"
+                disabled
               />
             </div>
             <Button
