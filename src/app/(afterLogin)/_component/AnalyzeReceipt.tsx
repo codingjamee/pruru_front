@@ -64,7 +64,7 @@ const AnalyzeReceipt = () => {
                   '.',
                   '',
                 ),
-                quantity: item.count?.formatted.value,
+                quantity: item.count?.formatted?.value || item.count?.text,
               };
             },
           ),
