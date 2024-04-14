@@ -14,8 +14,16 @@ http://localhost/ 실행
 
 
 test 계정 :   
+- [1]
+```
 id: test@test.com  
 pw: hellotest1
+```
+- [2]
+```
+id: test2@test.com  
+pw: hellotest1
+```
 
 ### 2. 배포링크 
 <a href="http://ec2-13-209-135-79.ap-northeast-2.compute.amazonaws.com/" target="_blank">배포 링크</a> <br>
