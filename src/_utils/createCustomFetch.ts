@@ -55,10 +55,14 @@ const createCustomFetch = ({ baseURL, headers }: CustomFetchType) => {
       if (options?.dynamicValues) {
         console.log('요청 성공');
       }
+      if (response.status === 400 || response.status === 401) {
+        console.log(response);
+        window.location.href = '/welcome/login';
+      }
 
       return response;
     } catch (err) {
-      console.error(err);
+      console.log(err);
       throw new Error('error occurred!');
     }
   };
