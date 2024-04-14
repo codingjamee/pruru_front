@@ -7,7 +7,8 @@ import { useRouter } from 'next/navigation';
 import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { api } from '@/_utils/createCustomFetch';
-import { useQueryClient } from '@tanstack/react-query';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
+import { signInUser } from '@/_utils/mutateQuery';
 
 const pwdRegex = new RegExp(/(?=.*\d)(?=.*[a-z]).{8,}/);
 
@@ -41,6 +42,7 @@ const SignupSchema = z
 type SignupType = z.infer<typeof SignupSchema>;
 
 const SignupForm = () => {
+  const queryClient = useQueryClient();
   const {
     register,
     handleSubmit,
@@ -56,12 +58,26 @@ const SignupForm = () => {
       checkPwd: '',
     },
   });
+  const { mutate } = useMutation({
+    mutationKey: ['user'],
+    mutationFn: (data: {
+      email: string;
+      password: string;
+      name?: string;
+      image?: string;
+    }) => signInUser(data),
+    onSuccess: (userData) => {
+      console.log(userData);
+      queryClient.setQueryData(['user'], {
+        name: userData.username,
+        image: userData.image,
+      });
+      return router.replace('/home');
+    },
+  });
   const router = useRouter();
-  const queryClient = useQueryClient();
 
   const onSubmit: SubmitHandler<SignupType> = async (data) => {
-    console.log(data);
-    let showRedirect = false;
     try {
       //회원가입
       const response: Response & {
@@ -77,30 +93,15 @@ const SignupForm = () => {
         }),
       });
 
-      let result;
       if (response.status === 201) {
-        result = await api('/user/signin', {
-          method: 'POST',
-          body: JSON.stringify({
-            email: data.email,
-            password: data.password,
-            name: data.name,
-          }),
-        });
+        mutate(data);
       }
-      const responseData = await result?.json();
-      responseData.ok &&
-        queryClient.setQueryData(['user'], responseData.username);
-
-      console.log(responseData);
-      showRedirect = true;
     } catch (err) {
       //추후 toast로 설정
       console.error(err);
       return null;
     }
     reset();
-    if (showRedirect) router.replace('/home');
   };
 
   return (

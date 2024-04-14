@@ -6,8 +6,8 @@ import { useForm, SubmitHandler } from 'react-hook-form';
 import { useRouter } from 'next/navigation';
 import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { api } from '@/_utils/createCustomFetch';
-import { useQueryClient } from '@tanstack/react-query';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
+import { signInUser } from '@/_utils/mutateQuery';
 
 const LoginSchema = z.object({
   email: z
@@ -20,6 +20,7 @@ const LoginSchema = z.object({
 type LoginType = z.infer<typeof LoginSchema>;
 
 const LoginForm = () => {
+  const queryClient = useQueryClient();
   const {
     register,
     handleSubmit,
@@ -34,41 +35,33 @@ const LoginForm = () => {
     },
   });
   const router = useRouter();
-  const queryClient = useQueryClient();
+  const { mutate } = useMutation({
+    mutationKey: ['user'],
+    mutationFn: (data: {
+      email: string;
+      password: string;
+      name?: string;
+      image?: string;
+    }) => signInUser(data),
+    onSuccess: (userData) => {
+      console.log(userData);
 
-  queryClient.invalidateQueries({
-    queryKey: ['receipt'],
-  });
-  queryClient.invalidateQueries({
-    queryKey: ['foods'],
-  });
-  queryClient.invalidateQueries({
-    queryKey: ['search'],
+      queryClient.setQueryData(['user'], {
+        name: userData.username,
+        image: userData.image,
+      });
+      return router.replace('/home');
+    },
   });
 
   const onSubmit: SubmitHandler<LoginType> = async (data) => {
-    let showRedirect = false;
     try {
-      const response: Response & { username?: string; image?: string } =
-        await api('/user/signin', {
-          method: 'POST',
-          body: JSON.stringify({
-            email: data.email,
-            password: data.password,
-          }),
-        });
-
-      const responseData = await response.json();
-      responseData.ok &&
-        queryClient.setQueryData(['user'], responseData.username);
-
-      showRedirect = true;
+      mutate(data);
     } catch (err) {
       //추후 toast로 설정
       console.error(err);
     }
     reset();
-    if (showRedirect) router.replace('/home');
   };
 
   return (
