@@ -2,6 +2,30 @@ import { PurchaseReceiptInfoType } from '@/_types/ReceiptTypes';
 import { api } from './createCustomFetch';
 import { FoodPropType } from '@/_types/FoodTypes';
 
+export const signInUser = async (data: {
+  email: string;
+  password: string;
+  name?: string;
+  image?: string;
+}) => {
+  const res = await api('/user/signin', {
+    method: 'POST',
+    body: JSON.stringify({
+      email: data.email,
+      password: data.password,
+      name: data.name,
+      image: data.image,
+    }),
+  });
+  if (!res.ok) {
+    throw new Error('Failed to post data');
+  }
+
+  const resData = await res.json();
+  console.log(resData);
+  return await resData;
+};
+
 export const postReceiptData = async (
   data: PurchaseReceiptInfoType | undefined,
 ) => {
