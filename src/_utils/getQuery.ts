@@ -3,6 +3,12 @@ import dayjs from 'dayjs';
 import { api, searchApi } from './createCustomFetch';
 import { receiptApi } from './createCustomFetch';
 import { QueryTypes } from '@/_types/CommonTypes';
+import { FoodPropType, FoodReturnType } from '@/_types/FoodTypes';
+import {
+  PurchaseReceiptInfoType,
+  ReceiptsReturnType,
+} from '@/_types/ReceiptTypes';
+import { AnalyzedReceiptData } from '@/_types/ReturnTypes';
 
 export const getFoods = async ({
   storage,
@@ -17,12 +23,15 @@ export const getFoods = async ({
   if (direction) params.append('direction', direction);
   if (pageParam) params.append('cursor', pageParam.toString());
 
-  const res = await api(`/food?${params.toString()}`, {
-    next: {
-      tags: ['foods', storage, sort, direction],
+  const res = await api<FoodReturnType & { ok: boolean }>(
+    `/food?${params.toString()}`,
+    {
+      next: {
+        tags: ['foods', storage, sort, direction],
+      },
+      credentials: 'include',
     },
-    credentials: 'include',
-  });
+  );
 
   if (!res.ok) {
     throw new Error('Failed to fetch data');
@@ -32,7 +41,7 @@ export const getFoods = async ({
 };
 
 export const getFoodById = async (id: string) => {
-  const res = await api(`/food/${id}`, {
+  const res = await api<FoodPropType & { ok: boolean }>(`/food/${id}`, {
     next: {
       tags: ['foods', id],
     },
@@ -53,12 +62,15 @@ export const getReceiptsByMonth = async ({
   if (!YM) {
     YM = dayjs().format('YY.MM');
   }
-  const res = await api(`/receipt?month=${YM}&cursor=${pageParam}`, {
-    next: {
-      tags: ['receipt', 'monthly'],
+  const res = await api<ReceiptsReturnType & { ok: boolean }>(
+    `/receipt?month=${YM}&cursor=${pageParam}`,
+    {
+      next: {
+        tags: ['receipt', 'monthly'],
+      },
+      credentials: 'include',
     },
-    credentials: 'include',
-  });
+  );
   if (!res.ok) {
     throw new Error('Failed to fetch data');
   }
@@ -66,12 +78,15 @@ export const getReceiptsByMonth = async ({
 };
 
 export const getReceiptDetail = async (receipt_id: string) => {
-  const res = await api(`/receipt/${receipt_id}`, {
-    next: {
-      tags: ['receipt', 'items', receipt_id],
+  const res = await api<PurchaseReceiptInfoType & { ok: boolean }>(
+    `/receipt/${receipt_id}`,
+    {
+      next: {
+        tags: ['receipt', 'items', receipt_id],
+      },
+      credentials: 'include',
     },
-    credentials: 'include',
-  });
+  );
   if (!res.ok) {
     throw new Error('Failed to fetch data');
   }
@@ -79,7 +94,7 @@ export const getReceiptDetail = async (receipt_id: string) => {
 };
 
 export const getAnalyzeReceipt = async (file: string, type: string) => {
-  const res = await receiptApi(
+  const res = await receiptApi<AnalyzedReceiptData>(
     `/custom/${process.env.NEXT_PUBLIC_CLOVA_REQUEST_PATH}`,
     {
       method: 'POST',
@@ -93,9 +108,6 @@ export const getAnalyzeReceipt = async (file: string, type: string) => {
       credentials: 'include',
     },
   );
-  if (!res.ok) {
-    throw new Error('Failed to fetch data');
-  }
   return res;
 };
 
@@ -114,23 +126,6 @@ export const getSearchCategory = async (
       credentials: 'include',
     },
   );
-  if (!res.ok) {
-    throw new Error('Failed to fetch data');
-  }
-  return res;
-};
-
-export const getFoodDataById = async (foodId: string) => {
-  const res = await api(`/food?${foodId}`, {
-    method: 'GET',
-    next: {
-      tags: ['addFood', foodId],
-    },
-    credentials: 'include',
-  });
-  if (!res.ok) {
-    throw new Error('Failed to fetch food Data');
-  }
 
   return res;
 };
