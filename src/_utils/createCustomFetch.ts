@@ -5,8 +5,8 @@ import {
 import dayjs from 'dayjs';
 import uuid4 from 'uuid4';
 
-const createCustomFetch = ({ baseURL, headers }: CustomFetchType) => {
-  return async (url = '', options?: ExtendedRequestInit): Promise<Response> => {
+const createCustomFetch = <T>({ baseURL, headers }: CustomFetchType) => {
+  return async (url = '', options?: ExtendedRequestInit): Promise<T> => {
     const baseFullUrl = `${baseURL}${url}`;
     const customHeaders = Object.entries(headers).reduce(
       (acc, [key, value]) => {
@@ -69,28 +69,31 @@ const createCustomFetch = ({ baseURL, headers }: CustomFetchType) => {
     }
   };
 };
-export const api = createCustomFetch({
-  baseURL: '/api',
-  headers: {
-    'Content-Type': 'application/json',
-    Authorization: `Bearer ${process.env.API_TOKEN as string}`,
-  },
-});
+export const api = <T>(
+  url: string,
+  options?: ExtendedRequestInit,
+): Promise<T> => {
+  return createCustomFetch<T>({
+    baseURL: '/api',
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${process.env.API_TOKEN as string}`,
+    },
+  })(url, options);
+};
 
-export const authApi = createCustomFetch({
-  baseURL: `${process.env.NEXT_PUBLIC_BASE_URL}/api/user`,
-  headers: {
-    'Content-Type': 'application/json',
-  },
-});
-
-export const receiptApi = createCustomFetch({
-  baseURL: '',
-  headers: {
-    'Content-Type': 'application/json',
-    'X-OCR-SECRET': process.env.NEXT_PUBLIC_CLOVA_SECRET_KEY,
-  },
-});
+export const receiptApi = <T>(
+  url: string,
+  options?: ExtendedRequestInit,
+): Promise<T> => {
+  return createCustomFetch<T>({
+    baseURL: ``,
+    headers: {
+      'Content-Type': 'application/json',
+      'X-OCR-SECRET': process.env.NEXT_PUBLIC_CLOVA_SECRET_KEY,
+    },
+  })(url, options);
+};
 
 export const searchApi = createCustomFetch({
   baseURL: '',
