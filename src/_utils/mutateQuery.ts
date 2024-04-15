@@ -21,9 +21,9 @@ export const signInUser = async (data: {
     throw new Error('Failed to post data');
   }
 
-  const resData = await res.json();
-  console.log(resData);
-  return await resData;
+  // const resData = await res.json();
+  console.log(res);
+  return res;
 };
 
 export const postReceiptData = async (
@@ -41,7 +41,7 @@ export const postReceiptData = async (
     throw new Error('Failed to post data');
   }
 
-  return await res.json();
+  return res;
 };
 
 export const postFoodDataById = async (
@@ -59,7 +59,7 @@ export const postFoodDataById = async (
   if (!res.ok) {
     throw new Error('Failed to post food data!');
   }
-  return await res.json();
+  return res;
 };
 
 export const putFoodDataById = async (
@@ -77,7 +77,7 @@ export const putFoodDataById = async (
   if (!res.ok) {
     throw new Error('Failed to post food data!');
   }
-  return await res.json();
+  return res;
 };
 
 export const postFoodData = async (data: FoodPropType) => {
@@ -103,7 +103,7 @@ export const deleteFoodById = async (foodId: string | undefined) => {
   if (!res.ok) {
     throw new Error('Failed to delete food data!');
   }
-  return await res.json();
+  return res;
 };
 
 export const deleteReceiptById = async (receiptId: string | undefined) => {
@@ -117,5 +117,5 @@ export const deleteReceiptById = async (receiptId: string | undefined) => {
   if (!res.ok) {
     throw new Error('Failed to delete receipt data!');
   }
-  return await res.json();
+  return res;
 };

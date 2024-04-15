@@ -28,7 +28,7 @@ export const getFoods = async ({
     throw new Error('Failed to fetch data');
   }
 
-  return await res.json();
+  return res;
 };
 
 export const getFoodById = async (id: string) => {
@@ -40,7 +40,7 @@ export const getFoodById = async (id: string) => {
   });
   if (!res.ok) throw new Error('Failed to Fetch Food by id');
 
-  return await res.json();
+  return res;
 };
 
 export const getReceiptsByMonth = async ({
@@ -62,7 +62,7 @@ export const getReceiptsByMonth = async ({
   if (!res.ok) {
     throw new Error('Failed to fetch data');
   }
-  return await res.json();
+  return res;
 };
 
 export const getReceiptDetail = async (receipt_id: string) => {
@@ -75,7 +75,7 @@ export const getReceiptDetail = async (receipt_id: string) => {
   if (!res.ok) {
     throw new Error('Failed to fetch data');
   }
-  return await res.json();
+  return res;
 };
 
 export const getAnalyzeReceipt = async (file: string, type: string) => {
@@ -96,7 +96,7 @@ export const getAnalyzeReceipt = async (file: string, type: string) => {
   if (!res.ok) {
     throw new Error('Failed to fetch data');
   }
-  return await res.json();
+  return res;
 };
 
 export const getSearchCategory = async (
@@ -117,7 +117,7 @@ export const getSearchCategory = async (
   if (!res.ok) {
     throw new Error('Failed to fetch data');
   }
-  return await res.json();
+  return res;
 };
 
 export const getFoodDataById = async (foodId: string) => {
@@ -132,5 +132,5 @@ export const getFoodDataById = async (foodId: string) => {
     throw new Error('Failed to fetch food Data');
   }
 
-  return await res.json();
+  return res;
 };
