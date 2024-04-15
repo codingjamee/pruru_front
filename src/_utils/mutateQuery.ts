@@ -1,6 +1,10 @@
-import { PurchaseReceiptInfoType } from '@/_types/ReceiptTypes';
+import {
+  PurchaseReceiptInfoType,
+  ReceiptPostType,
+} from '@/_types/ReceiptTypes';
 import { api } from './createCustomFetch';
-import { FoodPropType } from '@/_types/FoodTypes';
+import { FoodMutateType, FoodPropType } from '@/_types/FoodTypes';
+import { UserSignupType } from '@/_types/CommonTypes';
 
 export const signInUser = async (data: {
   email: string;
@@ -8,7 +12,7 @@ export const signInUser = async (data: {
   name?: string;
   image?: string;
 }) => {
-  const res = await api('/user/signin', {
+  const res = await api<UserSignupType & { ok: boolean }>('/user/signin', {
     method: 'POST',
     body: JSON.stringify({
       email: data.email,
@@ -29,7 +33,7 @@ export const signInUser = async (data: {
 export const postReceiptData = async (
   data: PurchaseReceiptInfoType | undefined,
 ) => {
-  const res = await api(`/receipt`, {
+  const res = await api<ReceiptPostType & { ok: boolean }>(`/receipt`, {
     next: {
       tags: ['posted', 'receipt', 'data'],
     },
@@ -37,10 +41,6 @@ export const postReceiptData = async (
     credentials: 'include',
     body: JSON.stringify(data),
   });
-  if (!res.ok) {
-    throw new Error('Failed to post data');
-  }
-
   return res;
 };
 
@@ -48,7 +48,7 @@ export const postFoodDataById = async (
   data: FoodPropType,
   foodId: string | undefined,
 ) => {
-  const res = await api(`/food/${foodId}`, {
+  const res = await api<FoodMutateType>(`/food/${foodId}`, {
     next: {
       tags: ['addFood', foodId || ''],
     },
@@ -66,7 +66,7 @@ export const putFoodDataById = async (
   data: FoodPropType,
   foodId: string | undefined,
 ) => {
-  const res = await api(`/food/${foodId}`, {
+  const res = await api<FoodMutateType>(`/food/${foodId}`, {
     next: {
       tags: ['addFood', foodId || ''],
     },
@@ -81,7 +81,7 @@ export const putFoodDataById = async (
 };
 
 export const postFoodData = async (data: FoodPropType) => {
-  const res = await api('/food', {
+  const res = await api<FoodMutateType>('/food', {
     next: {
       tags: ['addFirstFood'],
     },
@@ -93,7 +93,7 @@ export const postFoodData = async (data: FoodPropType) => {
 };
 
 export const deleteFoodById = async (foodId: string | undefined) => {
-  const res = await api(`/food/${foodId}`, {
+  const res = await api<FoodMutateType>(`/food/${foodId}`, {
     next: {
       tags: ['deleteFood', foodId || ''],
     },
@@ -107,7 +107,7 @@ export const deleteFoodById = async (foodId: string | undefined) => {
 };
 
 export const deleteReceiptById = async (receiptId: string | undefined) => {
-  const res = await api(`/receipt/${receiptId}`, {
+  const res = await api<FoodMutateType>(`/receipt/${receiptId}`, {
     next: {
       tags: ['deleteReceipt', receiptId || ''],
     },
