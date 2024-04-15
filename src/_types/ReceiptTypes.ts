@@ -30,3 +30,8 @@ export interface ReceiptsReturnType {
   receipts: ReceiptArrType[];
   nextCursor: string;
 }
+
+export interface ReceiptPostType {
+  message: string;
+  receipt_id: number;
+}

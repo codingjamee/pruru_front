@@ -29,3 +29,9 @@ export type FoodReturnType = {
   foods: FoodPropType[];
   nextCursor: string;
 };
+
+export interface FoodMutateType {
+  ok: boolean;
+  message: string;
+  foodId?: number;
+}

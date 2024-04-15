@@ -102,3 +102,8 @@ export interface QueryTextMap {
 }
 
 export type QueryKeyType = 'storage' | 'sort' | 'direction';
+
+export interface UserSignupType {
+  email: string;
+  text: string;
+}
