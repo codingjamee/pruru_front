@@ -2,11 +2,17 @@
 import PlusSvg from '@/_assets/PlusSvg';
 import Button from '@/_components/Button';
 import {
-  AnalyzedReceiptAllType,
+  Item,
   ModifiedAnalyzeReceiptType,
+  ResultData,
+  CombinedResult,
 } from '@/_types/ReturnTypes';
 import { getAnalyzeReceipt, getSearchCategory } from '@/_utils/getQuery';
-import { useQueries, useQuery, useQueryClient } from '@tanstack/react-query';
+import {
+  useQueries,
+  useQuery,
+  useQueryClient,
+} from '@tanstack/react-query';
 import { useRouter } from 'next/navigation';
 import { ChangeEvent, useEffect, useRef, useState } from 'react';
 import Resizer from 'react-image-file-resizer';
@@ -35,36 +41,36 @@ const AnalyzeReceipt = () => {
     if (analyzeStatus === 'success') {
       analyzedReceiptData_2 = {
         purchase_location:
-          (analyzedReceiptData.images[0].receipt.result?.storeInfo?.name
+          (analyzedReceiptData?.images[0]?.receipt?.result?.storeInfo?.name
             .formatted.value || '') +
           ' ' +
-          (analyzedReceiptData.images[0].receipt.result?.storeInfo?.subName
+          (analyzedReceiptData?.images[0]?.receipt?.result?.storeInfo?.subName
             ?.text || ''),
         purchase_date:
           new Date(
             Number(
-              analyzedReceiptData.images[0].receipt.result?.paymentInfo?.date
-                ?.formatted.year,
+              analyzedReceiptData?.images[0]?.receipt?.result?.paymentInfo?.date
+                ?.formatted?.year,
             ),
             Number(
-              analyzedReceiptData.images[0].receipt.result?.paymentInfo?.date
-                ?.formatted.month,
+              analyzedReceiptData?.images[0]?.receipt?.result?.paymentInfo?.date
+                ?.formatted?.month,
             ),
             Number(
-              analyzedReceiptData.images[0].receipt.result?.paymentInfo?.date
-                ?.formatted.day,
+              analyzedReceiptData?.images[0]?.receipt?.result?.paymentInfo?.date
+                ?.formatted?.day,
             ),
           ) || new Date(),
         receipt_items:
-          analyzedReceiptData.images[0]?.receipt?.result?.subResults[0]?.items.map(
-            (item: AnalyzedReceiptAllType) => {
+          analyzedReceiptData?.images[0]?.receipt?.result?.subResults[0]?.items.map(
+            (item: Item) => {
               return {
-                name: item.name.formatted.value.replace(reg_exceptgiho, ''),
-                purchase_price: item.price.price.formatted.value.replace(
+                name: item?.name?.formatted?.value?.replace(reg_exceptgiho, ''),
+                purchase_price: item?.price?.price?.formatted?.value?.replace(
                   '.',
                   '',
                 ),
-                quantity: item.count?.formatted?.value || item.count?.text,
+                quantity: item?.count?.formatted?.value || item?.count?.text,
               };
             },
           ),
@@ -91,7 +97,10 @@ const AnalyzeReceipt = () => {
   }, [analyzeStatus]);
 
   //네이버검색 요청 쿼리 - 영수증 인식성공시 트리거
-  const { data: searchResults, searchSuccess } = useQueries({
+  const { data: searchResults, searchSuccess } = useQueries<
+    ResultData[],
+    CombinedResult
+  >({
     queries: searchLists?.map((search, idx) => ({
       queryKey: ['search', 'category', idx],
       queryFn: () =>
@@ -99,15 +108,18 @@ const AnalyzeReceipt = () => {
       enabled: triggerSearch,
       staleTime: 60 * 60 * 1000,
     })),
-    combine: (results) => {
+    combine: (results: ResultData[]) => {
       return {
         data: results?.map((result, index) => {
-          if (result?.data?.items[0]?.category1 === '식품') {
+          if (
+            result?.data?.items &&
+            result?.data?.items[0]?.category1 === '식품'
+          ) {
             return {
               index: index,
               title: searchLists[index],
-              category: result?.data?.items[0].category3,
-              image_url: result?.data?.items[0].image,
+              category: result?.data?.items[0]?.category3,
+              image_url: result?.data?.items[0]?.image,
             };
           } else if (result?.data?.total === 0) {
             return {
