@@ -8,7 +8,7 @@ import {
   PurchaseReceiptInfoType,
   ReceiptsReturnType,
 } from '@/_types/ReceiptTypes';
-import { AnalyzedReceiptData } from '@/_types/ReturnTypes';
+import { AnalyzedReceiptData, SearchReturnType } from '@/_types/ReturnTypes';
 
 export const getFoods = async ({
   storage,
@@ -116,7 +116,7 @@ export const getSearchCategory = async (
   tags: string[],
   searchString?: string,
 ) => {
-  const res = await searchApi(
+  const res = await searchApi<SearchReturnType>(
     `/search/${process.env.NEXT_PUBLIC_NAVER_REQUEST_PATH}${searchString}&display=${display}`,
     {
       method: 'GET',

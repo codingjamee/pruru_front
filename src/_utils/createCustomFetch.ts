@@ -95,10 +95,15 @@ export const receiptApi = <T>(
   })(url, options);
 };
 
-export const searchApi = createCustomFetch({
-  baseURL: '',
-  headers: {
-    'X-Naver-Client-Id': process.env.NEXT_PUBLIC_NAVER_CLIENT_ID,
-    'X-Naver-Client-Secret': process.env.NEXT_PUBLIC_NAVER_SECRET_KEY,
-  },
-});
+export const searchApi = <T>(
+  url: string,
+  options?: ExtendedRequestInit,
+): Promise<T> => {
+  return createCustomFetch<T>({
+    baseURL: ``,
+    headers: {
+      'X-Naver-Client-Id': process.env.NEXT_PUBLIC_NAVER_CLIENT_ID,
+      'X-Naver-Client-Secret': process.env.NEXT_PUBLIC_NAVER_SECRET_KEY,
+    },
+  })(url, options);
+};
