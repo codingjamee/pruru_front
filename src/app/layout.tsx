@@ -3,6 +3,7 @@ import './globals.css';
 import MSWComponent from '@/_components/MSWComponent';
 import { montserrat } from '@/_styles/fonts';
 import { RQProvider } from './(afterLogin)/_component/RQProvider';
+import { ToastProvider } from '@/_components/Toast';
 
 export const metadata: Metadata = {
   title: 'Create Next App',
@@ -19,7 +20,10 @@ export default function RootLayout({
       <body className={`${montserrat.className}`}>
         <MSWComponent />
         <div id="modal-root" />
-        <RQProvider>{children}</RQProvider>
+        <div id="toast" />
+        <ToastProvider>
+          <RQProvider>{children}</RQProvider>
+        </ToastProvider>
       </body>
     </html>
   );
