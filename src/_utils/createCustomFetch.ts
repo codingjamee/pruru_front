@@ -55,15 +55,17 @@ const createCustomFetch = ({ baseURL, headers }: CustomFetchType) => {
       if (options?.dynamicValues) {
         console.log('요청 성공');
       }
-      if (response.status === 400 || response.status === 401) {
-        console.log(response);
+
+      const resData = await response.json();
+      if (
+        (response.status === 400 || response.status === 401) &&
+        resData.message !== '이메일 혹은 비밀번호가 일치하지 않습니다!'
+      ) {
         window.location.href = '/welcome/login';
       }
-
-      return response;
+      return resData;
     } catch (err) {
-      console.log(err);
-      throw new Error('error occurred!');
+      throw new Error('new Error');
     }
   };
 };
