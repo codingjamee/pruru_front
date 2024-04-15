@@ -113,8 +113,8 @@ const AddFood = () => {
             name="search_name"
           />
           <div>
-            {searchedData && searchedData.items.length >= 1 ? (
-              searchedData.items.map((result) => (
+            {searchedData && searchedData?.items.length >= 1 ? (
+              searchedData?.items.map((result) => (
                 <div
                   className="cursor-pointer"
                   onClick={() => {
