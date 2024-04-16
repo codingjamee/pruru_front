@@ -15,13 +15,13 @@ const navList = [
       { name: '영수증', subPath: '/add/receipt' },
     ],
   },
-  {
-    name: '검색',
-    path: '/searches',
-    focusKey: 'searches',
-    style: 'link-two',
-    subList: [],
-  },
+  // {
+  //   name: '검색',
+  //   path: '/searches',
+  //   focusKey: 'searches',
+  //   style: 'link-two',
+  //   subList: [],
+  // },
   {
     name: '식재료',
     path: '/food?storage=total&sort=expiryDate&direction=down',

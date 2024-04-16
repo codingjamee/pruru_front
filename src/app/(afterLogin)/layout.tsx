@@ -3,7 +3,7 @@ import logo from '@/_assets/pruru_logo.png';
 import NavTop from './_component/NavTop';
 import Link from 'next/link';
 import RefrigerIcon from '@/_assets/RefrigerIcon';
-import SearchGlass from '@/_assets/SearchGlass';
+// import SearchGlass from '@/_assets/SearchGlass';
 import ReceiptIcon from '@/_assets/ReceiptIcon';
 import UserIcon from '@/_assets/UserIcon';
 import AddList from '@/_assets/AddList';
@@ -34,7 +34,7 @@ export default async function layout({
             </Link>
             <div className="hidden w-full text-size-font-card-title tablet:block desktop:block">
               <nav className="flex w-full justify-between">
-                <Link href="/user">우리집</Link>
+                <Link href="/user">마이페이지</Link>
                 <NavTop />
               </nav>
             </div>
@@ -46,12 +46,12 @@ export default async function layout({
             <div className="mx-10 flex w-full cursor-pointer flex-row items-center justify-between">
               <RefrigerIcon width={30} height={30} path="/food" />
               <ReceiptIcon width={30} height={30} path="/receipt" />
-              <SearchGlass
+              {/* <SearchGlass
                 width={30}
                 height={30}
                 color="black"
                 path="/searches"
-              />
+              /> */}
               <UserIcon width={30} height={30} path="/user" />
               <AddList width={30} height={30} path="/add/receipt" />
             </div>
