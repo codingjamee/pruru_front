@@ -34,7 +34,7 @@ const SSmallFoodCard = ({ food, className }: FoodCardType) => {
           </div>
         )}
       </div>
-      <div className="h-full w-full flex-col justify-evenly px-3 pt-2 text-center tablet:hidden desktop:hidden">
+      <div className="h-full w-full flex-col justify-evenly truncate px-3 pt-2 text-center tablet:hidden desktop:hidden">
         {name}
       </div>
     </div>

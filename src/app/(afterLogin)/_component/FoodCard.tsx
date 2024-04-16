@@ -23,7 +23,7 @@ const FoodCard = ({ children, food, className }: FoodCardType) => {
         <div className="absolute right-0 m-1 flex h-[22px] w-[60px] items-center justify-center rounded-3xl bg-color-secondary-100 text-color-card-text">
           {remainingDay && remainingDay < 0
             ? `${Math.abs(remainingDay)}일 지남`
-            : `D-${remainingDay}}`}
+            : `D-${remainingDay}`}
         </div>
         {image_url ? (
           <Image
@@ -40,7 +40,7 @@ const FoodCard = ({ children, food, className }: FoodCardType) => {
         )}
       </div>
 
-      <div className="h-full w-full flex-col justify-evenly p-[18px] tablet:flex desktop:flex">
+      <div className="h-full w-full flex-col justify-evenly truncate p-[18px] tablet:flex desktop:flex">
         <div>{name}</div>
         <div className="flex w-full justify-between">
           <div>

@@ -18,7 +18,7 @@ const SmallFoodCard = ({ food, className }: FoodCardType) => {
   return (
     <div
       onClick={onClickCard}
-      className={`flex h-[133px] w-[158px] flex-shrink-0 cursor-pointer flex-col gap-[10px] rounded-lg border-2  border-solid border-color-default-text shadow-custom ${className}`}>
+      className={`flex h-[133px] w-[158px] flex-shrink-0 cursor-pointer flex-col gap-[10px] rounded-lg border-2 border-solid border-color-default-text shadow-custom ${className}`}>
       <div className="relative flex h-[71px] w-full flex-col">
         <div className="absolute right-0 m-1 flex h-[22px] w-[40px] items-center justify-center rounded-3xl bg-color-secondary-100 text-[12px] text-color-bg-sub">
           D-{remainingDay}
