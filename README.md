@@ -111,7 +111,7 @@ pw: hellotest1
 
 - 영수증 추가시 사진 업로드하여 자동 분석기능 (수동입력 기능 포함)  
   <img width="400" alt="영수증자동분석" src="https://github.com/codingjamee/pruru_front/assets/99540667/d9373edc-2040-4489-8158-83afc12e08f2">
-  <img width="400" alt="영수증자동분석" src="https://github.com/codingjamee/pruru_front/assets/99540667/d0b1d97a-0c4b-48ed-b0d3-b2742dc7523c">
+  <img width="239" alt="영수증자동분석" src="https://github.com/codingjamee/pruru_front/assets/99540667/d0b1d97a-0c4b-48ed-b0d3-b2742dc7523c">
 
 - 영수증에서 식재료 추가 버튼 클릭시 금액, 구매일자 등 다수 필드 자동 입력기능  
   <img width="400" alt="Screenshot 2024-04-16 at 8 14 14 PM" src="https://github.com/codingjamee/pruru_front/assets/99540667/35b4eebb-fdc7-4b06-877a-06ce636679eb">  
