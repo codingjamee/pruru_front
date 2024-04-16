@@ -12,7 +12,7 @@ export const signInUser = async (data: {
   name?: string;
   image?: string;
 }) => {
-  const res = await api<UserSignupType & { ok: boolean }>('/user/signin', {
+  const res = await api<UserSignupType & { ok?: boolean }>('/user/signin', {
     method: 'POST',
     body: JSON.stringify({
       email: data.email,

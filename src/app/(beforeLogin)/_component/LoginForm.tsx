@@ -41,12 +41,7 @@ const LoginForm = () => {
     },
   });
   const router = useRouter();
-  const { mutate } = useMutation<
-    LoginResponseType,
-    any,
-    any,
-    LoginResponseType
-  >({
+  const { mutate } = useMutation({
     mutationKey: ['user'],
     mutationFn: (data: {
       email: string;
@@ -55,8 +50,6 @@ const LoginForm = () => {
       image?: string;
     }) => signInUser(data),
     onSuccess: (userData) => {
-      console.log(userData);
-
       queryClient.setQueryData(['user'], {
         name: userData.username,
         image: userData.image,
