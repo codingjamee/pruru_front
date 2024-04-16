@@ -179,16 +179,33 @@ const AnalyzeReceipt = () => {
   return (
     <>
       <div className="flex h-full flex-grow flex-col gap-4 rounded-lg border p-[12px]">
-        <div className="p-[8px] text-size-font-card-title">영수증 선택</div>
         <input type="file" onChange={onChangeFile} ref={fileInput} hidden />
-        <Button
-          onClick={onClickButton}
-          className=" flex h-[50%] w-full flex-grow flex-col items-center justify-center rounded-lg hover:bg-color-primary-m">
-          <PlusSvg
-            cyAttribute="upload-receipt"
-            className="flex h-[44px] w-[44px] items-center justify-center"
-          />
-        </Button>
+        {!incodedFile ? (
+          <>
+            <div className="p-[8px] text-size-font-card-title">영수증 선택</div>
+            <Button
+              onClick={onClickButton}
+              className="flex h-[50%] w-full flex-grow flex-col items-center justify-center rounded-lg hover:bg-color-primary-m">
+              <PlusSvg
+                cyAttribute="upload-receipt"
+                className="flex h-[44px] w-[44px] items-center justify-center"
+              />
+            </Button>
+          </>
+        ) : (
+          <>
+            <div
+              onClick={() => setIncodedFile('')}
+              className="cursor-pointer p-[8px] text-size-font-card-title">
+              눌러서 취소하기
+            </div>
+            <div
+              className="flex h-[50%] w-full flex-grow cursor-pointer flex-col items-center justify-center rounded-lg"
+              onClick={() => setIncodedFile('')}>
+              <img src={incodedFile} alt="incoded receipt" />
+            </div>
+          </>
+        )}
       </div>
       <Button
         cyAttribute="analyze-receipt"

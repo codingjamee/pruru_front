@@ -20,9 +20,9 @@ const FoodCard = ({ children, food, className }: FoodCardType) => {
       onClick={onClickCard}
       className={`flex w-[198px] cursor-pointer flex-col rounded-lg border-2 border-solid border-color-default-text shadow-custom mobile:hidden tablet:h-[246px] desktop:h-[246px] ${className}`}>
       <div className="boder-color-default-text relative min-w-[194px] tablet:h-[125px] tablet:border-b desktop:h-[133px] desktop:border-b">
-        <div className="absolute right-0 m-1 flex h-[22px] w-[60px] items-center justify-center rounded-3xl bg-color-secondary-100 text-color-card-text">
+        <div className="absolute right-0 m-1 flex h-[22px] w-[60px] items-center justify-center rounded-3xl bg-color-secondary-100 text-xs text-color-bg-sub">
           {remainingDay && remainingDay < 0
-            ? `${Math.abs(remainingDay)}일 지남`
+            ? `${Math.abs(remainingDay)}일 경과`
             : `D-${remainingDay}`}
         </div>
         {image_url ? (
