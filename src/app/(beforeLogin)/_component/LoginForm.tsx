@@ -11,7 +11,6 @@ import { signInUser } from '@/_utils/mutateQuery';
 import Toast from '@/_components/Toast';
 import ToastText from '@/_components/ToastText';
 import { useState } from 'react';
-import { LoginResponseType } from './SignupForm';
 
 const LoginSchema = z.object({
   email: z
