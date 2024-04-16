@@ -4,7 +4,7 @@ import Button from '@/_components/Button';
 import Card from '@/_components/Card';
 import { FoodPropType } from '@/_types/FoodTypes';
 import { getFoodById } from '@/_utils/getQuery';
-import { useMutation, useQuery } from '@tanstack/react-query';
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import Image from 'next/image';
 import logo from '@/_assets/pruru_logo.png';
 import dayjs from 'dayjs';
@@ -14,6 +14,7 @@ import { storageText } from '@/_utils/listData';
 
 const FoodDetailCard = ({ foodId }: { foodId: string }) => {
   const router = useRouter();
+  const queryClient = useQueryClient();
   const { data: foodData } = useQuery<FoodPropType, any, FoodPropType, any>({
     queryKey: ['foods', foodId],
     queryFn: () => getFoodById(foodId),
@@ -22,7 +23,10 @@ const FoodDetailCard = ({ foodId }: { foodId: string }) => {
   const { mutate } = useMutation({
     mutationKey: ['deleteFoodById', foodId],
     mutationFn: (foodId: string) => deleteFoodById(foodId),
-    onSuccess: () => router.push('/food'),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['foods'] });
+      router.push('/food');
+    },
   });
 
   const foodDetailList = [
