@@ -36,18 +36,19 @@ pw: hellotest1
 ### 3. 기술 스택
 
 <img src="https://img.shields.io/badge/HTML5-E34F26?style=for-the-badge&logo=html5&logoColor=white"/> <img src="https://img.shields.io/badge/CSS3-1572B6?style=for-the-badge&logo=css3&logoColor=white"> <img src="https://img.shields.io/badge/JavaScript-F7DF1E?style=for-the-badge&logo=JavaScript&logoColor=white">
-<img src="https://img.shields.io/badge/TypeScript-007ACC?style=for-the-badge&logo=typescript&logoColor=white"> <img src="https://img.shields.io/badge/Next.js-000000?style=for-the-badge&logo=Next.js&logoColor=white"/> <img src="https://img.shields.io/badge/Tailwind CSS-06B6D4?style=flat-square&logo=Tailwind CSS&logoColor=white"/> <img src="https://img.shields.io/badge/Node.js-339933?style=flat-square&logo=Node.js&logoColor=white"/> <img src="https://img.shields.io/badge/MySQL-4479A1?style=for-the-badge&logo=MySQL&logoColor=white"/> <img src="https://img.shields.io/badge/Express-000000?style=for-the-badge&logo=Express&logoColor=white"/> <img src="https://img.shields.io/badge/Docker-2496ED?style=flat-square&logo=Docker&logoColor=white"/> <img src="https://img.shields.io/badge/Amazon AWS-232F3E?style=flat-square&logo=amazonaws&logoColor=white"/>
+<img src="https://img.shields.io/badge/TypeScript-007ACC?style=for-the-badge&logo=typescript&logoColor=white"> <img src="https://img.shields.io/badge/Next.js-000000?style=for-the-badge&logo=Next.js&logoColor=white"/> <img src="https://img.shields.io/badge/Tailwind CSS-06B6D4?style=flat-square&logo=Tailwind CSS&logoColor=white"/>   
+<img src="https://img.shields.io/badge/Node.js-339933?style=flat-square&logo=Node.js&logoColor=white"/> <img src="https://img.shields.io/badge/MySQL-4479A1?style=for-the-badge&logo=MySQL&logoColor=white"/> <img src="https://img.shields.io/badge/Express-000000?style=for-the-badge&logo=Express&logoColor=white"/> <img src="https://img.shields.io/badge/Docker-2496ED?style=flat-square&logo=Docker&logoColor=white"/> <img src="https://img.shields.io/badge/Amazon AWS-232F3E?style=flat-square&logo=amazonaws&logoColor=white"/>
 
 ### 4. 프로젝트의 주요 특징
 
 - 개인 프로젝트
 - 검색 엔진 최적화 (SEO)  
-  **Next.js의 서버 사이드 렌더링 (SSR)** 을 활용하여 애플리케이션의 검색 엔진 순위를 향상시켰습니다.
+  - **Next.js의 서버 사이드 렌더링 (SSR)** 을 활용하여 애플리케이션의 검색 엔진 순위를 향상시켰습니다.
 - 유연한 요청 처리
 - **Next.js의 미들웨어**
-  프로젝트에서 Next Auth의 기본 제공 필드 및 로직이 요구 사항을 완벽히 충족시키지 못하자,  
-  자체적인 로그인 API 로직을 구현하기로 결정했습니다.  
-  이 과정에서 Next.js의 미들웨어 기능을 도입하여 사용자 인증 과정을 강화하고, 세밀한 제어를 가능하게 했습니다.
+  - 자체적인 로그인 API 로직을 구현하기로 결정했습니다.  
+    프로젝트에서 Next Auth의 기본 제공 필드 및 로직이 요구 사항을 완벽히 충족시키지 못한다고 판단했기 때문입니다.  
+  - 이 과정에서 Next.js의 미들웨어 기능을 도입하여 사용자 인증 과정을 강화하고, 세밀한 제어를 가능하게 했습니다.
 - 효율적인 폼 관리
   - **React-hook-form** 사용으로 폼이 많은 것이 특징인 프로젝트에서 과도한 리렌더링을 방지하고,  
     유효성 검사 로직 등의 다양한 스테이트를 효율적으로 관리하였습니다.
@@ -80,7 +81,8 @@ pw: hellotest1
   - 다양한 식자재를 등록하는데 편의성을 더하고자
     영수증을 전송하면 AI분석기능인 Naver CLOVA API 및 Naver Search API로
     식자재 명과 금액 카테고리등을 자동으로 제공합니다.
-  - UX개선을 위해 멀티 디바이스에 대응하여 반응형 UI로 설계하였습니다.
+  - **tailwind prefix 활용**하여 UX개선을 위해 멀티 디바이스에 대응하여 반응형 UI로 설계하였습니다.
+  - **next prefers-color-scheme**를 활용하여 사용자 선호 테마로 다크모드 라이트모드 UI 구현하였습니다.
 
 ### 5. 프로젝트의 소개
 
@@ -91,9 +93,24 @@ pw: hellotest1
 ### 6. 프로젝트 기능 소개
 
 - 회원가입 /로그인
-- 유통기한 임박, 최근 산 재료 보여주기
-- 식재료 관리 (보관방법, 금액순, 유통기한 순 보여주기)
-- 식재료 추가시 Naver 검색 api 활용하여 카테고리, 시중상품 명, 이미지 자동입력 기능
-- 영수증 관리
-- 영수증 추가시 사진 업로드하여 자동 분석기능 (수동입력 기능 포함)
-- 영수증에서 식재료 추가 버튼 클릭시 금액, 구매일자 등 다수 필드 자동 입력기능
+
+  <img width="400" alt="회원가입/로그인페이지" src="https://github.com/codingjamee/pruru_front/assets/99540667/7f1b1a34-b629-41ad-9564-4a613081440d">  
+  <img width="370" alt="안내문구" src="https://github.com/codingjamee/pruru_front/assets/99540667/75b3579f-8d1a-4b24-8305-4f17ec06f3d9">
+
+- 유통기한 임박, 최근 산 재료 보여주기  
+- <img width="400" alt="home페이지" src="https://github.com/codingjamee/pruru_front/assets/99540667/7f51fd7d-7416-4417-b3bb-da8be05a7cb7">
+
+- 식재료 관리 (보관방법, 금액순, 유통기한 순 보여주기)  
+  <img width="400" alt="식재료보기" src="https://github.com/codingjamee/pruru_front/assets/99540667/ef09a8ef-e760-40d9-a0eb-98b55cf41fd97">
+
+- 식재료 추가시 Naver 검색 api 활용하여 카테고리, 시중상품 명, 이미지 자동입력 기능  
+  <img width="400" alt="식재료검색모달" src="https://github.com/codingjamee/pruru_front/assets/99540667/263ab16c-c977-489e-8f58-3a1a981eaeee">
+
+- 영수증 관리 (월별보기)  
+   <img width="400" alt="영수증관리" src="https://github.com/codingjamee/pruru_front/assets/99540667/07ab7502-eb5e-4e05-a23e-7adca7ee2bab">  
+
+- 영수증 추가시 사진 업로드하여 자동 분석기능 (수동입력 기능 포함)  
+  <img width="400" alt="영수증자동분석" src="https://github.com/codingjamee/pruru_front/assets/99540667/d9373edc-2040-4489-8158-83afc12e08f2">
+
+- 영수증에서 식재료 추가 버튼 클릭시 금액, 구매일자 등 다수 필드 자동 입력기능  
+  <img width="400" alt="Screenshot 2024-04-16 at 8 14 14 PM" src="https://github.com/codingjamee/pruru_front/assets/99540667/35b4eebb-fdc7-4b06-877a-06ce636679eb">  
