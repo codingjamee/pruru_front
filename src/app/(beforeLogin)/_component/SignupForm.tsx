@@ -104,7 +104,7 @@ const SignupForm = () => {
         }),
       });
 
-      if (response.status === 201) {
+      if (response.ok) {
         mutate(data);
       }
       if (response.status === 401) {
