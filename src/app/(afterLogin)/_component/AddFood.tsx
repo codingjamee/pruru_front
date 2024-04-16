@@ -43,7 +43,7 @@ const AddFood = () => {
       }
     },
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['foods', existFoodId] });
+      queryClient.invalidateQueries({ queryKey: ['foods'] });
       router.push(`/food/${existFoodId}`);
     },
     onError: () => {
