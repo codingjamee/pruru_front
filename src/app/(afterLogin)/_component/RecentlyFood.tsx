@@ -23,6 +23,7 @@ const RecentlyFood = () => {
       }),
     staleTime: 10 * 60 * 1000,
     initialData: queryClient.getQueryData(['foods', storage, sort, direction]),
+    throwOnError: true,
   });
 
   return (

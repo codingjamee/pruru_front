@@ -50,6 +50,7 @@ const AddFood = () => {
       //토스트
       console.log('식재료 업로드 실패...!!');
     },
+    throwOnError: true,
   });
 
   const { register, handleSubmit, watch, setValue, control } = useForm<
@@ -85,6 +86,7 @@ const AddFood = () => {
         searchName || searchFoodName,
       ),
     enabled: searchTrigger,
+    throwOnError: true,
   });
 
   const onClickSearch = () => {

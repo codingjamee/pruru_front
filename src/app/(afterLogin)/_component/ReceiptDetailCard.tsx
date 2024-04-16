@@ -25,11 +25,13 @@ const ReceiptDetailCard = ({ receipt_id }: { receipt_id: string }) => {
     queryKey: ['receipt', 'items', receipt_id],
     queryFn: () => getReceiptDetail(receipt_id),
     staleTime: 10 * 60 * 1000,
+    throwOnError: true,
   });
   const { mutate } = useMutation({
     mutationKey: ['deleteReceipt', receipt_id],
     mutationFn: (receipt_id: string) => deleteReceiptById(receipt_id),
     onSuccess: () => router.push('/receipt'),
+    throwOnError: true,
   });
   const queryClient = useQueryClient();
 

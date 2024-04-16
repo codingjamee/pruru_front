@@ -84,6 +84,7 @@ const SignupForm = () => {
       });
       return router.replace('/home');
     },
+    throwOnError: true,
   });
   const router = useRouter();
 

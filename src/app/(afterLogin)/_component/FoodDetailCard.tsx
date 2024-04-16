@@ -19,6 +19,7 @@ const FoodDetailCard = ({ foodId }: { foodId: string }) => {
     queryKey: ['foods', foodId],
     queryFn: () => getFoodById(foodId),
     staleTime: 10 * 60 * 1000,
+    throwOnError: true,
   });
   const { mutate } = useMutation({
     mutationKey: ['deleteFoodById', foodId],
@@ -27,6 +28,7 @@ const FoodDetailCard = ({ foodId }: { foodId: string }) => {
       queryClient.invalidateQueries({ queryKey: ['foods'] });
       router.push('/food');
     },
+    throwOnError: true,
   });
 
   const foodDetailList = [

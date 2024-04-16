@@ -29,6 +29,7 @@ const AnalyzeReceipt = () => {
     queryKey: ['receipt', 'anaylze'],
     queryFn: () => getAnalyzeReceipt(incodedFile, 'JPEG'),
     enabled: triggerAnalyzeReceipt,
+    throwOnError: true,
   });
   let analyzedReceiptData_2: PurchaseReceiptInfoType | any = [];
   // 영수증 인식 성공이라면 searchList를 만듦

@@ -50,6 +50,7 @@ const EditReceipt = () => {
       //토스트
       console.log('영수증 업로드 실패...!!');
     },
+    throwOnError: true,
   });
   const router = useRouter();
 

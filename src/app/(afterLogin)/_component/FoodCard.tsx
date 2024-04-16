@@ -31,7 +31,7 @@ const FoodCard = ({ children, food, className }: FoodCardType) => {
             alt={image_url}
             width="100"
             height="100"
-            className="h-full"
+            className="h-full rounded-lg"
           />
         ) : (
           <div className="h-full w-full tablet:p-7 desktop:p-7">
