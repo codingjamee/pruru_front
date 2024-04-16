@@ -13,6 +13,12 @@ import {
 import RecentlyFood from '../_component/RecentlyFood';
 import { getFoods } from '@/_utils/getQuery';
 import Foods from '../_component/Foods';
+import { Metadata } from 'next';
+
+export const metadata: Metadata = {
+  title: '홈 / PRURU',
+  description: '유통기한 구매일자별 식재료',
+};
 
 const page = async () => {
   const storage = 'total';

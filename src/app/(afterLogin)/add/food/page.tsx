@@ -1,4 +1,10 @@
+import { Metadata } from 'next';
 import AddFood from '../../_component/AddFood';
+
+export const metadata: Metadata = {
+  title: '식재료 추가 / PRURU',
+  description: '식재료 추가하기',
+};
 
 function page() {
   return (

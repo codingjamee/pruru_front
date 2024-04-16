@@ -2,6 +2,12 @@ import PlusSvg from '@/_assets/PlusSvg';
 import Button from '@/_components/Button';
 import Card from '@/_components/Card';
 import AnalyzeReceipt from '../../_component/AnalyzeReceipt';
+import { Metadata } from 'next';
+
+export const metadata: Metadata = {
+  title: '영수증추가 / PRURU',
+  description: '영수증 추가하기',
+};
 
 const page = () => {
   return (

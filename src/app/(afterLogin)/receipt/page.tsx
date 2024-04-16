@@ -4,6 +4,12 @@ import Card from '@/_components/Card';
 import React from 'react';
 import ReceiptArrowFn from '../_component/ReceiptArrowFn';
 import ReceiptCard from '../_component/ReceiptCard';
+import { Metadata } from 'next';
+
+export const metadata: Metadata = {
+  title: '영수증 페이지 / PRURU',
+  description: '월별 영수증 관리하기',
+};
 
 const page = () => {
   return (

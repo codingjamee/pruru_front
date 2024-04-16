@@ -1,6 +1,12 @@
 import React from 'react';
 import QueryComponent from '../_component/QueryComponent';
 import Foods from '../_component/Foods';
+import { Metadata } from 'next';
+
+export const metadata: Metadata = {
+  title: 'Food / PRURU',
+  description: '식재료 관리',
+};
 
 const page = () => {
   return (
