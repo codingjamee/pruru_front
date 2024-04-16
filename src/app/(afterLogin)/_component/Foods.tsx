@@ -17,7 +17,7 @@ const Foods = () => {
     'expiryDate') as QueryTypes['sort'];
 
   const direction: QueryTypes['direction'] =
-    (params.get('direction') as QueryTypes['direction']) || 'down';
+    (params.get('direction') as QueryTypes['direction']) || 'up';
 
   const targetRef = useRef<HTMLDivElement | null>(null);
   const { data: foodData, fetchNextPage } = useInfiniteQuery<
