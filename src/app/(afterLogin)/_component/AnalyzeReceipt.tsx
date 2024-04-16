@@ -5,14 +5,9 @@ import {
   Item,
   ModifiedAnalyzeReceiptType,
   ResultData,
-  CombinedResult,
 } from '@/_types/ReturnTypes';
 import { getAnalyzeReceipt, getSearchCategory } from '@/_utils/getQuery';
-import {
-  useQueries,
-  useQuery,
-  useQueryClient,
-} from '@tanstack/react-query';
+import { useQueries, useQuery, useQueryClient } from '@tanstack/react-query';
 import { useRouter } from 'next/navigation';
 import { ChangeEvent, useEffect, useRef, useState } from 'react';
 import Resizer from 'react-image-file-resizer';
@@ -97,10 +92,7 @@ const AnalyzeReceipt = () => {
   }, [analyzeStatus]);
 
   //네이버검색 요청 쿼리 - 영수증 인식성공시 트리거
-  const { data: searchResults, searchSuccess } = useQueries<
-    ResultData[],
-    CombinedResult
-  >({
+  const { data: searchResults, searchSuccess } = useQueries({
     queries: searchLists?.map((search, idx) => ({
       queryKey: ['search', 'category', idx],
       queryFn: () =>
