@@ -22,7 +22,9 @@ const SSmallFoodCard = ({ food, className }: FoodCardType) => {
       className={`flex h-[90px] w-[100px] flex-shrink-0 cursor-pointer flex-col gap-[3px] rounded-lg border-2 border-solid  border-color-default-text shadow-custom ${className}`}>
       <div className="relative flex h-full w-full flex-col">
         <div className="absolute right-0 m-1 flex h-[22px] w-[40px] items-center justify-center rounded-3xl bg-color-secondary-100  text-color-bg-sub mobile:text-[10px]">
-          D-{remainingDay}
+          {remainingDay && remainingDay < 0
+            ? `${Math.abs(remainingDay)}일 경과`
+            : `D-${remainingDay}`}
         </div>
         {image_url ? (
           <Image src={image_url} alt={image_url} className="h-full" />

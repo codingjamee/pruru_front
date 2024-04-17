@@ -47,7 +47,6 @@ const EditReceipt = () => {
       router.push(`/receipt?month=${editMonth}`);
     },
     onError: () => {
-      //토스트
       console.log('영수증 업로드 실패...!!');
     },
     throwOnError: true,
