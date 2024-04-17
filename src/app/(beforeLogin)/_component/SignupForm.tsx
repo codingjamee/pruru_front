@@ -84,7 +84,6 @@ const SignupForm = () => {
       });
       return router.replace('/home');
     },
-    throwOnError: true,
   });
   const router = useRouter();
 
@@ -108,12 +107,11 @@ const SignupForm = () => {
       if (response.ok) {
         mutate(data);
       }
-      if (response.status === 401) {
+      if (response.message === '이메일 혹은 비밀번호가 일치하지 않습니다!') {
         setToastShow(true);
         setError(response.message || '');
       }
     } catch (err) {
-      //추후 toast로 설정
       setToastShow(true);
       setError(err as string);
       console.error(err);

@@ -60,14 +60,12 @@ const LoginForm = () => {
       setToastShow(true);
       setError('이메일 혹은 비밀번호가 일치하지 않습니다.');
     },
-    throwOnError: true,
   });
 
   const onSubmit: SubmitHandler<LoginType> = async (data) => {
     try {
       mutate(data);
     } catch (err) {
-      //추후 toast로 설정
       console.error(err);
     }
     reset();
