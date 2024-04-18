@@ -17,6 +17,11 @@ export type FoodPropType = {
   expiry_date?: Date;
   registered?: boolean;
   purchase_location?: string;
+  storage_info?: {
+    id: number;
+    remaining_amount: number;
+    remaining_quantity: number;
+  };
 };
 
 export type FoodCardType = {
