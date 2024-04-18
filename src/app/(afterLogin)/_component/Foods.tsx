@@ -57,8 +57,8 @@ const Foods = () => {
   return (
     <>
       {foodData &&
-        foodData.pages.map((page: FoodReturnType) =>
-          page.foods.map((food: FoodPropType) => (
+        foodData.pages?.map((page: FoodReturnType) =>
+          page?.foods?.map((food: FoodPropType) => (
             <div key={food.id}>
               <FoodCard className="mobile:hidden" food={food} />
               <SmallFoodCard
