@@ -28,7 +28,8 @@ export interface ReceiptArrType {
 
 export interface ReceiptsReturnType {
   receipts: ReceiptArrType[];
-  nextCursor: string;
+  lastPage?: number;
+  page?: number;
 }
 
 export interface ReceiptPostType {
