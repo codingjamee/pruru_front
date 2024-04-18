@@ -66,7 +66,7 @@ const Foods = () => {
 
   return (
     <>
-      {foodData &&
+      {foodData ? (
         foodData.pages?.map((page: FoodReturnType) =>
           page?.foods?.map((food: FoodPropType) => (
             <div key={food.id}>
@@ -77,7 +77,10 @@ const Foods = () => {
               />
             </div>
           )),
-        )}
+        )
+      ) : (
+        <div>식재료를 등록해주세요</div>
+      )}
       <div ref={targetRef} />
     </>
   );
