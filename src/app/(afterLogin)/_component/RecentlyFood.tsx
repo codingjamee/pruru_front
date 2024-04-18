@@ -13,7 +13,11 @@ const RecentlyFood = () => {
   const direction = 'up';
   const targetRef = useRef<HTMLDivElement | null>(null);
 
-  const { data: foodData, fetchNextPage } = useInfiniteQuery<
+  const {
+    data: foodData,
+    fetchNextPage,
+    isFetching,
+  } = useInfiniteQuery<
     FoodReturnType,
     unknown,
     InfiniteData<FoodReturnType>,
@@ -21,7 +25,7 @@ const RecentlyFood = () => {
     unknown
   >({
     queryKey: ['foods', storage, sort, direction],
-    queryFn: ({ pageParam }) =>
+    queryFn: ({ pageParam = 0 }) =>
       getFoods({
         storage,
         sort,
@@ -30,7 +34,11 @@ const RecentlyFood = () => {
       }),
     initialPageParam: 1,
     getNextPageParam: (data) => {
-      return data?.nextCursor;
+      if (data.lastPage && data?.page && data?.page < data.lastPage) {
+        return data?.page + 1;
+      } else {
+        return null;
+      }
     },
     staleTime: 10 * 60 * 1000,
     throwOnError: true,
@@ -40,7 +48,9 @@ const RecentlyFood = () => {
     { isIntersecting },
   ]) => {
     if (!isIntersecting) return;
-    await fetchNextPage();
+    if (isIntersecting && !isFetching && foodData) {
+      await fetchNextPage();
+    }
   };
 
   useIntersectionObserver({
