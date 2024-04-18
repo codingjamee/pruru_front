@@ -76,6 +76,6 @@ export const sortText: QueryTextMap = {
 };
 
 export const directionText: QueryTextMap = {
-  down: '내림차순',
   up: '오름차순',
+  down: '내림차순',
 };
