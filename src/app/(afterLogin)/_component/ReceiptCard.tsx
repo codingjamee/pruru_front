@@ -13,7 +13,11 @@ const ReceiptCard = () => {
   const router = useRouter();
   const { yearMonth } = useYearMonthCtx();
   const targetRef = useRef<HTMLDivElement | null>(null);
-  const { data: receiptData, fetchNextPage } = useInfiniteQuery<
+  const {
+    data: receiptData,
+    fetchNextPage,
+    isFetching,
+  } = useInfiniteQuery<
     ReceiptsReturnType,
     unknown,
     InfiniteData<ReceiptsReturnType>,
@@ -21,14 +25,16 @@ const ReceiptCard = () => {
     unknown
   >({
     queryKey: ['receipt', 'monthly', yearMonth],
-    queryFn: ({ pageParam }) =>
+    queryFn: ({ pageParam = 0 }) =>
       getReceiptsByMonth({
         pageParam,
         YM: yearMonth || dayjs().format('YY.MM'),
       }),
     initialPageParam: 1,
     getNextPageParam: (data) => {
-      return data.nextCursor;
+      if (data.lastPage && data?.page && data?.page < data.lastPage) {
+        return data?.page + 1;
+      }
     },
     staleTime: 10 * 60 * 1000,
   });
@@ -37,7 +43,9 @@ const ReceiptCard = () => {
     { isIntersecting },
   ]) => {
     if (!isIntersecting) return;
-    await fetchNextPage();
+    if (isIntersecting && !isFetching && receiptData) {
+      await fetchNextPage();
+    }
   };
 
   useIntersectionObserver({
