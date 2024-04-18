@@ -28,6 +28,8 @@ export type FoodCardType = {
 export type FoodReturnType = {
   foods: FoodPropType[];
   nextCursor: string;
+  lastPage?: number;
+  page?: number;
 };
 
 export interface FoodMutateType {
