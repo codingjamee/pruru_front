@@ -1,18 +1,25 @@
 'use client';
-import { FoodPropType } from '@/_types/FoodTypes';
-import { useQuery, useQueryClient } from '@tanstack/react-query';
-import React from 'react';
+import { FoodPropType, FoodReturnType } from '@/_types/FoodTypes';
+import { InfiniteData, useInfiniteQuery } from '@tanstack/react-query';
+import React, { useRef } from 'react';
 import FoodCard from './FoodCard';
 import SmallFoodCard from './SmallFoodCard';
 import { getFoods } from '@/_utils/getQuery';
+import useIntersectionObserver from '../_hooks/useIntersectionObserver';
 
 const RecentlyFood = () => {
-  const queryClient = useQueryClient();
   const storage = 'total';
   const sort = 'purchaseDate';
   const direction = 'up';
+  const targetRef = useRef<HTMLDivElement | null>(null);
 
-  const { data: recentFood, isSuccess } = useQuery({
+  const { data: foodData, fetchNextPage } = useInfiniteQuery<
+    FoodReturnType,
+    unknown,
+    InfiniteData<FoodReturnType>,
+    [_1: string, _2: string, _3: string, _4: string],
+    unknown
+  >({
     queryKey: ['foods', storage, sort, direction],
     queryFn: ({ pageParam }) =>
       getFoods({
@@ -21,24 +28,40 @@ const RecentlyFood = () => {
         direction,
         pageParam,
       }),
+    initialPageParam: 1,
+    getNextPageParam: (data) => {
+      return data?.nextCursor;
+    },
     staleTime: 10 * 60 * 1000,
-    initialData: queryClient.getQueryData(['foods', storage, sort, direction]),
     throwOnError: true,
+  });
+
+  const onIntersect: IntersectionObserverCallback = async ([
+    { isIntersecting },
+  ]) => {
+    if (!isIntersecting) return;
+    await fetchNextPage();
+  };
+
+  useIntersectionObserver({
+    target: targetRef.current,
+    onIntersect: onIntersect,
   });
 
   return (
     <>
-      {isSuccess &&
-        recentFood &&
-        recentFood.foods.map((food: FoodPropType) => (
-          <React.Fragment key={food.id}>
-            <FoodCard className="mobile:hidden" food={food} />
-            <SmallFoodCard
-              className="tablet:hidden desktop:hidden"
-              food={food}
-            />
-          </React.Fragment>
-        ))}
+      {foodData &&
+        foodData.pages?.map((page: FoodReturnType) =>
+          page?.foods?.map((food: FoodPropType) => (
+            <React.Fragment key={food.id}>
+              <FoodCard className="mobile:hidden" food={food} />
+              <SmallFoodCard
+                className="tablet:hidden desktop:hidden"
+                food={food}
+              />
+            </React.Fragment>
+          )),
+        )}
     </>
   );
 };
