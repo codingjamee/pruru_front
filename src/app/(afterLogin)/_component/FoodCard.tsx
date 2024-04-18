@@ -6,7 +6,7 @@ import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 
 const FoodCard = ({ children, food, className }: FoodCardType) => {
-  const { id, image_url, name, purchase_date, amount, unit, expiry_date } =
+  const { id, image_url, name, purchase_date, storage_info, expiry_date } =
     food;
   const remainingDay = expiry_date && remainedTime(expiry_date);
   const router = useRouter();
@@ -53,8 +53,7 @@ const FoodCard = ({ children, food, className }: FoodCardType) => {
             구매
           </div>
           <div className="truncate mobile:hidden">
-            {amount}
-            {unit}
+            {storage_info && storage_info.remaining_amount}
           </div>
         </div>
       </div>
