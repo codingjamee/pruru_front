@@ -21,7 +21,7 @@ const page = () => {
           <QueryComponent query="direction" />
         </div>
       </div>
-      <div className="flex flex-row flex-wrap items-center gap-[10px]">
+      <div className="flex flex-row flex-wrap items-center justify-center gap-[10px]">
         <Foods />
       </div>
     </div>
