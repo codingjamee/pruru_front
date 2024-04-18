@@ -64,14 +64,18 @@ const page = async () => {
 
         <div className="my-10 flex justify-between text-size-font-card-title">
           <div>유통기한 임박</div>
-          <Link href="/food?storage=total&sort=expiryDate">더보기</Link>
+          <Link href="/food?storage=total&sort=expiryDate&direction=up">
+            더보기
+          </Link>
         </div>
         <CardSliderWrapper>
           <Foods />
         </CardSliderWrapper>
         <div className="my-10 flex justify-between text-size-font-card-title">
           <div>최근 산 재료</div>
-          <Link href="/food?storage=total&sort=purchaseDate">더보기</Link>
+          <Link href="/food?storage=total&sort=purchaseDate&direction=up">
+            더보기
+          </Link>
         </div>
         <CardSliderWrapper>
           <RecentlyFood />
