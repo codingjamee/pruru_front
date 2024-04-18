@@ -21,8 +21,7 @@ export const getFoods = async ({
   if (storage) params.append('storage', storage);
   if (sort) params.append('sort', sort);
   if (direction) params.append('direction', direction);
-  if (pageParam) params.append('cursor', pageParam.toString());
-
+  if (pageParam) params.append('page', pageParam.toString());
   const res = await api<FoodReturnType & { ok: boolean }>(
     `/food?${params.toString()}`,
     {
