@@ -19,8 +19,12 @@ dayjs.extend(customParseFormat);
 
 const EditReceipt = () => {
   const queryClient = useQueryClient();
+  const modifiedData =
+    typeof window !== 'undefined'
+      ? localStorage.getItem('allSearchResults')
+      : '';
   const foundReceiptData: PurchaseReceiptInfoType | undefined =
-    queryClient.getQueryData(['allSearchResults']);
+    modifiedData && JSON.parse(modifiedData);
   const [length, setLength] = useState<number | undefined>(
     (foundReceiptData && foundReceiptData.receipt_items.length) || 1,
   );
@@ -44,6 +48,7 @@ const EditReceipt = () => {
       queryClient.invalidateQueries({
         queryKey: ['receipt', 'monthly', editMonth],
       });
+      localStorage.removeItem('allSearchResults');
       router.push(`/receipt?month=${editMonth}`);
     },
     onError: () => {

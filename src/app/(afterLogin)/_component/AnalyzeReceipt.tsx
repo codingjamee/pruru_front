@@ -101,6 +101,7 @@ const AnalyzeReceipt = () => {
         getSearchCategory(1, ['search', 'category', idx.toString()], search),
       enabled: triggerSearch,
       staleTime: 60 * 60 * 1000,
+      gcTime: 60 * 60 * 1000,
     })),
     combine: (results: ResultData[]) => {
       return {
@@ -150,7 +151,9 @@ const AnalyzeReceipt = () => {
             },
           ),
       };
-      queryClient.setQueryData(['allSearchResults'], modifiedData);
+      typeof window !== 'undefined'
+        ? localStorage.setItem('allSearchResults', JSON.stringify(modifiedData))
+        : '';
       router.push('/add/receipt/edit');
     }
   }, [searchSuccess]);
