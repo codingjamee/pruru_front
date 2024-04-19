@@ -9,26 +9,27 @@ import {
 import { getAnalyzeReceipt, getSearchCategory } from '@/_utils/getQuery';
 import { useQueries, useQuery, useQueryClient } from '@tanstack/react-query';
 import { useRouter } from 'next/navigation';
-import { ChangeEvent, useEffect, useRef, useState } from 'react';
-import Resizer from 'react-image-file-resizer';
+import { useEffect, useRef, useState } from 'react';
 import {
   PurchaseReceiptInfoType,
   ReceiptDetailType,
 } from '@/_types/ReceiptTypes';
 import { reg_exceptgiho } from '@/_utils/regExp';
+import useFileUploader from '../_hooks/useFileUploader';
 
 const AnalyzeReceipt = () => {
   const fileInput = useRef<HTMLInputElement>(null);
-  const [incodedFile, setIncodedFile] = useState<string>('');
   const [triggerAnalyzeReceipt, setTriggerAnalyzeReceipt] = useState(false);
   const [triggerSearch, setTriggerSearch] = useState(false);
   const [searchLists, setSearchLists] = useState([]);
   const queryClient = useQueryClient();
   const router = useRouter();
+  const { encodedFile, setEncodedFile, onChangeFile } = useFileUploader();
   const { status: analyzeStatus, data: analyzedReceiptData } = useQuery({
     queryKey: ['receipt', 'anaylze'],
-    queryFn: () => getAnalyzeReceipt(incodedFile, 'JPEG'),
+    queryFn: () => getAnalyzeReceipt(encodedFile, 'JPEG'),
     enabled: triggerAnalyzeReceipt,
+    gcTime: 60 * 60 * 1000,
     throwOnError: true,
   });
   let analyzedReceiptData_2: PurchaseReceiptInfoType | any = [];
@@ -158,30 +159,11 @@ const AnalyzeReceipt = () => {
     fileInput.current!.click();
   };
 
-  const imgUpload = (file: File): Promise<string> => {
-    return new Promise<string>((resolve) => {
-      Resizer.imageFileResizer(file, 500, 500, 'JPEG', 100, 0, (image) => {
-        resolve(image as string | PromiseLike<string>);
-      });
-    });
-  };
-
-  const onChangeFile = (e: ChangeEvent<HTMLInputElement>) => {
-    if (e.target.files) {
-      imgUpload(e.target.files[0])
-        .then((result) => setIncodedFile(result))
-        .catch((error) => {
-          console.error('Image upload failed:', error);
-          e.target.value = '';
-        });
-    }
-  };
-
   return (
     <>
       <div className="flex h-full flex-grow flex-col gap-4 rounded-lg border p-[12px]">
         <input type="file" onChange={onChangeFile} ref={fileInput} hidden />
-        {!incodedFile ? (
+        {!encodedFile ? (
           <>
             <div className="p-[8px] text-size-font-card-title">영수증 선택</div>
             <Button
@@ -196,14 +178,14 @@ const AnalyzeReceipt = () => {
         ) : (
           <>
             <div
-              onClick={() => setIncodedFile('')}
+              onClick={() => setEncodedFile('')}
               className="cursor-pointer p-[8px] text-size-font-card-title">
               눌러서 취소하기
             </div>
             <div
               className="flex h-[50%] w-full flex-grow cursor-pointer flex-col items-center justify-center rounded-lg"
-              onClick={() => setIncodedFile('')}>
-              <img src={incodedFile} alt="incoded receipt" />
+              onClick={() => setEncodedFile('')}>
+              <img src={encodedFile} alt="encoded receipt" />
             </div>
           </>
         )}
