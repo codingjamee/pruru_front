@@ -109,7 +109,7 @@ const ReceiptDetailCard = ({ receipt_id }: { receipt_id: string }) => {
           <Button
             variant="primary"
             className="rounded-lg"
-            aria-aria-label="receipt-delete"
+            aria-label="receipt-delete"
             onClick={() => mutate(receipt_id)}>
             삭제하기
           </Button>
