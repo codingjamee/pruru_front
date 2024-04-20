@@ -223,7 +223,8 @@ const EditReceipt = () => {
           <Button
             type="submit"
             variant="outlined"
-            className="w-full rounded-lg">
+            className="w-full rounded-lg"
+            aria-label="add-receipt">
             추가하기
           </Button>
         </form>

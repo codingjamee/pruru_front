@@ -23,6 +23,8 @@
   --color-card-bg: #ffffff;
   --color-card-border: #ffffff;
   --color-card-text: #000000;
+  --color-outlined-text: #000000;
+  --color-inbutton-outlined-text: #000000;
   --color-gray: #939393;
   --color-disabled: #939393;
 }
@@ -43,10 +45,12 @@
     --color-default-text: #fff5d2;
     --color-main-logo: #fff5d2;
     --color-sub-logo: #8da69d;
-    --color-text-button: #fff5d2;
+    --color-text-button: #000000;
     --color-card-bg: #fff5d2;
     --color-card-border: #fff5d2;
-    --color-card-text: #fff5d2;
+    --color-card-text: #000000;
+    --color-outlined-text: #fff5d2;
+    --color-inbutton-outlined-text: #000000;
     --color-gray: #939393;
     --color-disabled: #939393;
     --size-font-card-title: 20px;

@@ -23,7 +23,9 @@ const page = () => {
           <div className="p-[8px] text-size-font-card-title">직접 입력하기</div>
           <Button
             href="/add/receipt/edit"
-            className="flex h-[50%] w-full flex-grow flex-col items-center justify-center rounded-lg hover:bg-color-primary-m">
+            variant="primary"
+            className="flex h-[50%] w-full flex-grow flex-col items-center justify-center rounded-lg hover:bg-color-primary-m"
+            aria-label="add-receipt">
             <PlusSvg className="flex h-[44px] w-[44px] items-center justify-center" />
           </Button>
         </div>

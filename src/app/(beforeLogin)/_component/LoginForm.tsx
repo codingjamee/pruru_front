@@ -53,6 +53,7 @@ const LoginForm = () => {
         name: userData.username,
         image: userData.image,
       });
+      console.log(queryClient);
       return router.replace('/home');
     },
     onError: (err) => {
@@ -106,6 +107,7 @@ const LoginForm = () => {
             type="submit"
             variant="primary"
             className="btn-defaultsize"
+            aria-label="login"
             disabled={isSubmitting || !isValid}>
             로그인
           </Button>
@@ -117,7 +119,8 @@ const LoginForm = () => {
             <p>아직 회원이 아니신가요?</p>
             <Button
               variant="outlined"
-              className="btn-defaultsize w-[200px]"
+              aria-label="go-to-sign-up"
+              className="btn-defaultsize text-color-inbutton-outlined-text w-[200px]"
               onClick={() => {
                 router.push('/welcome/join');
               }}>

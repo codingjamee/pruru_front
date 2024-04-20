@@ -22,6 +22,7 @@ export default function Error({
         <Button
           variant="primary"
           className="rounded-lg"
+          aria-label="try-again"
           onClick={() => reset()}>
           다시 시도하기
         </Button>

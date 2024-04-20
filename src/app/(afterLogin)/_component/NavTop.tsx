@@ -55,6 +55,7 @@ const NavTop = () => {
         <div key={nav.path} className={`${nav.style} relative`}>
           <Button
             href={nav.path}
+            aria-label="nav-button"
             className={`${isFocused(nav.focusKey)} nav-button hover:nav-hover`}>
             <li>{nav.name}</li>
           </Button>

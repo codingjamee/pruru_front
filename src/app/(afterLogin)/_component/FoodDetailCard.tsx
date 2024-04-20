@@ -72,7 +72,7 @@ const FoodDetailCard = ({ foodId }: { foodId: string }) => {
             <div className="w-[213px] rounded-lg border border-solid border-color-default-text px-[30px] py-[7px] text-center mobile:w-full">
               {(foodData && foodData?.category) || '카테고리'}
             </div>
-            <div className="flex h-[40px] w-[110px] items-center justify-center rounded-lg bg-color-primary mobile:w-full">
+            <div className="flex h-[40px] w-[110px] items-center justify-center rounded-lg bg-color-primary text-color-card-text mobile:w-full">
               {(foodData &&
                 foodData?.method !== undefined &&
                 storageText[foodData?.method]) ||
@@ -108,13 +108,15 @@ const FoodDetailCard = ({ foodId }: { foodId: string }) => {
             <Button
               onClick={() => router.push(`${foodId}/edit`)}
               variant="primary"
-              className="flex-1 rounded-lg mobile:w-full">
+              className="flex-1 rounded-lg mobile:w-full"
+              aria-label="edit-food">
               수정하기
             </Button>
             <Button
               onClick={() => mutate(foodId)}
               variant="primary"
-              className="flex-1 rounded-lg mobile:w-full">
+              className="flex-1 rounded-lg mobile:w-full"
+              aria-label="delete-food">
               삭제하기
             </Button>
           </div>

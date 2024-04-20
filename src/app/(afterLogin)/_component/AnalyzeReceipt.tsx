@@ -171,6 +171,7 @@ const AnalyzeReceipt = () => {
             <div className="p-[8px] text-size-font-card-title">영수증 선택</div>
             <Button
               onClick={onClickButton}
+              variant="primary"
               className="flex h-[50%] w-full flex-grow flex-col items-center justify-center rounded-lg hover:bg-color-primary-m">
               <PlusSvg
                 cyAttribute="upload-receipt"

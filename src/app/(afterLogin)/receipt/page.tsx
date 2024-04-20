@@ -24,7 +24,8 @@ const page = () => {
         </div>
         <Button
           href="/add/receipt"
-          className="flex h-[50%] w-full flex-col items-center justify-center rounded-lg hover:bg-color-primary-m">
+          className="flex h-[50%] w-full flex-col items-center justify-center rounded-lg hover:bg-color-primary-m"
+          aria-label="add-receipt">
           <PlusSvg className="flex h-[44px] w-[44px] items-center justify-center" />
         </Button>
       </Card>

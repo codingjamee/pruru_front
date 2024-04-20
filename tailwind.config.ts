@@ -24,6 +24,8 @@ const config: Config = {
         'color-disabled': 'var(--color-disabled)',
         'color-card-bg': 'var(--color-card-bg)',
         'color-card-text': 'var(--color-card-text)',
+        'color-outlined-text': 'var(--color-outlined-text)',
+        'color-inbutton-outlined-text': 'var(--color-inbutton-outlined-text)',
         'color-card-border': 'var(--color-card-border)',
         'color-bg-main': 'var(--color-background-main)',
         'color-bg-sub': 'var(--color-background-sub)',

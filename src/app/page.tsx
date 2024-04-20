@@ -24,13 +24,15 @@ export default async function Home() {
             <Button
               variant="primary"
               className="btn-defaultsize"
-              href="/welcome/login">
+              href="/welcome/login"
+              aria-label="login">
               로그인
             </Button>
             <Button
               className="btn-defaultsize"
               variant="primary"
-              href="/welcome/join">
+              href="/welcome/join"
+              aria-label="sign-up">
               회원가입
             </Button>
           </div>

@@ -58,7 +58,7 @@ const ReceiptDetailCard = ({ receipt_id }: { receipt_id: string }) => {
             <div className="w-[213px] rounded-lg border border-solid border-color-default-text px-[30px] py-[7px] text-center mobile:w-full">
               {dayjs(purchaseReceiptInfo.purchase_date).format('YY.MM.DD')} 구매
             </div>
-            <div className="flex h-[40px] w-[110px] items-center justify-center rounded-lg bg-color-primary mobile:w-full">
+            <div className="flex h-[40px] items-center justify-center rounded-lg bg-color-primary px-3 text-color-card-text mobile:w-full">
               {purchaseReceiptInfo.purchase_location}
             </div>
           </div>
@@ -108,7 +108,8 @@ const ReceiptDetailCard = ({ receipt_id }: { receipt_id: string }) => {
           </div>
           <Button
             variant="primary"
-            className="rounded-lg "
+            className="rounded-lg"
+            aria-aria-label="receipt-delete"
             onClick={() => mutate(receipt_id)}>
             삭제하기
           </Button>

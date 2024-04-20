@@ -4,7 +4,7 @@
 
 @layer components {
   .input {
-    @apply h-[40px] w-full border-color-card-text bg-transparent pb-1 text-color-card-text focus:outline-none;
+    @apply text-color-outlined-text h-[40px] w-full border-color-card-text bg-transparent pb-1 focus:outline-none;
   }
 
   .input[type='*'] {
@@ -18,7 +18,10 @@
     @apply rounded-lg border bg-transparent;
   }
   .input-underline {
-    @apply border-b bg-transparent;
+    @apply border-color-outlined-text border-b bg-transparent;
+  }
+  .input-underline::placeholder {
+    @apply text-color-outlined-text;
   }
   .input-passed {
     @apply border-b border-color-primary;

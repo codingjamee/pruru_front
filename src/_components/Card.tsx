@@ -13,7 +13,7 @@ const Card = ({
   className?: string;
   onClick?: (e?: any) => void;
 }) => {
-  const getClassName = (variant: CardVariant) => `card-${variant}`;
+  const getClassName = (variant: CardVariant) => `${variant}`;
   return (
     <article className="center-alignment" onClick={onClick}>
       <div className={`card ${getClassName(variant)} ${className} m-1`}>

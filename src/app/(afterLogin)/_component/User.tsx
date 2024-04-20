@@ -38,7 +38,8 @@ const User = () => {
         <Button
           onClick={onClickLogout}
           variant="primary"
-          className="rounded-lg">
+          className="rounded-lg"
+          aria-label="logout">
           로그아웃하기
         </Button>
       </div>

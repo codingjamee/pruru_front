@@ -22,7 +22,7 @@
     @apply cursor-not-allowed border-color-disabled bg-color-disabled;
   }
   .outlined {
-    @apply border border-color-card-text bg-transparent text-color-card-text;
+    @apply text-color-outlined-text border border-color-card-border bg-transparent;
   }
   .outlined-disabled {
     @apply cursor-not-allowed border-color-disabled;

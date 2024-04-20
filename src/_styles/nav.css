@@ -7,7 +7,7 @@
     @apply desktop:nav-desktop tablet:nav-tablet sticky top-0 z-[99] box-border flex h-[61px] w-full flex-col items-center justify-between bg-color-bg-main px-12  drop-shadow-lg;
   }
   button.nav-button {
-    @apply h-[52px] w-[91px] rounded-tl-[7px];
+    @apply h-[52px] w-[91px] rounded-tl-[7px] text-color-default-text;
   }
   .nav-desktop {
     @apply top-[-38px] h-[144px] pt-[38px];
@@ -31,14 +31,14 @@
   button.nav-button:hover,
   a.nav-hover,
   a.nav-hover:hover {
-    @apply rounded-tl-2xl bg-color-primary;
+    @apply rounded-tl-2xl bg-color-primary text-color-text-button;
   }
 
   .mobile-nav {
     @apply fixed bottom-0 flex h-[53px] w-full justify-center bg-color-primary tablet:hidden desktop:hidden;
   }
   .link-style {
-    @apply flex h-full w-full items-center justify-center text-center hover:bg-color-primary-m focus:bg-color-primary-m;
+    @apply flex h-full w-full items-center justify-center text-center text-color-card-text hover:bg-color-primary-m focus:bg-color-primary-m;
   }
   .sub-nav {
     @apply absolute hidden h-[123px] w-[91px] flex-col items-center justify-evenly rounded-b-2xl bg-color-primary;

@@ -82,6 +82,7 @@ const SignupForm = () => {
         name: userData.username,
         image: userData.image,
       });
+      console.log(queryClient);
       return router.replace('/home');
     },
   });
@@ -177,6 +178,7 @@ const SignupForm = () => {
             type="submit"
             variant="primary"
             className="btn-defaultsize"
+            aria-label="sign-up"
             disabled={isSubmitting || !isValid}>
             회원가입
           </Button>
@@ -189,6 +191,7 @@ const SignupForm = () => {
             <Button
               variant="outlined"
               className="btn-defaultsize w-[200px]"
+              aria-label="go-to-login"
               onClick={() => {
                 router.push('/welcome/login');
               }}>

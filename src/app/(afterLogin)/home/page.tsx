@@ -45,7 +45,8 @@ const page = async () => {
               <div className="text-size-font-card-title">식재료 추가하기</div>
               <Button
                 href="/add/food"
-                className="flex h-[50%] w-full flex-col items-center justify-center rounded-lg hover:bg-color-primary-m">
+                className="flex h-[50%] w-full flex-col items-center justify-center rounded-lg hover:bg-color-primary-m"
+                aria-label="add-food">
                 <PlusSvg className="flex h-[44px] w-[44px] items-center justify-center" />
               </Button>
             </div>
@@ -55,7 +56,8 @@ const page = async () => {
               <div className="text-size-font-card-title">영수증 추가하기</div>
               <Button
                 href="/add/receipt"
-                className="flex h-[50%] w-full flex-col items-center justify-center rounded-lg hover:bg-color-primary-m">
+                className="flex h-[50%] w-full flex-col items-center justify-center rounded-lg hover:bg-color-primary-m"
+                aria-label="add-receipt">
                 <PlusSvg className="h-[44px] w-[44px]" />
               </Button>
             </div>
@@ -64,7 +66,9 @@ const page = async () => {
 
         <div className="my-10 flex justify-between text-size-font-card-title">
           <div>유통기한 임박</div>
-          <Link href="/food?storage=total&sort=expiryDate&direction=up">
+          <Link
+            href="/food?storage=total&sort=expiryDate&direction=up"
+            aria-label="more-expiry-food">
             더보기
           </Link>
         </div>
@@ -73,7 +77,9 @@ const page = async () => {
         </CardSliderWrapper>
         <div className="my-10 flex justify-between text-size-font-card-title">
           <div>최근 산 재료</div>
-          <Link href="/food?storage=total&sort=purchaseDate&direction=up">
+          <Link
+            href="/food?storage=total&sort=purchaseDate&direction=up"
+            aria-label="more-recently-food">
             더보기
           </Link>
         </div>

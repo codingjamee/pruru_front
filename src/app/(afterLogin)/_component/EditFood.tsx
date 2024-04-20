@@ -273,7 +273,8 @@ const EditFood = () => {
           <Button
             type="submit"
             variant="primary"
-            className="rounded-lg mobile:w-full">
+            className="rounded-lg mobile:w-full"
+            aria-label="edit-food">
             수정완료
           </Button>
         </form>

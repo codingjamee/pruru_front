@@ -162,7 +162,8 @@ const AddFood = () => {
             <Button
               href="/receipt"
               variant="primary"
-              className="rounded-lg mobile:w-full">
+              className="rounded-lg mobile:w-full"
+              aria-label="getInfo-receipt">
               영수증에서 가져오기
             </Button>
           </div>
@@ -278,7 +279,8 @@ const AddFood = () => {
           <Button
             type="submit"
             variant="primary"
-            className="rounded-lg mobile:w-full">
+            className="rounded-lg mobile:w-full"
+            aria-label="add-food">
             추가하기
           </Button>
         </form>
