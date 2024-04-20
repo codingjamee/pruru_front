@@ -41,7 +41,7 @@ const page = async () => {
           customClass="my-[63px] h-[168px] tablet:h-[225px] desktop:h-[275px]"
           arrowHoverStyle="bg-color-primary-m">
           <CarouselItem>
-            <div className="m-[18px] flex h-full flex-col gap-4 tablet:m-[30px] desktop:m-[40px]">
+            <div className="m-[18px] flex h-full flex-col gap-4 text-color-card-text tablet:m-[30px] desktop:m-[40px]">
               <div className="text-size-font-card-title">식재료 추가하기</div>
               <Button
                 href="/add/food"
@@ -52,7 +52,7 @@ const page = async () => {
             </div>
           </CarouselItem>
           <CarouselItem>
-            <div className="m-[18px] flex h-full flex-col gap-4 tablet:m-[30px] desktop:m-[40px]">
+            <div className="m-[18px] flex h-full flex-col gap-4 text-color-card-text tablet:m-[30px] desktop:m-[40px] ">
               <div className="text-size-font-card-title">영수증 추가하기</div>
               <Button
                 href="/add/receipt"

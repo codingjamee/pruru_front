@@ -146,9 +146,6 @@ input::placeholder {
     @apply flex h-full items-center justify-center;
   }
 
-  .card.card-primary {
-    @apply border-none bg-color-primary;
-  }
   .primary {
     @apply bg-color-primary;
   }

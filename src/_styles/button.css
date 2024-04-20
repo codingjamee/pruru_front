@@ -12,6 +12,9 @@
   .card {
     @apply m-2 w-1/2 flex-col gap-9 rounded-lg border border-color-card-border p-2 py-8 text-color-card-text shadow-2xl dark:shadow-custom;
   }
+  .card.card-primary {
+    @apply border-none bg-color-primary;
+  }
   .primary {
     @apply bg-color-primary;
   }
@@ -24,6 +27,7 @@
   .outlined {
     @apply text-color-outlined-text border border-color-card-border bg-transparent;
   }
+
   .outlined-disabled {
     @apply cursor-not-allowed border-color-disabled;
   }
