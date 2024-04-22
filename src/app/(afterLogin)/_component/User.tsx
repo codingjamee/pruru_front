@@ -1,13 +1,20 @@
 'use client';
 import Button from '@/_components/Button';
 import Card from '@/_components/Card';
+import { UserSignupType } from '@/_types/CommonTypes';
 import { api } from '@/_utils/createCustomFetch';
-import { useQueryClient } from '@tanstack/react-query';
+import { getUserInfo } from '@/_utils/getQuery';
+import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { useRouter } from 'next/navigation';
 
 const User = () => {
   const router = useRouter();
   const queryClient = useQueryClient();
+  const { data: user } = useQuery<UserSignupType, any, UserSignupType, any>({
+    queryKey: ['user'],
+    queryFn: () => getUserInfo(),
+  });
+
   const onClickLogout = async () => {
     queryClient.invalidateQueries({
       queryKey: ['receipt'],
@@ -21,12 +28,10 @@ const User = () => {
     queryClient.invalidateQueries({
       queryKey: ['user'],
     });
+    localStorage.clear();
     await api('/user/logout');
     router.replace('/welcome/login');
   };
-
-  const user: { name?: string; image?: string } | undefined =
-    queryClient.getQueryData(['user']);
 
   return (
     <Card

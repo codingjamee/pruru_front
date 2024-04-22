@@ -2,7 +2,7 @@
 import dayjs from 'dayjs';
 import { api, searchApi } from './createCustomFetch';
 import { receiptApi } from './createCustomFetch';
-import { QueryTypes } from '@/_types/CommonTypes';
+import { QueryTypes, UserSignupType } from '@/_types/CommonTypes';
 import { FoodPropType, FoodReturnType } from '@/_types/FoodTypes';
 import {
   PurchaseReceiptInfoType,
@@ -126,5 +126,18 @@ export const getSearchCategory = async (
     },
   );
 
+  return res;
+};
+
+export const getUserInfo = async () => {
+  const res = await api<UserSignupType & { ok: boolean }>('/user/info', {
+    method: 'GET',
+    next: {
+      tags: ['user'],
+    },
+  });
+  if (!res.ok) {
+    throw new Error('Failed to fetch user info data');
+  }
   return res;
 };

@@ -15,7 +15,7 @@ import { useState } from 'react';
 
 export interface LoginResponseType extends Response {
   email?: string;
-  username?: string;
+  name?: string;
   image?: string;
   message?: string;
 }
@@ -79,7 +79,7 @@ const SignupForm = () => {
     }) => signInUser(data),
     onSuccess: (userData) => {
       queryClient.setQueryData(['user'], {
-        name: userData.username,
+        name: userData.name,
         image: userData.image,
       });
       console.log(queryClient);
@@ -93,7 +93,7 @@ const SignupForm = () => {
       //회원가입
       const response: Response & {
         email?: string;
-        username?: string;
+        name?: string;
         image?: string;
         message?: string;
       } = await api('/user/signup', {

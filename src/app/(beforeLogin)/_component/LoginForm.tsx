@@ -50,7 +50,7 @@ const LoginForm = () => {
     }) => signInUser(data),
     onSuccess: (userData) => {
       queryClient.setQueryData(['user'], {
-        name: userData.username,
+        name: userData.name,
         image: userData.image,
       });
       console.log(queryClient);
@@ -120,7 +120,7 @@ const LoginForm = () => {
             <Button
               variant="outlined"
               aria-label="go-to-sign-up"
-              className="btn-defaultsize text-color-inbutton-outlined-text w-[200px]"
+              className="btn-defaultsize w-[200px] text-color-inbutton-outlined-text"
               onClick={() => {
                 router.push('/welcome/join');
               }}>
