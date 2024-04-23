@@ -5,8 +5,11 @@ import Input from '@/_components/Input';
 import { PurchaseReceiptInfoType } from '@/_types/ReceiptTypes';
 import { editReceiptForm, receiptItemsInit } from '@/_utils/listData';
 import dayjs from 'dayjs';
+import customParseFormat from 'dayjs/plugin/customParseFormat';
+dayjs.extend(customParseFormat);
 import { Dispatch, Fragment, SetStateAction } from 'react';
 import ReactDatePicker from 'react-datepicker';
+import 'react-datepicker/dist/react-datepicker.css';
 import {
   Controller,
   SubmitHandler,
@@ -20,12 +23,14 @@ const ReceiptForm = ({
   purchaseDate,
   totalPrice,
   length,
+  buttonName,
 }: {
   onSubmitForm: SubmitHandler<PurchaseReceiptInfoType>;
   setPurchaseDate: Dispatch<SetStateAction<Date | null>>;
   purchaseDate: Date | null;
   totalPrice?: number;
   length?: number;
+  buttonName: string;
 }) => {
   const {
     handleSubmit,
@@ -141,7 +146,7 @@ const ReceiptForm = ({
         variant="outlined"
         className="w-full rounded-lg"
         aria-label="add-receipt">
-        추가하기
+        {buttonName}
       </Button>
     </form>
   );

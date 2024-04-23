@@ -110,6 +110,7 @@ const AddFood = () => {
             onAddFood={onAddFood}
             searchIamgeUrl={searchIamgeUrl}
             searchFoodName={searchFoodName}
+            buttonName="추가하기"
           />
         </Card>
       </FormProvider>

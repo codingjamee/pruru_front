@@ -94,6 +94,7 @@ const EditReceipt = () => {
             purchaseDate={purchaseDate}
             totalPrice={totalPrice}
             length={length}
+            buttonName="추가하기"
           />
         </FormProvider>
       </Card>
