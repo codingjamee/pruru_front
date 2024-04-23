@@ -10,6 +10,7 @@ import AddList from '@/_assets/AddList';
 import { YearMonthProvider } from '@/_contexts/DateContext';
 import { Suspense } from 'react';
 import { montserrat } from '@/_styles/fonts';
+import Loading from '../loading';
 
 export default async function layout({
   children,
@@ -18,7 +19,7 @@ export default async function layout({
 }>) {
   return (
     <YearMonthProvider>
-      <Suspense fallback={<div>...loading 중...</div>}>
+      <Suspense fallback={<Loading />}>
         <div className="full relative">
           <div className="nav">
             <Link href="/home">
