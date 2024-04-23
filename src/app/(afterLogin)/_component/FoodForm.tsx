@@ -10,6 +10,7 @@ import {
   useFormContext,
 } from 'react-hook-form';
 import ReactDatePicker from 'react-datepicker';
+import 'react-datepicker/dist/react-datepicker.css';
 import { selectLists } from '@/_utils/listData';
 
 const FoodForm = ({
@@ -17,11 +18,13 @@ const FoodForm = ({
   onAddFood,
   searchIamgeUrl,
   searchFoodName,
+  buttonName,
 }: {
   onClickSearch: () => void;
   onAddFood: SubmitHandler<FieldValues>;
   searchIamgeUrl: string | undefined;
   searchFoodName: string | undefined;
+  buttonName: string;
 }) => {
   const [expiryDate, setExpiryDate] = useState<Date | null>(null);
   const [purchaseDate, setPurchaseDate] = useState<Date | null>(null);
@@ -168,7 +171,7 @@ const FoodForm = ({
         variant="primary"
         className="rounded-lg mobile:w-full"
         aria-label="add-food">
-        추가하기
+        {buttonName}
       </Button>
     </form>
   );
