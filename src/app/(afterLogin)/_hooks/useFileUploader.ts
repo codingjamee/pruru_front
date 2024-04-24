@@ -5,10 +5,14 @@ const useFileUploader = () => {
   const [encodedFile, setEncodedFile] = useState('');
 
   const imgUpload = (file: File): Promise<string> => {
-    return new Promise<string>((resolve) => {
-      Resizer.imageFileResizer(file, 500, 500, 'JPEG', 100, 0, (image) => {
-        resolve(image as string | PromiseLike<string>);
-      });
+    return new Promise<string>((resolve, reject) => {
+      try {
+        Resizer.imageFileResizer(file, 500, 500, 'JPEG', 100, 0, (image) => {
+          resolve(image as string | PromiseLike<string>);
+        });
+      } catch (err: any) {
+        reject(err);
+      }
     });
   };
 
