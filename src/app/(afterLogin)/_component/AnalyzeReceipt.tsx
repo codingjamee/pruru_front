@@ -16,16 +16,22 @@ import {
 } from '@/_types/ReceiptTypes';
 import { reg_exceptgiho } from '@/_utils/regExp';
 import useFileUploader from '../_hooks/useFileUploader';
+import Loading from '@/app/loading';
 
 const AnalyzeReceipt = () => {
   const fileInput = useRef<HTMLInputElement>(null);
   const [triggerAnalyzeReceipt, setTriggerAnalyzeReceipt] = useState(false);
   const [triggerSearch, setTriggerSearch] = useState(false);
   const [searchLists, setSearchLists] = useState([]);
+
   const queryClient = useQueryClient();
   const router = useRouter();
   const { encodedFile, setEncodedFile, onChangeFile } = useFileUploader();
-  const { status: analyzeStatus, data: analyzedReceiptData } = useQuery({
+  const {
+    status: analyzeStatus,
+    data: analyzedReceiptData,
+    isPending,
+  } = useQuery({
     queryKey: ['receipt', 'anaylze'],
     queryFn: () => getAnalyzeReceipt(encodedFile, 'JPEG'),
     enabled: triggerAnalyzeReceipt,
@@ -89,7 +95,6 @@ const AnalyzeReceipt = () => {
       if (fileInput.current) {
         fileInput.current.value = '';
       }
-      console.log('에러가 발생하였습니다 다시 파일을 업로드해주세요');
     }
   }, [analyzeStatus]);
 
@@ -161,6 +166,10 @@ const AnalyzeReceipt = () => {
   const onClickButton = () => {
     fileInput.current!.click();
   };
+
+  if (triggerAnalyzeReceipt && isPending) {
+    return <Loading />;
+  }
 
   return (
     <>
