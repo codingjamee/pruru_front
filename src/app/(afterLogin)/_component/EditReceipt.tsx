@@ -55,24 +55,22 @@ const EditReceipt = () => {
   const router = useRouter();
   const defaultValues = useDefaultReceiptValues(foundReceiptData, totalPrice);
 
-  const { watch } = useForm<PurchaseReceiptInfoType>({
+  const methods = useForm<PurchaseReceiptInfoType>({
     defaultValues: defaultValues,
   });
-  const methods = useForm();
 
   useEffect(() => {
-    const { unsubscribe } = watch((value) => {
+    const subscription = methods.watch((value) => {
       setLength(value.receipt_items && value.receipt_items.length);
       setTotalPrice(
-        value.receipt_items &&
-          value.receipt_items.reduce(
-            (acc: number, cur) => acc + (Number(cur?.purchase_price) || 0),
-            0,
-          ),
+        value.receipt_items?.reduce(
+          (acc: number, cur) => acc + (Number(cur?.purchase_price) || 0),
+          0,
+        ),
       );
     });
-    return () => unsubscribe();
-  }, [watch]);
+    return () => subscription.unsubscribe();
+  }, [methods.watch]);
 
   const onSubmitForm = (data: PurchaseReceiptInfoType) => {
     mutate(data);
