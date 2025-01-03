@@ -41,8 +41,11 @@ pw: hellotest1
 <img src="https://img.shields.io/badge/Tailwind CSS-06B6D4?style=flat-square&logo=Tailwind CSS&logoColor=white"/> <img src="https://img.shields.io/badge/Node.js-339933?style=flat-square&logo=Node.js&logoColor=white"/> <img src="https://img.shields.io/badge/MySQL-4479A1?style=for-the-badge&logo=MySQL&logoColor=white"/> <img src="https://img.shields.io/badge/Express-000000?style=for-the-badge&logo=Express&logoColor=white"/> <img src="https://img.shields.io/badge/Docker-2496ED?style=flat-square&logo=Docker&logoColor=white"/> <img src="https://img.shields.io/badge/Amazon AWS-232F3E?style=flat-square&logo=amazonaws&logoColor=white"/></div>
 
 
-
 ### 4. 프로젝트의 주요 특징
+
+주요 서비스 구조도
+<img width="1084" alt="Screenshot 2025-01-04 at 12 28 30 AM" src="https://github.com/user-attachments/assets/a0e65d63-a6e3-49dc-bf03-d496ad3b6c30" />
+
 
 - 개인 프로젝트
 - 검색 엔진 최적화 (SEO)  
